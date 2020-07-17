@@ -1,0 +1,37 @@
+* {
+    font-family: Monospace;
+}
+.editor {
+    position: absolute;
+    background: radial-gradient(lightgray, gray);
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+.editor > button,
+.editor > input,
+.editor > textarea {
+    border: 1px solid black;
+}
+.editor > h3 {
+    margin: 0;
+}
+.editor > button {
+    cursor: pointer;
+}
+.editor > input[type=number] {
+    max-width: 100px;
+}
+.editor > textarea {
+    padding: 5px;
+    resize: none;
+}
+.editor > textarea[id=output] {
+    user-select: all;
+    -ms-user-select: all;
+    -moz-user-select: all;
+    -webkit-user-select: all;
+}
+.editor > textarea:last-of-type {
+    border-radius: 0 0 10px 10px;
+}

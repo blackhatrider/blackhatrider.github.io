@@ -1,0 +1,53 @@
+header {
+  border: 1px solid black;
+}
+
+#logoBlock{
+	background: url('../images/banner.png') center;
+  height: 200px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 3
+}
+ 
+#div {
+  margin-top: 10px;
+  display: block;
+  width: 100px;
+  float:left;
+  height:100px;
+  margin-left:20px;
+}
+
+#div1 {
+  margin-top: 10px;
+  display: block;
+  width: 100px;
+  float:left;
+  height:100px;
+  margin-left:180px;
+}
+
+#tabs {
+  background: #40404080;
+}
+
+button {
+  color: #404040;
+  padding: 10px;
+  background: #dfdfdf;
+  border: 1px solid #bebebe;
+  border-radius: 30px;
+  display: inline-flex;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
