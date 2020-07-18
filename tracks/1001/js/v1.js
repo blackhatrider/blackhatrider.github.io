@@ -2847,7 +2847,7 @@
         I.style.position = "fixed";
         document.body.style.overflow = 'hidden';
         I.style.top = I.style.left = 0;
-        I.style.border = "none";
+        I.style.border = "default";
         Fb.style.left = I.width - (v.documentElement.offsetHeight <= window.innerHeight ? 24 : 39) + "px";
         V[2] = Tb[0][7] = "Disable fullscreen ( ESC or F )";
         window.scrollTo(0, 0);
@@ -2940,39 +2940,39 @@
             switch (a.keyCode) {
             case 66:
                 "brush" !== P ? (P = "brush",
-                ga.style.cursor = "none",
+                ga.style.cursor = "default",
                 Z = j) : S || (S = j,
                 U.copy(Lb),
                 Z = j);
                 break;
             case 67:
                 "scenery brush" !== P ? (P = "scenery brush",
-                ga.style.cursor = "none",
+                ga.style.cursor = "default",
                 Z = j) : S || (S = j,
                 U.copy(Mb),
                 Z = j);
                 break;
             case 81:
                 "line" !== P ? (P = "line",
-                ga.style.cursor = "none") : S || (S = j,
+                ga.style.cursor = "default") : S || (S = j,
                 U.copy(Lb),
                 Z = j);
                 break;
             case 84:
                 "scenery line" !== P ? (P = "scenery line",
-                ga.style.cursor = "none") : S || (S = j,
+                ga.style.cursor = "default") : S || (S = j,
                 U.copy(Mb),
                 Z = j);
                 break;
             case 69:
                 P = "eraser";
-                ga.style.cursor = "none";
+                ga.style.cursor = "default";
                 Z = j;
                 break;
             case 82:
                 "camera" !== P ? (Qb = P,
                 P = "camera",
-                ga.style.cursor = "move") : Rb = j;
+                ga.style.cursor = "default") : Rb = j;
                 break;
             case 77:
                 H.Qa();
@@ -3039,7 +3039,7 @@
             break;
         case 82:
             Rb && (P = Qb,
-            ga.style.cursor = "none",
+            ga.style.cursor = "default",
             Rb = k);
             break;
         case 49:
@@ -3150,7 +3150,7 @@
     ;
     I.onmouseover = function() {
         V = k;
-        ga.style.cursor = "camera" === P ? "move" : "none"
+        ga.style.cursor = "default"
     }
     ;
     I.onmousedown = function(a) {
@@ -3166,7 +3166,7 @@
             switch (P) {
             case "boost":
             case "gravity":
-                ga.style.cursor = "crosshair";
+                ga.style.cursor = "default";
                 break;
             case "eraser":
                 fc();
@@ -3243,7 +3243,7 @@
                     e.xb()
                 })
             } else if ("boost" === P || "gravity" === P)
-                ga.style.cursor = "none",
+                ga.style.cursor = "default",
                 d = s(180 * Math.atan2(-(R.x - U.x), R.y - U.y) / Math.PI),
                 c = "boost" === P ? new jb(U.x,U.y,d,H) : new lb(U.x,U.y,d,H),
                 a = t(c.c.x / H.v),
@@ -3294,11 +3294,11 @@
             H.paused = j;
             P = "camera";
             nc(j);
-            ac.style.display = "none";
-            Fb.style.display = "none";
+            ac.style.display = "default";
+            Fb.style.display = "default";
             K.lineCap = "round";
             K.lineJoin = "round";
-            v.getElementById("track_menu").style.display = "none";
+            v.getElementById("track_menu").style.display = "default";
             var b = D(["input#name.input-block-level", {
                 type: "text",
                 size: 18,

@@ -3316,7 +3316,7 @@
             }
         },
         down: function() {
-            ga.style.cursor = "crosshair"
+            ga.style.cursor = "default"
         },
         up: function(a) {
             ga.style.cursor = "";
@@ -3353,7 +3353,7 @@
             }
         },
         down: function() {
-            ga.style.cursor = "crosshair"
+            ga.style.cursor = "default"
         },
         up: function(a) {
             ga.style.cursor = "";
