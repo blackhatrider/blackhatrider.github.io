@@ -29,8 +29,11 @@
             }
             window.onload = (event) => {
                 for(var i in data){
-                    if(localStorage.name != i && localStorage.pass == data[i]) break
-                    if(localStorage.name != i || localStorage.pass != data[i]) window.location.href = "./default.html"
+                    if(localStorage.name == i && localStorage.pass == data[i]){
+                        return
+                    } else if(localStorage.name != i || localStorage.pass != data[i]){
+                        window.location.href = "./default.html"
+                    }
                 }
             };
         </script>

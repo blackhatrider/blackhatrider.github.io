@@ -26,10 +26,8 @@
                 const name = document.getElementById("name").value;
                 const pas = document.getElementById("pass").value;
                 if(name == i && pas == data[i]){
-                    localStorage.name = name
-                    localStorage.pass = pas
-                    window.location.href = "./index.html"
-                } else if(name != i && pas != data[i]){
+                    return localStorage.name = name, localStorage.pass = pas, window.location.href = "./index.html"
+                } else if(name != i || pas != data[i]){
                     document.getElementById("incorrect").innerHTML = "Invalid username or password.";
                 }
             }
