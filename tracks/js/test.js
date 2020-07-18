@@ -2,7 +2,6 @@ function ajax(url, callback) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            //console.log(JSON.parse(xmlhttp.responseText.slice(2,-2)).code);
             callback(JSON.parse(xmlhttp.responseText.slice(2,-2)).code);
         }
     };
