@@ -2,7 +2,7 @@
 	<head>
 		<style id="stndz-style"></style>
 		<title>Wild West | Black Hat Rider 2</title>
-		<link rel="icon" href="../icons/icon_128.png">
+		<link rel="icon" href="../../icons/icon_128.png">
 		<meta name="description" content="Get on your bike and ride tens of tracks drawn by other players! Black Hat Rider is an addictive game written only in JavaScript &amp; HTML5, using the most of the new canvas element.">
 		<meta name="author" content="Pete &amp; Maxime">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -96,8 +96,8 @@
 				have fun.
 			</div>
 			<canvas id="canvas_rider" width="700" height="400" style="position: static; border: 1px solid black; z-index: 2; display: inline-block;"></canvas>
-			<img src="images/toolbar-left.png" class="toolbar" id="toolbar1" style="display: none;">
-			<img src="images/toolbar-right.png" class="toolbar" id="toolbar2" style="display: none;">
+			<img class="toolbar" id="toolbar1">
+			<img class="toolbar" id="toolbar2">
 			<div id="track_menu" class="well">
   				<div class="row-fluid">
 					<div class="span12">Ghosts - Coming Soon</div>
@@ -107,5 +107,14 @@
 			<script src="code.js"></script>
 		</div>
 		<footer>2020 - Black Hat Rider 2</footer>
+		<script>
+			(async function(){
+				const params = new URLSearchParams(window.location.search);
+				if (params.has('id')) {
+				const r = await fetch(`https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${params.get('id')}/track-data-v1.js`).then(d => d.text()).then(d => JSON.parse(d.slice(2, -2)));
+				console.log(r)
+				}
+			})
+		</script>
 	</body>
 </html>
