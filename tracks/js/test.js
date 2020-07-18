@@ -20,7 +20,6 @@ async function test(){
     var p = ParseURLParameter('id');
     if(typeof p != 'undefined'){
         const t = await new Promise(x => ajax(`https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${p}/track-data-v1.js`, x))
-        console.log(t)
         let inject = document.createElement('script');
         inject.innerHTML = `(BH.game || cr).ride('${t}')`
         document.head.appendChild(inject);
