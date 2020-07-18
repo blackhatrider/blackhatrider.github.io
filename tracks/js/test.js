@@ -24,6 +24,6 @@ function ParseURLParameter(p){
 }
 var p = ParseURLParameter('id');
 if(typeof p != 'undefined'){
-    const t = new Promise(x => ajax_get(`https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/t/${p}?ajax=true`, x))
-    console.log(t)
+    const t = new Promise(x => ajax_get(`https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${p}/track-data-v1.js`, x)).t
+    (BH.game || cr).ride(`${t}`)
 }
