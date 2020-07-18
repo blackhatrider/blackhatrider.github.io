@@ -36,18 +36,18 @@
 					<div class="nav-collapse collapse">
 						<ul class="nav" id="menu-collapse">
 							<li>
-								<a href="../" title="The latest tracks">Tracks</a>
+								<a href="/" title="The latest tracks">Home</a>
 							</li>
-							<li>
+							<li class="active">
 								<a href="../tracks" title="The latest tracks">Tracks</a>
 							</li>
 							<li>
 								<a href="../ghosts" title="Recent ghosts">Ghosts</a>
 							</li>
 							<li>
-								<a href="../track/random" title="Play a random track instantly">Random track</a>
+								<a href="./random" title="Play a random track instantly">Random track</a>
 							</li>
-							<li class="active">
+							<li>
 								<a href="../editor" title="Draw a track">Draw track</a>
 							</li>
 							<li>
@@ -87,28 +87,27 @@
 			</div>
 		</nav>
 		<div id="content" class="container clearfix" style="margin-top: 42px;">
-            <div class="column-left">
-                <ul>
-                    <li>
-
-                    </li>
-                    <li>
-                        
-                    </li>
-                    <li>
-                        
-                    </li>
-                    <li>
-                        
-                    </li>
-                    <li>
-                        
-                    </li>
-                    <li>
-                        
-                    </li>
-                </ul>
-            </div>
+			<div class="alert alert-info align-left">
+				<strong>Black Hat Rider 2</strong><br>
+				<ul>
+					<li>Welcome to Black Hat Rider 2!</li>
+					<li>Feel free to join the official freeriderhd.com discord: <a href="https://discord.gg/sqCh3AU">https://discord.gg/sqCh3AU</a></li>
+					<li>Or the free rider mods server: <a href="https://discord.gg/9gpcYYG">https://discord.gg/9gpcYYG</a></li>
+				</ul>
+				have fun.
+			</div>
+			<div class="track-info" id="info">
+				<h3 id="title">Title</h3>
+			</div>
+			<canvas id="canvas_rider" width="700" height="400" style="position: static; border: 1px solid black; z-index: 2; display: inline-block;"></canvas>
+			<img class="toolbar" id="toolbar1">
+			<img class="toolbar" id="toolbar2">
+			<div id="track_menu" class="well">
+  				<div class="row-fluid">
+					<div class="span12">Ghosts - Coming Soon</div>
+  				</div>
+			</div>
+			<script src="js/v1.js"></script>
 		</div>
 		<footer>2020 - Black Hat Rider 2</footer>
 	</body>
