@@ -2889,21 +2889,25 @@
             H.Na();
             break;
         case 37:
+        case 65:
             H.t && (a.preventDefault(),
             H.O = H.t.head,
             Aa = 1);
             break;
         case 39:
+        case 68:
             H.t && (a.preventDefault(),
             H.O = H.t.head,
             Ba = 1);
             break;
         case 38:
+        case 87:
             H.t && (a.preventDefault(),
             H.O = H.t.head,
             O = 1);
             break;
         case 40:
+        case 83:
             H.t && (a.preventDefault(),
             H.O = H.t.head,
             Ca = 1);
@@ -2926,14 +2930,14 @@
         }
         if (H.id === g)
             switch (a.keyCode) {
-            case 65:
+            case 66:
                 "brush" !== P ? (P = "brush",
                 ga.style.cursor = "none",
                 Z = j) : S || (S = j,
                 U.copy(Lb),
                 Z = j);
                 break;
-            case 83:
+            case 67:
                 "scenery brush" !== P ? (P = "scenery brush",
                 ga.style.cursor = "none",
                 Z = j) : S || (S = j,
@@ -2946,7 +2950,7 @@
                 U.copy(Lb),
                 Z = j);
                 break;
-            case 87:
+            case 84:
                 "scenery line" !== P ? (P = "scenery line",
                 ga.style.cursor = "none") : S || (S = j,
                 U.copy(Mb),
@@ -2974,9 +2978,13 @@
         switch (a.keyCode) {
         case 13:
         case 37:
+        case 65:
         case 39:
+        case 68:
         case 38:
+        case 87:
         case 40:
+        case 83:
             a.preventDefault();
             break;
         case 8:
@@ -2998,15 +3006,19 @@
             a.ctrlKey && ec();
             break;
         case 37:
+        case 65:
             Aa = 0;
             break;
         case 39:
+        case 68:
             Ba = 0;
             break;
         case 38:
+        case 87:
             O = 0;
             break;
         case 40:
+        case 83:
             Ca = 0;
             break;
         case 90:
@@ -3030,12 +3042,12 @@
             H.id !== g && H.ob(a.keyCode - 48);
             break;
         case 81:
-        case 87:
+        case 67:
         case 69:
-        case 83:
+        case 86:
             H.H && (H.O === H.H.head && (H.O = H.t.head),
             H.H = k);
-        case 65:
+        case 66:
             Z && (S = Z = k)
         }
     }
