@@ -419,6 +419,10 @@
     function ua(a) {
         this.j = a;
         this.Ja = "hat";
+        if(window.party)
+            localStorage.party = 1
+        if(localStorage.party == 1)
+            this.Ja = "party"
         this.ka = this.Y = k;
         this.M = this.ba = this.ca = this.W = this.K = 0
     }
@@ -552,6 +556,8 @@
         this.j = c;
         this.ea = b[31] || 0;
         this.Ja = "hat";
+        if(localStorage.party == 1)
+            this.Ja = "party"
         this.tb = j;
         this.M = 0;
         this.ha = {}
@@ -1289,6 +1295,8 @@
           , c = this;
         c.na = Sa;
         this.Ja = "hat";
+        if(localStorage.party == 1)
+            this.Ja = "party"
         this.j = a;
         this.f = [this.head = new J(new F(b[0],b[1]),this), this.g = new pa(new F(b[6],b[7]),this), this.n = new pa(new F(b[13],b[14]),this)];
         this.f[0].q = new F(b[2],b[3]);
