@@ -14,7 +14,7 @@
 		<script src="./js/bootstrap.js"></script>
 		<script> window.addEvent('domready', BS.init);
     	var require = { baseUrl: '/js' }, _gaq = [ ['_setAccount', 'UA-37797683-1'], ['_trackPageview'] ],
-      	bhuser_ = {"id":1,"isAdmin":true,"name":"Guest","online":true,"last online":"never","posts":"none","ghosts":0,"title":null};
+      	bhuser_ = {"id":1,"isAdmin":false,"name":"Guest","online":true,"last online":"never","posts":"none","ghosts":0,"title":null};
     	window.BHR_RCE_ENABLED=false;
   		</script>
 		<script src="./js/require.js" data-main="init"></script>
@@ -55,7 +55,7 @@
 						</ul>
 					</div>
 					<div id="membership" class="pull-right navbar-text">
-						<a href="/users/Guest" disabled>Guest</a> -
+						<a href="../users/Guest" disabled>Guest</a> -
           				<span class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void 0;">Options</a>
 							<form class="dropdown-menu pull-right text row-fluid with-arrow" id="options">
@@ -96,6 +96,8 @@
 				have fun.
 			</div>
 			<canvas id="canvas_rider" width="700" height="400" style="position: static; border: 1px solid black; z-index: 2; display: inline-block;"></canvas>
+			<img src="images/toolbar-left.png" class="toolbar" id="toolbar1" style="display: none;">
+			<img src="images/toolbar-right.png" class="toolbar" id="toolbar2" style="display: none;">
 			<div id="track_menu" class="well">
   				<div class="row-fluid">
 					<div class="span12">Ghosts - Coming Soon</div>
