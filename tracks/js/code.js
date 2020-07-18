@@ -34,7 +34,7 @@ async function Inject(){
         document.head.appendChild(inject);
         const title = await new Promise(x => ajaxTitle(`https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${p}/track-data-v1.js`, x))
         document.getElementsByTagName("title")[0].innerHTML = `${title} | Black Hat Rider 2`
-        console.log(title)
+        document.getElementById("title").innerHTML = title
     }
 };
 Inject()
