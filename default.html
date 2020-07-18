@@ -11,19 +11,20 @@
         <label for="name">Username:</label>
         <input type="text" id="name" name="username"><br><br>
         <label for="pass">Password:</label>
-        <input type="password" id="pass" name="password"><br><br>
-        <button onclick="test()">Login</button>
+        <input type="password" id="pass" name="password"><br>
+        <p id="incorrect"></p>
+        <button onclick="login()">Login</button>
     </body>
     <script>
         data = {
             "Calculus": "precalculus",
             "Guest": "password"
         }
-        function test(){
+        function login(){
             for(var i in data){
                 const name = document.getElementById("name").value;
                 const pass = document.getElementById("pass").value;
-                if(name != i) return;
+                if(name != i) return document.getElementById("incorrect").innerHTML = "Invalid username or password.";
                 if(pass != data[i]) return;
                 localStorage.name = name
                 localStorage.pass = pass
