@@ -2811,12 +2811,12 @@
         } else
             Ub.Ra(a);
         b.onmouseover = function() {
-            ga.style.cursor = 0 === a.ja ? "move" : "none"
+            ga.style.cursor = 0 === a.ja ? "default" : "default"
         }
         ;
         b.onmousemove = function(c) {
             a.O.M((new I(c.clientX - b.offsetLeft + window.pageXOffset,c.clientY - b.offsetTop + window.pageYOffset)).Gb(a));
-            a.ya && (a.ya.emit("move", a, c),
+            a.ya && (a.ya.emit("default", a, c),
             a.Ua && a.ya.emit("drag", a, c))
         }
         ;
@@ -3134,10 +3134,10 @@
         icon: "move",
         activate: function(a) {
             a.oa(this, 0);
-            a.wa.setStyle("cursor", "move")
+            a.wa.setStyle("cursor", "default")
         },
         deactivate: function(a) {
-            a.wa.setStyle("cursor", "")
+            a.wa.setStyle("cursor", "default")
         },
         drag: function(a) {
             a.da = q;
@@ -3319,7 +3319,7 @@
             ga.style.cursor = "default"
         },
         up: function(a) {
-            ga.style.cursor = "";
+            ga.style.cursor = "default";
             var b = a.O
               , c = a.aa;
             a.cb(gb, c, y(180 * Math.atan2(-(b.x - c.x), b.y - c.y) / Math.PI))
@@ -3356,7 +3356,7 @@
             ga.style.cursor = "default"
         },
         up: function(a) {
-            ga.style.cursor = "";
+            ga.style.cursor = "default";
             var b = a.O
               , c = a.aa;
             a.cb(ib, c, y(180 * Math.atan2(-(b.x - c.x), b.y - c.y) / Math.PI))
