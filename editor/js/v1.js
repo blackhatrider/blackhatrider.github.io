@@ -1,43 +1,15 @@
-!function() {
-    var __ = location.hash === '#fps' ? 1000 / 30 : 40;
-    var g = void 0
-      , j = !0
-      , k = !1;
-    function aa() {
-        return function() {}
-    }
-    function ba(a) {
-        return function() {
-            return a
-        }
-    }
-    var p = 2 * Math.PI
-      , q = Math.random
-      , r = Math.cos
-      , ca = Math.sin
-      , s = Math.round
-      , da = Math.ceil
-      , t = Math.floor
-      , ea = Math.pow
-      , fa = Math.sqrt
-      , u = parseInt
-      , v = document
-      , ga = v.body
-      , z = "a"
-      , A = "ba"
-      , B = "f"
-      , ha = "fx"
-      , ia = 0;
-    function ja() {
-        function a(a) {
+!function(){
+    var ia = 0;
+    function ja(){
+        function a(a){
             e.push(a);
             d && (c = a(c));
             return f.Ib
         }
-        function b(a) {
-            d = j;
+        function b(a){
+            d = !0;
             c = a;
-            for (var b = 0, f = e.length; b < f; b++)
+            for(var b = 0, f = e.length; b < f; b++)
                 e[b](a)
         }
         var c, d, e = [], f = {
@@ -52,3065 +24,2688 @@
         };
         return f
     }
-    function ka(a, b) {
-        var c = v.createElementNS(b, a.match(/^\w+/)[0]), d, e;
-        if (d = a.match(/#([\w-]+)/))
+    function ka(a, b){
+        var c = document.createElementNS(b, a.match(/^\w+/)[0]), d, e;
+        if(d = a.match(/#([\w-]+)/))
             c.id = d[1];
         (e = a.match(/\.[\w-]+/g)) && c.setAttribute("class", e.join(" ").replace(/\./g, ""));
         return c
     }
-    function D(a, b, c) {
+    function createElement(a, b, c){
         var d = document, e, f;
-        if (a && a.big)
+        if(a && a.big)
             return d.getElementById(a);
         c = c || {};
         b = b || "http://www.w3.org/1999/xhtml";
         a[0].big && (a[0] = ka(a[0], b));
-        for (e = 1; e < a.length; e++)
-            if (a[e].big)
+        for(e = 1; e < a.length; e++)
+            if(a[e].big)
                 a[0].appendChild(d.createTextNode(a[e]));
-            else if (a[e].pop)
+            else if(a[e].pop)
                 a[e][0].big && (a[e][0] = ka(a[e][0], b)),
                 a[0].appendChild(a[e][0]),
-                D(a[e], b, c);
-            else if (a[e].call)
+                createElement(a[e], b, c);
+            else if(a[e].call)
                 a[e](a[0]);
             else
-                for (f in a[e])
+                for(f in a[e])
                     a[0].setAttribute(f, a[e][f]);
         c[0] = a[0];
         return c[0]
     }
-    function E(a, b) {
-        for (var c in b)
+    function createItem(a, b){
+        for(var c in b)
             b.hasOwnProperty(c) && (a[c] = b[c])
     }
-    function la(a, b) {
-        for (var c = 0, d = b.length; c < d; c++) {
+    function la(a, b){
+        for(var c = 0, d = b.length; c < d; c++){
             var e = a
               , f = b[c];
             ~e.indexOf(f) || e.push(f)
         }
     }
-    function ma() {
-        this.Ia = {}
-    }
-    var na = ma.prototype;
-    na.Tb = function(a, b) {
-        (this.Ia[a] = this.Ia[a] || []).push(b);
-        return this
-    }
-    ;
-    na.Sb = function(a, b) {
-        this.Ia[a] && _remove(this.Ia[a], b);
-        return this
-    }
-    ;
-    na.Za = function(a) {
-        var b = this.Ia && this.Ia[a];
-        if (b)
-            for (var c = _slice.call(arguments, 1), d = 0, e = b.length; d < e; d++)
-                b[d].apply(this, c)
-    }
-    ;
-    function F(a, b) {
-        this.x = a;
-        this.y = b
-    }
-    var G = F.prototype;
-    G.C = function() {
-        return new F((this.x - H.N.x) * H.d + I.width / 2,(this.y - H.N.y) * H.d + I.height / 2)
-    }
-    ;
-    G.Ka = function() {
-        return new F((this.x - I.width / 2) / H.d + H.N.x,(this.y - I.height / 2) / H.d + H.N.y)
-    }
-    ;
-    G.copy = function(a) {
-        this.x = a.x;
-        this.y = a.y;
-        return this
-    }
-    ;
-    G.G = function(a) {
-        this.x += a.x;
-        this.y += a.y;
-        return this
-    }
-    ;
-    G.Xb = function(a) {
-        this.x -= a.x;
-        this.y -= a.y;
-        return this
-    }
-    ;
-    G.Fa = function(a) {
-        this.x *= a;
-        this.y *= a;
-        return this
-    }
-    ;
-    G.clone = function() {
-        return new F(this.x,this.y)
-    }
-    ;
-    G.b = function(a) {
-        return new F(this.x + a.x,this.y + a.y)
-    }
-    ;
-    G.i = function(a) {
-        return new F(this.x - a.x,this.y - a.y)
-    }
-    ;
-    G.a = function(a) {
-        return new F(this.x * a,this.y * a)
-    }
-    ;
-    G.rb = function(a) {
-        return new F(this.x / a,this.y / a)
-    }
-    ;
-    G.ra = function(a) {
-        return this.x * a.x + this.y * a.y
-    }
-    ;
-    G.sa = function() {
-        return fa(this.x * this.x + this.y * this.y)
-    }
-    ;
-    G.X = function() {
-        return this.x * this.x + this.y * this.y
-    }
-    ;
-    G.fb = function(a) {
-        var b = this.x - a.x
-          , a = this.y - a.y;
-        return fa(b * b + a * a)
-    }
-    ;
-    G.Ya = function(a) {
-        var b = this.x - a.x
-          , a = this.y - a.y;
-        return b * b + a * a
-    }
-    ;
-    G.toString = function() {
-        return s(this.x).toString(32) + " " + s(this.y).toString(32)
-    }
-    ;
-    G.toJSON = function() {
-        return [this.x, this.y]
-    }
-    ;
-    function J(a, b) {
-        this.c = a.clone();
-        this.q = a.clone();
-        this.h = new F(0,0);
-        this.j = b;
-        this.size = 10;
-        this.oa = 0;
-        this.L = j
-    }
-    var oa = J.prototype;
-    oa.la = function(a) {
-        this.c.G(a.a(-a.ra(this.h) * this.oa));
-        this.wa = j
-    }
-    ;
-    oa.J = function() {
-        this.h.G(this.j.P).Fa(0.99);
-        this.c.G(this.h);
-        this.wa = k;
-        this.L && H.L(this);
-        this.h = this.c.i(this.q);
-        this.q.copy(this.c)
-    }
-    ;
-    oa.clone = function() {
-        var a = new J(this.c,this.j);
-        a.q = this.q.clone();
-        a.h = this.h.clone();
-        a.size = this.size;
-        a.oa = this.oa;
-        return a
-    }
-    ;
-    oa.toJSON = function() {
-        return {
-            Wa: "BodyPart",
-            c: this.c,
-            q: this.q,
-            h: this.h,
-            size: this.size
+    class Vector {
+        constructor(a, b){
+            this.x = a;
+            this.y = b
+        }
+        toPixel(){
+            return new Vector((this.x - track.camera.x) * track.zoom + canvas.width / 2,(this.y - track.camera.y) * track.zoom + canvas.height / 2)
+        }
+        adjustToCanvas(){
+            return new Vector((this.x - canvas.width / 2) / track.zoom + track.camera.x,(this.y - canvas.height / 2) / track.zoom + track.camera.y)
+        }
+        copy(a){
+            this.x = a.x;
+            this.y = a.y;
+            return this
+        }
+        addToSelf(a){
+            this.x += a.x;
+            this.y += a.y;
+            return this
+        }
+        subtractFromSelf(a){
+            this.x -= a.x;
+            this.y -= a.y;
+            return this 
+        }
+        scaleSelf(a){
+            this.x *= a;
+            this.y *= a;
+            return this
+        }
+        clone(){
+            return new Vector(this.x,this.y)
+        }
+        add(a){
+            return new Vector(this.x + a.x,this.y + a.y)
+        }
+        sub(a){
+            return new Vector(this.x - a.x,this.y - a.y)
+        }
+        scale(a){
+            return new Vector(this.x * a,this.y * a)
+        }
+        oppositeScale(a){
+            return new Vector(this.x / a,this.y / a)
+        }
+        dot(a){
+            return this.x * a.x + this.y * a.y
+        }
+        getLength(){
+            return Math.sqrt(this.x * this.x + this.y * this.y)
+        }
+        lengthSquared(){
+            return this.x * this.x + this.y * this.y
+        }
+        distanceTo(a){
+            var b = this.x - a.x,
+                a = this.y - a.y;
+            return Math.sqrt(b * b + a * a)
+        }
+        distanceToSquared(a){
+            var b = this.x - a.x,
+                a = this.y - a.y;
+            return b * b + a * a
+        }
+        toString(){
+            return Math.round(this.x).toString(32) + " " + Math.round(this.y).toString(32)
+        }
+        toJSON(){
+            return [this.x, this.y]
         }
     }
-    ;
-    function pa(a, b) {
-        this.c = a.clone();
-        this.q = a.clone();
-        this.h = new F(0,0);
-        this.j = b;
-        this.size = 10;
-        this.oa = 0;
-        this.P = this.L = j;
-        this.w = this.da = 0
-    }
-    var qa = pa.prototype;
-    qa.la = function(a) {
-        this.c.G(a.a(this.w * this.j.direction));
-        this.K && this.c.G(a.a(0.3 * -a.ra(this.h)));
-        this.da = a.ra(this.h) / this.size;
-        this.wa = j
-    }
-    ;
-    qa.J = function() {
-        this.h.G(this.j.P).Fa(0.99);
-        this.c.G(this.h);
-        this.wa = k;
-        this.L && H.L(this);
-        this.h = this.c.i(this.q);
-        this.q.copy(this.c)
-    }
-    ;
-    qa.clone = function() {
-        var a = new pa(this.c,this.j);
-        a.q = this.q.clone();
-        a.h = this.h.clone();
-        a.w = this.w;
-        return a
-    }
-    ;
-    qa.toJSON = function() {
-        return {
-            Wa: "Wheel",
-            c: this.c,
-            q: this.q,
-            h: this.h,
-            w: this.w,
-            da: this.da,
-            size: this.size,
-            oa: this.oa
+    class Mass {
+        constructor(a, b){
+            this.pos = a.clone();
+            this.oldPos = a.clone();
+            this.velocity = new Vector(0,0);
+            this.track = b;
+        }
+        update(){
+            this.velocity.addToSelf(this.track.gravity).scaleSelf(0.99);
+            this.pos.addToSelf(this.velocity);
+            this.wa = !1;
+            this.collide && track.collide(this);
+            this.velocity = this.pos.sub(this.oldPos);
+            this.oldPos.copy(this.pos)
         }
     }
-    ;
-    function ra(a, b) {
-        this.c = new F(a.x + 5 * (q() - q()),a.y + 5 * (q() - q()));
-        this.q = new F(this.c.x,this.c.y);
-        this.h = new F(11 * (q() - q()),11 * (q() - q()));
-        this.j = b;
-        this.mb = b.j;
-        this.size = 2 + 9 * q();
-        this.rotation = 6.2 * q();
-        this.da = q() - q();
-        this.oa = 0.05;
-        this.L = j;
-        this.shape = [1, 0.7, 0.8, 0.9, 0.5, 1, 0.7, 1]
-    }
-    var sa = ra.prototype;
-    sa.I = function() {
-        var a = this.c.C()
-          , b = this.size * this.mb.d
-          , c = this.shape[0] * b
-          , d = a.x + c * r(this.rotation)
-          , c = a.y + c * ca(this.rotation)
-          , e = 2;
-        for (K[A]().m(d, c).fillStyle = "#000"; 8 > e; e++)
-            c = this.shape[e - 1] * b / 2,
-            d = a.x + c * r(this.rotation + 6.283 * e / 8),
-            c = a.y + c * ca(this.rotation + 6.283 * e / 8),
-            K.l(d, c);
-        K[B]()
-    }
-    ;
-    sa.la = function(a) {
-        this.da = a.ra(this.h) / this.size;
-        this.c.G(a.a(-a.ra(this.h) * this.oa));
-        this.rotation += this.da;
-        var b = a.sa();
-        0 < b && (a = new F(-a.y / b,a.x / b),
-        this.q.G(a.a(0.8 * a.ra(this.h))))
-    }
-    ;
-    sa.J = function() {
-        this.rotation += this.da;
-        this.h.G(this.j.P);
-        this.h = this.h.a(0.99);
-        this.c.G(this.h);
-        this.wa = k;
-        this.L && H.L(this);
-        this.h = this.c.i(this.q);
-        this.q.copy(this.c)
-    }
-    ;
-    function L(a, b, c) {
-        this.u = a;
-        this.r = b;
-        this.j = c;
-        this.p = this.Q = 40;
-        this.S = 0.5;
-        this.R = 0.7
-    }
-    var ta = L.prototype;
-    ta.V = function(a) {
-        this.p += (this.Q - a - this.p) / 5
-    }
-    ;
-    ta.rotate = function(a) {
-        var b = this.r.c.i(this.u.c)
-          , b = new F(-b.y / this.p,b.x / this.p);
-        this.u.c.G(b.a(a));
-        this.r.c.G(b.a(-a))
-    }
-    ;
-    ta.J = function() {
-        var a = this.r.c.i(this.u.c)
-          , b = a.sa();
-        if (1 > b)
-            return this;
-        a = a.a(1 / b);
-        b = a.a((b - this.p) * this.R);
-        b.G(a.a(this.r.h.i(this.u.h).ra(a) * this.S));
-        this.r.h.G(b.a(-1));
-        this.u.h.G(b);
-        return this
-    }
-    ;
-    ta.ya = function() {
-        var a = new F;
-        a.copy(this.u.c);
-        this.u.c.copy(this.r.c);
-        this.r.c.copy(a);
-        a.copy(this.u.q);
-        this.u.q.copy(this.r.q);
-        this.r.q.copy(a);
-        a.copy(this.u.h);
-        this.u.h.copy(this.r.h);
-        this.r.h.copy(a);
-        a = this.u.rotation;
-        this.u.rotation = this.r.rotation;
-        this.r.rotation = a
-    }
-    ;
-    ta.sa = function() {
-        return this.r.c.i(this.u.c).sa()
-    }
-    ;
-    ta.clone = function() {
-        var a = new L(this.u,this.r,this.j);
-        a.Q = this.Q;
-        a.p = this.p;
-        a.S = this.S;
-        a.R = this.R;
-        return a
-    }
-    ;
-    ta.toJSON = function() {
-        return {
-            Wa: "Joint",
-            u: this.u,
-            r: this.r,
-            Q: this.Q,
-            p: this.p,
-            S: this.S,
-            R: this.R
+    class BodyPart extends Mass {
+        constructor(a, b){
+            super(a, b);
+            this.size = 10;
+            this.friction = 0;
+            this.collide = !0
+        }
+        drive(a){
+            this.pos.addToSelf(a.scale(-a.dot(this.velocity) * this.friction));
+            this.wa = !0
+        }
+        clone(){
+            var a = new BodyPart(this.pos,this.track);
+            a.oldPos = this.oldPos.clone();
+            a.velocity = this.velocity.clone();
+            a.size = this.size;
+            a.friction = this.friction;
+            return a
+        }
+        toJSON(){
+            return {
+                type: "BodyPart",
+                pos: this.pos,
+                oldPos: this.oldPos,
+                velocity: this.velocity,
+                size: this.size
+            }
         }
     }
-    ;
-    function ua(a) {
-        this.j = a;
-        this.Ja = "hat";
-        this.ka = this.Y = k;
-        this.M = this.ba = this.ca = this.W = this.K = 0
+    class Wheel extends Mass {
+        constructor(a, b){
+            super(a, b);
+            this.size = 10;
+            this.friction = 0;
+            this.gravity = this.collide = !0;
+            this.speed = this.da = 0
+        }
+        drive(a){
+            this.pos.addToSelf(a.scale(this.speed * this.track.direction));
+            this.K && this.pos.addToSelf(a.scale(0.3 * -a.dot(this.velocity)));
+            this.da = a.dot(this.velocity) / this.size;
+            this.wa = !0
+        }
+        clone(){
+            var a = new Wheel(this.pos,this.track);
+            a.oldPos = this.oldPos.clone();
+            a.velocity = this.velocity.clone();
+            a.speed = this.speed;
+            return a
+        }
+        toJSON(){
+            return {
+                type: "Wheel",
+                pos: this.pos,
+                oldPos: this.oldPos,
+                velocity: this.velocity,
+                speed: this.speed,
+                da: this.da,
+                size: this.size,
+                friction: this.friction
+            }
+        }
     }
-    var va = ua.prototype;
-    E(va, ma.prototype);
-    va.ya = function() {
-        wa = xa = k;
-        this.direction *= -1;
-        this.D.ya();
-        var a = this.z.p;
-        this.z.p = this.A.p;
-        this.A.p = a;
-        this.Za("turn")
+    class Shard {
+        constructor(a, b){
+            this.pos = new Vector(a.x + 5 * (Math.random() - Math.random()),a.y + 5 * (Math.random() - Math.random()));
+            this.oldPos = new Vector(this.pos.x,this.pos.y);
+            this.velocity = new Vector(11 * (Math.random() - Math.random()),11 * (Math.random() - Math.random()));
+            this.track = b;
+            this.mb = b.track;
+            this.size = 2 + 9 * Math.random();
+            this.rotation = 6.2 * Math.random();
+            this.da = Math.random() - Math.random();
+            this.friction = 0.05;
+            this.collide = !0;
+            this.shape = [1, 0.7, 0.8, 0.9, 0.5, 1, 0.7, 1]
+        }
+        draw(){
+            var a = this.pos.toPixel(),
+                b = this.size * this.mb.d,
+                c = this.shape[0] * b,
+                d = a.x + c * Math.cos(this.rotation),
+                c = a.y + c * Math.sin(this.rotation),
+                e = 2;
+            for(K["ba"]().m(d, c).fillStyle = "#000"; 8 > e; e++)
+                c = this.shape[e - 1] * b / 2,
+                d = a.x + c * Math.cos(this.rotation + 6.283 * e / 8),
+                c = a.y + c * Math.sin(this.rotation + 6.283 * e / 8),
+                K.l(d, c);
+            K["f"]()
+        }
+        drive(a){
+            this.da = a.dot(this.velocity) / this.size;
+            this.pos.addToSelf(a.scale(-a.dot(this.velocity) * this.friction));
+            this.rotation += this.da;
+            var b = a.getLength();
+            0 < b && (a = new Vector(-a.y / b,a.x / b),
+            this.oldPos.addToSelf(a.scale(0.8 * a.dot(this.velocity))))
+        }
+        update(){
+            this.rotation += this.da;
+            this.velocity.addToSelf(this.track.gravity);
+            this.velocity = this.velocity.scale(0.99);
+            this.pos.addToSelf(this.velocity);
+            this.wa = !1;
+            this.collide && track.collide(this);
+            this.velocity = this.pos.sub(this.oldPos);
+            this.oldPos.copy(this.pos)
+        }
     }
-    ;
-    va.Db = function() {
-        var a = this.j
-          , b = this.na;
-        this.Za("hitTarget");
-        if (this.ka & 2) {
-            if (this.Za("hitGoal"),
-            a.ja && a.ea === a.ja && 0 < a.currentTime && (!a.time || this.time < a.time) && a.id !== g) {
-                if (__ === 40 && confirm("You just set a new Track record!\nYour run will be saved for others to enjoy.")) {
-                    for (var b = "", c, d = 0, e = N.length; d < e; d++) {
-                        for (c in N[d])
+    class Joint {
+        constructor(a, b, c){
+            this.a = a;
+            this.b = b;
+            this.track = c;
+            this.p = this.distanceBetween = 40;
+            this.damp = 0.5;
+            this.spring = 0.7
+        }
+        lean(a){
+            this.p += (this.distanceBetween - a - this.p) / 5
+        }
+        rotate(a){
+            var b = this.b.pos.sub(this.a.pos),
+                b = new Vector(-b.y / this.p,b.x / this.p);
+            this.a.pos.addToSelf(b.scale(a));
+            this.b.pos.addToSelf(b.scale(-a))
+        }
+        update(){
+            var a = this.b.pos.sub(this.a.pos),
+                b = a.getLength();
+            if(1 > b)
+                return this;
+            a = a.scale(1 / b);
+            b = a.scale((b - this.p) * this.spring);
+            b.addToSelf(a.scale(this.b.velocity.sub(this.a.velocity).dot(a) * this.damp));
+            this.b.velocity.addToSelf(b.scale(-1));
+            this.a.velocity.addToSelf(b);
+            return this
+        }
+        turn(){
+            var a = new Vector;
+            a.copy(this.a.pos);
+            this.a.pos.copy(this.b.pos);
+            this.b.pos.copy(a);
+            a.copy(this.a.oldPos);
+            this.a.oldPos.copy(this.b.oldPos);
+            this.b.oldPos.copy(a);
+            a.copy(this.a.velocity);
+            this.a.velocity.copy(this.b.velocity);
+            this.b.velocity.copy(a);
+            a = this.a.rotation;
+            this.a.rotation = this.b.rotation;
+            this.b.rotation = a
+        }
+        getLength(){
+            return this.b.pos.sub(this.a.pos).getLength()
+        }
+        clone(){
+            var a = new Joint(this.a,this.b,this.track);
+            a.distanceBetween = this.distanceBetween;
+            a.p = this.p;
+            a.damp = this.damp;
+            a.spring = this.spring;
+            return a
+        }
+        toJSON(){
+            return {
+                type: "Joint",
+                a: this.a,
+                b: this.b,
+                distanceBetween: this.distanceBetween,
+                p: this.p,
+                damp: this.damp,
+                spring: this.spring
+            }
+        }
+    }
+    class Bike {
+        constructor(a, b, c){
+            this.track = a;
+            this.vehicle = c ? "BMX" : "MTB";
+            this.cosmetics = {
+                head: "hat"
+            };
+            this.pastCheckpoint = this.dead = !1;
+            this.M = this.ba = this.ca = this.W = this.K = 0
+        }
+        turn(){
+            wa = xa = !1;
+            this.direction *= -1;
+            this.D.turn();
+            var a = this.z.p;
+            this.z.p = this.A.p;
+            this.A.p = a;
+            this.collide("turn")
+        }
+        complete(){
+            var a = this.track
+            , b = this.na;
+            this.collide("hitTarget");
+            if(this.pastCheckpoint & 2){
+                if(this.collide("hitGoal"),
+                a.targets && a.collected === a.targets && 0 < a.currentTime && (!a.time || this.time < a.time) && a.id !== void 0){
+                    for(var b = "", c, d = 0, e = N.length; d < e; d++){
+                        for(c in N[d])
                             isNaN(c) || (b += c + " ");
                         b += ","
                     }
                     c = new XMLHttpRequest;
-                    c.open("POST", "/ghost/save", k);
+                    c.open("POST", window.location.href.split("/")[window.location.href.split("/").length - 1] + "/ghost_save", true);
                     c.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    c.send("tid=" + a.id + "&v=" + this.toString() + "&t=" + a.currentTime + "&c=" + b);
-                    "ok" !== c.responseText && alert("Server responded: " + c.responseText)
+                    c.send("id=" + window.location.href.split("/")[window.location.href.split("/").length - 1] + "&vehicle=" + this.vehicle + "&time=" + a.currentTime + "&code=" + b);
+                    alert("Ghost saved!");
+                    Aa = Ba = cameraLock = Ca = 0
                 }
-                Aa = Ba = O = Ca = 0
+            } else if(this.pastCheckpoint & 1){
+                this.collide("hitCheckpoint");
+                c = [];
+                b.push([this.head.pos.x, this.head.pos.y, this.head.oldPos.x, this.head.oldPos.y, this.head.velocity.x, this.head.velocity.y, this.rearWheel.pos.x, this.rearWheel.pos.y, this.rearWheel.oldPos.x, this.rearWheel.oldPos.y, this.rearWheel.velocity.x, this.rearWheel.velocity.y, this.rearWheel.speed , this.frontWheel.pos.x, this.frontWheel.pos.y, this.frontWheel.oldPos.x, this.frontWheel.oldPos.y, this.frontWheel.velocity.x, this.frontWheel.velocity.y, this.frontWheel.speed , this.F[0].p, this.F[1].p, this.F[2].p, this.direction, this.gravity.x, this.gravity.y, this.slow, a.collected, c, a.currentTime, this.ba, this.ca, this.W, this.K]);
+                for(b = 0; b < a.powerups.length; b++)
+                    c.push(a.powerups[b].used);
+                a.ghost && (a = a.ghost,
+                Da.push([a.bike[0].pos.x, a.bike[0].pos.y, a.bike[0].oldPos.x, a.bike[0].oldPos.y, a.bike[0].velocity.x, a.bike[0].velocity.y, a.bike[1].pos.x, a.bike[1].pos.y, a.bike[1].oldPos.x, a.bike[1].oldPos.y, a.bike[1].velocity.x, a.bike[1].velocity.y, a.bike[1].speed, a.bike[2].pos.x, a.bike[2].pos.y, a.bike[2].oldPos.x, a.bike[2].oldPos.y, a.bike[2].velocity.x, a.bike[2].velocity.y, a.bike[2].speed, a.F[0].p, a.F[1].p, a.F[2].p, a.direction, a.gravity.x, a.gravity.y, a.slow, a.ba, a.ca, a.W, a.K, a.collected]))
             }
-        } else if (this.ka & 1) {
-            this.Za("hitCheckpoint");
-            c = [];
-            b.push([this.head.c.x, this.head.c.y, this.head.q.x, this.head.q.y, this.head.h.x, this.head.h.y, this.g.c.x, this.g.c.y, this.g.q.x, this.g.q.y, this.g.h.x, this.g.h.y, this.g.w, this.n.c.x, this.n.c.y, this.n.q.x, this.n.q.y, this.n.h.x, this.n.h.y, this.n.w, this.F[0].p, this.F[1].p, this.F[2].p, this.direction, this.P.x, this.P.y, this.$, a.ea, c, a.currentTime, this.ba, this.ca, this.W, this.K]);
-            for (b = 0; b < a.k.length; b++)
-                c.push(a.k[b].ha);
-            a.H && (a = a.H,
-            Da.push([a.f[0].c.x, a.f[0].c.y, a.f[0].q.x, a.f[0].q.y, a.f[0].h.x, a.f[0].h.y, a.f[1].c.x, a.f[1].c.y, a.f[1].q.x, a.f[1].q.y, a.f[1].h.x, a.f[1].h.y, a.f[1].w, a.f[2].c.x, a.f[2].c.y, a.f[2].q.x, a.f[2].q.y, a.f[2].h.x, a.f[2].h.y, a.f[2].w, a.F[0].p, a.F[1].p, a.F[2].p, a.direction, a.P.x, a.P.y, a.$, a.ba, a.ca, a.W, a.K, a.ea]))
+            this.pastCheckpoint = 0
         }
-        this.ka = 0
-    }
-    ;
-    va.eb = function() {
-        this.Y = j;
-        this.head.la = aa();
-        this.g.w = 0;
-        this.g.K = k;
-        this.n.K = k;
-        this.head.L = k;
-        var a = this.j.t = new Ea(this,this.gb(),this.j);
-        a.Ca = new ra(this.head.c.clone(),this);
-        a.Ca.h = this.head.h.clone();
-        a.Ca.size = 10;
-        a.Ca.da = 0.1
-    }
-    ;
-    va.J = function() {
-        this.ka && this.Db();
-        var a = this.j.currentTime;
-        Aa !== this.ba && (N[0][a] = 1,
-        this.ba = Aa);
-        Ba !== this.ca && (N[1][a] = 1,
-        this.ca = Ba);
-        O !== this.W && (N[2][a] = 1,
-        this.W = O);
-        Ca !== this.K && (N[3][a] = 1,
-        this.K = Ca);
-        xa && (N[4][a] = 1);
-        this.Y || this.va();
-        for (a = this.F.length - 1; 0 <= a; a--)
-            this.F[a].J();
-        for (a = this.f.length - 1; 0 <= a; a--)
-            this.f[a].J();
-        this.g.wa && this.n.wa && (this.$ = k);
-        if (!this.$ && !this.Y) {
-            this.va();
-            for (a = this.F.length - 1; 0 <= a; a--)
-                this.F[a].J();
-            for (a = this.f.length - 1; 0 <= a; a--)
-                this.f[a].J()
+        die(){
+            this.dead = !0;
+            this.head.drive = () => {};
+            this.rearWheel.speed = 0;
+            this.rearWheel.K = !1;
+            this.frontWheel.K = !1;
+            this.head.collide = !1;
+            var bike = this.track.player = new DeadBike(this,this.getRider(),this.track);
+            bike.hat = new Shard(this.head.pos.clone(),this);
+            bike.hat.velocity = this.head.velocity.clone();
+            bike.hat.size = 10;
+            bike.hat.da = 0.1
         }
-    }
-    ;
-    va.clone = function() {
-        var a = this.g.clone()
-          , b = this.n.clone()
-          , c = this.head.clone()
-          , d = this.z.clone()
-          , e = this.D.clone()
-          , f = this.A.clone();
-        return {
-            g: a,
-            n: b,
-            head: c,
-            f: [c, a, b],
-            F: [d, e, f],
-            direction: this.direction,
-            P: this.P.clone(),
-            $: this.$,
-            time: this.time
+        getRider(){
+            var a = {}
+            , b = this.frontWheel.pos.sub(this.rearWheel.pos)
+            , c = new Vector(b.y * this.direction,-b.x * this.direction);
+            a.head = this.rearWheel.pos.add(b.scale(0.35)).add(this.head.pos.sub(this.frontWheel.pos.add(this.rearWheel.pos).scale(0.5)).scale(1.2));
+            a.hand = a.shadowHand = this.rearWheel.pos.add(b.scale(0.8)).add(c.scale(0.68));
+            var d = a.head.sub(a.hand)
+            , d = new Vector(d.y * this.direction,-d.x * this.direction);
+            a.elbow = a.shadowElbow = a.head.add(a.hand).scale(0.5).add(d.scale(130 / d.lengthSquared()));
+            a.hip = this.rearWheel.pos.add(b.scale(0.2)).add(c.scale(0.5));
+            var e = new Vector(6 * Math.cos(this.M),6 * Math.sin(this.M));
+            a.foot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).add(e);
+            d = a.hip.sub(a.foot);
+            d = new Vector(-d.y * this.direction,d.x * this.direction);
+            a.knee = a.hip.add(a.foot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
+            a.shadowFoot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).sub(e);
+            d = a.hip.sub(a.shadowFoot);
+            d = new Vector(-d.y * this.direction,d.x * this.direction);
+            a.shadowKnee = a.hip.add(a.shadowFoot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
+            return a
         }
-    }
-    ;
-    va.toJSON = function() {
-        return {
-            Wa: this.toString(),
-            keys: N.map(Object.keys),
-            g: this.g,
-            n: this.n,
-            head: this.head,
-            z: this.z,
-            D: this.D,
-            A: this.A,
-            direction: this.direction,
-            P: this.P,
-            $: this.$,
-            time: this.time
+        update(){
+            this.pastCheckpoint && this.complete();
+            var a = this.track.currentTime;
+            Aa !== this.ba && (N[0][a] = 1,
+            this.ba = Aa);
+            Ba !== this.ca && (N[1][a] = 1,
+            this.ca = Ba);
+            cameraLock !== this.W && (N[2][a] = 1,
+            this.W = cameraLock);
+            Ca !== this.K && (N[3][a] = 1,
+            this.K = Ca);
+            xa && (N[4][a] = 1);
+            this.dead || this.setProperties();
+            for(a = this.F.length - 1; 0 <= a; a--)
+                this.F[a].update();
+            for(a = this.bike.length - 1; 0 <= a; a--)
+                this.bike[a].update();
+            this.rearWheel.wa && this.frontWheel.wa && (this.slow = !1);
+            if(!this.slow && !this.dead){
+                this.setProperties();
+                for(a = this.F.length - 1; 0 <= a; a--)
+                    this.F[a].update();
+                for(a = this.bike.length - 1; 0 <= a; a--)
+                    this.bike[a].update()
+            }
         }
-    }
-    ;
-    va.toString = ba("BikeGeneric");
-    function Fa(a, b, c) {
-        this.Z = a;
-        this.name = a[7] || "Ghost";
-        this.j = c;
-        this.ea = b[31] || 0;
-        this.Ja = "hat";
-        this.tb = j;
-        this.M = 0;
-        this.ha = {}
-    }
-    var Ga = Fa.prototype;
-    Ga.ya = function() {
-        this.direction *= -1;
-        this.D.ya();
-        var a = this.F[0].p;
-        this.z.p = this.F[2].p;
-        this.A.p = a
-    }
-    ;
-    Ga.J = function() {
-        var a = this.j.currentTime
-          , b = 0;
-        a > this.time && (this.J = aa());
-        this.Z[0][a] && (this.ba = this.ba ? 0 : 1);
-        this.Z[1][a] && (this.ca = this.ca ? 0 : 1);
-        this.Z[2][a] && (this.W = this.W ? 0 : 1);
-        this.Z[3][a] && (this.K = this.K ? 0 : 1);
-        this.Z[4][a] && this.ya();
-        this.va();
-        for (b = this.F.length - 1; 0 <= b; b--)
-            this.F[b].J();
-        for (b = this.f.length - 1; 0 <= b; b--)
-            this.f[b].J();
-        this.g.wa && this.n.wa && (this.$ = k);
-        if (!this.$) {
-            this.va();
-            for (b = this.F.length - 1; 0 <= b; b--)
-                this.F[b].J();
-            for (b = this.f.length - 1; 0 <= b; b--)
-                this.f[b].J()
+        collide(a){
+            var b = this.BMX_DEFAULT && this.BMX_DEFAULT[a];
+            if(b)
+                for(var c = _slice.call(arguments, 1), d = 0, e = b.length; d < e; d++)
+                    b[d].apply(this, c)
+        }
+        clone(){
+            var a = this.rearWheel.clone()
+            , b = this.frontWheel.clone()
+            , c = this.head.clone()
+            , d = this.z.clone()
+            , e = this.D.clone()
+            , f = this.A.clone();
+            return {
+                rearWheel: a,
+                frontWheel: b,
+                head: c,
+                bike: [c, a, b],
+                F: [d, e, f],
+                direction: this.direction,
+                P: this.gravity.clone(),
+                slow: this.slow,
+                time: this.time
+            }
+        }
+        toJSON(){
+            return {
+                type: this.toString(),
+                keys: N.map(Object.keys),
+                rearWheel: this.rearWheel,
+                frontWheel: this.frontWheel,
+                head: this.head,
+                z: this.z,
+                D: this.D,
+                A: this.A,
+                direction: this.direction,
+                P: this.gravity,
+                slow: this.slow,
+                time: this.time
+            }
+        }
+        toString(){
+            "BikeGeneric"
         }
     }
-    ;
-    function Ha(a) {
-        ua.call(this, a);
-        var b = Ia[Ia.length - 1]
-          , c = this;
-        c.na = Ia;
-        c.f = [c.head = new J(new F(b[0],b[1]),c), c.g = new pa(new F(b[6],b[7]),c), c.n = new pa(new F(b[13],b[14]),c)];
-        c.head.q = new F(b[2],b[3]);
-        c.head.h = new F(b[4],b[5]);
-        c.g.q = new F(b[8],b[9]);
-        c.g.h = new F(b[10],b[11]);
-        c.g.w = b[12];
-        c.n.q = new F(b[15],b[16]);
-        c.n.h = new F(b[17],b[18]);
-        c.n.w = b[19];
-        c.head.size = 14;
-        c.head.la = function() {
-            c.eb()
+    class Rider extends Bike{
+        constructor(a, b, c){
+            super(a, b, c);
+            var c = this;
+            this.head.drive = () => {
+                c.die();
+            }
         }
-        ;
-        c.g.size = 11.7;
-        c.n.size = 11.7;
-        c.F = [c.z = new L(c.head,c.g,c), c.D = new L(c.g,c.n,c), c.A = new L(c.n,c.head,c)];
-        c.z.Q = 45;
-        c.z.p = b[20];
-        c.z.R = 0.35;
-        c.z.S = 0.3;
-        c.D.Q = 42;
-        c.D.p = b[21];
-        c.D.R = 0.35;
-        c.D.S = 0.3;
-        c.A.Q = 45;
-        c.A.p = b[22];
-        c.A.R = 0.35;
-        c.A.S = 0.3;
-        c.direction = b[23];
-        c.P = new F(b[24],b[25]);
-        c.$ = b[26];
-        a.ea = b[27];
-        for (var d = 0, e = a.k.length; d < e; d++)
-            a.k[d].ha = b[28][d];
-        c.time = b[29];
-        if (c.time) {
-            c.ba = b[30];
-            c.ca = b[31];
-            c.W = b[32];
-            c.K = b[33];
-            d = 0;
-            for (e = N.length; d < e; d++)
-                for (var f in N[d])
-                    f >= c.time && delete N[d][f]
-        } else
-            N = [{}, {}, {}, {}, {}]
     }
-    var Ja = Ha.prototype;
-    E(Ja, ua.prototype);
-    Ja.va = function() {
-        xa && this.ya();
-        this.g.w += (O - this.f[1].w) / 10;
-        O && (this.M += this.g.da / 5);
-        this.g.K = this.n.K = Ca;
-        var a = Aa - Ba;
-        this.z.V(5 * a * this.direction);
-        this.A.V(5 * -a * this.direction);
-        this.D.rotate(a / 6);
-        !a && O && (this.z.V(-7),
-        this.A.V(7))
-    }
-    ;
-    Ja.I = function() {
-        var a, b, c, d, e = this.j.d, f = this.direction, h = this.g.c.C(), i = this.n.c.C();
-        K.strokeStyle = "#000";
-        K.lineWidth = 3.5 * e;
-        K[A]()[z](h.x, h.y, 10 * e, 0, p, j).m(i.x + 10 * e, i.y)[z](i.x, i.y, 10 * e, 0, p, j).s();
-        var l = i.x - h.x
-          , m = i.y - h.y
-          , i = new F((i.y - h.y) * f,(h.x - i.x) * f);
-        a = h.x + 0.3 * l + 0.25 * i.x;
-        b = h.y + 0.3 * m + 0.25 * i.y;
-        var n = h.x + 0.84 * l + 0.42 * i.x
-          , x = h.y + 0.84 * m + 0.42 * i.y;
-        c = h.x + 0.84 * l + 0.37 * i.x;
-        d = h.y + 0.84 * m + 0.37 * i.y;
-        var w = h.x + 0.4 * l + 0.05 * i.x
-          , y = h.y + 0.4 * m + 0.05 * i.y;
-        K.lineWidth = 3 * e;
-        K[A]().m(h.x, h.y).l(a, b).l(n, x).m(c, d).l(w, y).l(h.x, h.y);
-        c = 6 * r(this.M) * e;
-        d = 6 * ca(this.M) * e;
-        n = w + c;
-        x = y + d;
-        c = w - c;
-        d = y - d;
-        var C = h.x + 0.17 * l + 0.38 * i.x
-          , M = h.y + 0.17 * m + 0.38 * i.y
-          , X = h.x + 0.3 * l + 0.45 * i.x
-          , ya = h.y + 0.3 * m + 0.45 * i.y
-          , T = h.x + 0.25 * l + 0.4 * i.x
-          , Y = h.y + 0.25 * m + 0.4 * i.y;
-        K.m(n, x).l(c, d).m(C, M).l(X, ya).m(w, y).l(T, Y);
-        var C = h.x + 0.97 * l
-          , M = h.y + 0.97 * m
-          , X = h.x + 0.8 * l + 0.48 * i.x
-          , ya = h.y + 0.8 * m + 0.48 * i.y
-          , T = h.x + 0.86 * l + 0.5 * i.x
-          , Y = h.y + 0.86 * m + 0.5 * i.y
-          , za = h.x + 0.82 * l + 0.65 * i.x
-          , rc = h.y + 0.82 * m + 0.65 * i.y
-          , w = h.x + 0.78 * l + 0.67 * i.x
-          , y = h.y + 0.78 * m + 0.67 * i.y;
-        K.m(h.x + l, h.y + m).l(C, M).l(X, ya).l(T, Y).l(za, rc).l(w, y).s();
-        if (!this.Y) {
-            K.lineCap = "round";
-            i = this.head.c.C();
-            i = {
-                x: i.x - h.x - 0.5 * l,
-                y: i.y - h.y - 0.5 * m
+    class BMX extends Bike {
+        constructor(a){
+            super();
+            this.track = a;
+            this.vehicle = "BMX";
+            var b = BMX_DEFAULT[BMX_DEFAULT.length - 1],
+            c = this;
+            c.na = BMX_DEFAULT;
+            c.bike = [c.head = new BodyPart(new Vector(b[0],b[1]),c), c.rearWheel = new Wheel(new Vector(b[6],b[7]),c), c.frontWheel = new Wheel(new Vector(b[13],b[14]),c)];
+            c.head.oldPos = new Vector(b[2],b[3]);
+            c.head.velocity = new Vector(b[4],b[5]);
+            c.rearWheel.oldPos = new Vector(b[8],b[9]);
+            c.rearWheel.velocity = new Vector(b[10],b[11]);
+            c.rearWheel.speed = b[12];
+            c.frontWheel.oldPos = new Vector(b[15],b[16]);
+            c.frontWheel.velocity = new Vector(b[17],b[18]);
+            c.frontWheel.speed = b[19];
+            c.head.size = 14;
+            c.head.drive = function(){
+                c.die()
             };
-            h = a - 0.1 * l + 0.3 * i.x;
-            C = b - 0.1 * m + 0.3 * i.y;
-            T = n - h;
-            Y = x - C;
-            za = T * T + Y * Y;
-            M = h + 0.5 * T + 200 * Y * f * e * e / za;
-            X = C + 0.5 * Y + 200 * -T * f * e * e / za;
-            T = c - h;
-            Y = d - C;
-            za = T * T + Y * Y;
-            ya = h + 0.5 * T + 200 * Y * f * e * e / za;
-            T = C + 0.5 * Y + 200 * -T * f * e * e / za;
-            K.lineWidth = 6 * e;
-            K.strokeStyle = "rgba(0, 0, 0, 0.5)";
-            K[A]().m(c, d).l(ya, T).l(h, C).s();
+            c.rearWheel.size = 11.7;
+            c.frontWheel.size = 11.7;
+            c.F = [c.z = new Joint(c.head,c.rearWheel,c), c.D = new Joint(c.rearWheel,c.frontWheel,c), c.A = new Joint(c.frontWheel,c.head,c)];
+            c.z.distanceBetween = 45;
+            c.z.p = b[20];
+            c.z.spring = 0.35;
+            c.z.damp = 0.3;
+            c.D.distanceBetween = 42;
+            c.D.p = b[21];
+            c.D.spring = 0.35;
+            c.D.damp = 0.3;
+            c.A.distanceBetween = 45;
+            c.A.p = b[22];
+            c.A.spring = 0.35;
+            c.A.damp = 0.3;
+            c.direction = b[23];
+            c.gravity = new Vector(b[24],b[25]);
+            c.slow = b[26];
+            a.collected = b[27];
+            for(var d = 0; d < a.powerups.length; d++)
+                a.powerups[d].used = b[28][d];
+            if(c.time = b[29]){
+                c.ba = b[30];
+                c.ca = b[31];
+                c.W = b[32];
+                c.K = b[33];
+                for(a = 0; a < N.length; a++)
+                    for(var e in N[a])
+                        e >= c.time && delete N[a][e]
+            } else {
+                N = [{}, {}, {}, {}, {}]
+            }
+        }
+        setProperties(){
+            xa && this.turn();
+            this.rearWheel.speed += (cameraLock - this.rearWheel.speed) / 10;
+            cameraLock && (this.M += this.rearWheel.da / 5);
+            this.rearWheel.K = this.frontWheel.K = Ca;
+            var a = Aa - Ba;
+            this.z.lean(5 * a * this.direction);
+            this.A.lean(5 * -a * this.direction);
+            this.D.rotate(a / 6);
+            !a && cameraLock && (this.z.lean(-7),
+            this.A.lean(7))
+        }
+        draw(){
+            var a, b, c, d, e = this.track.zoom, f = this.direction, h = this.rearWheel.pos.toPixel(), i = this.frontWheel.pos.toPixel();
             K.strokeStyle = "#000";
-            K[A]().m(n, x).l(M, X).l(h, C).s();
-            n = a + 0.05 * l + 0.88 * i.x;
-            x = b + 0.05 * m + 0.88 * i.y;
-            K.lineWidth = 8 * e;
-            K[A]().m(h, C).l(n, x).s();
-            c = a + 0.15 * l + 1.05 * i.x;
-            d = b + 0.15 * m + 1.05 * i.y;
-            K.lineWidth = 2 * e;
-            K[A]().m(c + 5 * e, d)[z](c, d, 5 * e, 0, p, j).s()[A]();
-            switch (this.Ja) {
-            case "cap":
-                c = a + 0.4 * l + 1.1 * i.x;
-                d = b + 0.4 * m + 1.1 * i.y;
-                a = a + 0.05 * l + 1.05 * i.x;
-                b = b + 0.05 * m + 1.05 * i.y;
-                K.m(a, b).l(c, d).s();
-                break;
-            case "hat":
-                c = a + 0.35 * l + 1.15 * i.x;
-                d = b + 0.35 * m + 1.15 * i.y;
-                h = a - 0.05 * l + 1.1 * i.x;
-                C = b - 0.05 * m + 1.1 * i.y;
-                M = a + 0.25 * l + 1.13 * i.x;
-                X = b + 0.25 * m + 1.13 * i.y;
-                a = a + 0.05 * l + 1.11 * i.x;
-                b = b + 0.05 * m + 1.11 * i.y;
-                ya = c - 0.1 * l + 0.2 * i.x;
-                T = d - 0.1 * m + 0.2 * i.y;
-                l = h + 0.02 * l + 0.2 * i.x;
-                m = C + 0.02 * m + 0.2 * i.y;
-                K.fillStyle = "#000";
-                K.m(c, d).l(M, X).l(ya, T).l(l, m).l(a, b).l(h, C).s()[B]();
-                break;
-            case "party":
-                c = a + 0.28 * l + 1.15 * i.x;
-                d = b + 0.28 * m + 1.15 * i.y;
-                a = a + 0 * l + 1.1 * i.x;
-                b = b + 0 * m + 1.1 * i.y;
-                h = a + 0.07 * l + 0.33 * i.x;
-                C = b + 0.07 * m + 0.33 * i.y;
-                K.fillStyle = "#3960ad";
-                K.m(c, d).l(h, C).l(a, b)[B]().strokeStyle = "#70d135";
-                K.lineWidth = 4 * e;
-                K[A]().m(c, d).l(a, b).s().fillStyle = "#ffd600";
+            K.lineWidth = 3.5 * e;
+            K["ba"]()["a"](h.x, h.y, 10 * e, 0, 2 * Math.PI, !0).m(i.x + 10 * e, i.y)["a"](i.x, i.y, 10 * e, 0, 2 * Math.PI, !0).s();
+            var l = i.x - h.x
+            , m = i.y - h.y
+            , i = new Vector((i.y - h.y) * f,(h.x - i.x) * f);
+            a = h.x + 0.3 * l + 0.25 * i.x;
+            b = h.y + 0.3 * m + 0.25 * i.y;
+            var n = h.x + 0.84 * l + 0.42 * i.x
+            , x = h.y + 0.84 * m + 0.42 * i.y;
+            c = h.x + 0.84 * l + 0.37 * i.x;
+            d = h.y + 0.84 * m + 0.37 * i.y;
+            var w = h.x + 0.4 * l + 0.05 * i.x
+            , y = h.y + 0.4 * m + 0.05 * i.y;
+            K.lineWidth = 3 * e;
+            K["ba"]().m(h.x, h.y).l(a, b).l(n, x).m(c, d).l(w, y).l(h.x, h.y);
+            c = 6 * Math.cos(this.M) * e;
+            d = 6 * Math.sin(this.M) * e;
+            n = w + c;
+            x = y + d;
+            c = w - c;
+            d = y - d;
+            var C = h.x + 0.17 * l + 0.38 * i.x
+            , M = h.y + 0.17 * m + 0.38 * i.y
+            , X = h.x + 0.3 * l + 0.45 * i.x
+            , ya = h.y + 0.3 * m + 0.45 * i.y
+            , T = h.x + 0.25 * l + 0.4 * i.x
+            , Y = h.y + 0.25 * m + 0.4 * i.y;
+            K.m(n, x).l(c, d).m(C, M).l(X, ya).m(w, y).l(T, Y);
+            var C = h.x + 0.97 * l
+            , M = h.y + 0.97 * m
+            , X = h.x + 0.8 * l + 0.48 * i.x
+            , ya = h.y + 0.8 * m + 0.48 * i.y
+            , T = h.x + 0.86 * l + 0.5 * i.x
+            , Y = h.y + 0.86 * m + 0.5 * i.y
+            , za = h.x + 0.82 * l + 0.65 * i.x
+            , rc = h.y + 0.82 * m + 0.65 * i.y
+            , w = h.x + 0.78 * l + 0.67 * i.x
+            , y = h.y + 0.78 * m + 0.67 * i.y;
+            K.m(h.x + l, h.y + m).l(C, M).l(X, ya).l(T, Y).l(za, rc).l(w, y).s();
+            if(!this.dead){
+                K.lineCap = "round";
+                i = this.head.pos.toPixel();
+                i = {
+                    x: i.x - h.x - 0.5 * l,
+                    y: i.y - h.y - 0.5 * m
+                };
+                h = a - 0.1 * l + 0.3 * i.x;
+                C = b - 0.1 * m + 0.3 * i.y;
+                T = n - h;
+                Y = x - C;
+                za = T * T + Y * Y;
+                M = h + 0.5 * T + 200 * Y * f * e * e / za;
+                X = C + 0.5 * Y + 200 * -T * f * e * e / za;
+                T = c - h;
+                Y = d - C;
+                za = T * T + Y * Y;
+                ya = h + 0.5 * T + 200 * Y * f * e * e / za;
+                T = C + 0.5 * Y + 200 * -T * f * e * e / za;
+                K.lineWidth = 6 * e;
+                K.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                K["ba"]().m(c, d).l(ya, T).l(h, C).s();
+                K.strokeStyle = "#000";
+                K["ba"]().m(n, x).l(M, X).l(h, C).s();
+                n = a + 0.05 * l + 0.88 * i.x;
+                x = b + 0.05 * m + 0.88 * i.y;
+                K.lineWidth = 8 * e;
+                K["ba"]().m(h, C).l(n, x).s();
+                c = a + 0.15 * l + 1.05 * i.x;
+                d = b + 0.15 * m + 1.05 * i.y;
                 K.lineWidth = 2 * e;
-                K[A]().m(h, C)[z](h - 0.01 * l - 0.03 * i.x, C - 0.01 * m - 0.03 * i.y, 3 * e, 0, p)[B]().fillStyle = K.strokeStyle = "#000";
-                break;
-            case "ninja":
-                c = a + 0.26 * l + 1.1 * i.x,
-                d = b + 0.26 * m + 1.1 * i.y,
-                a = a + 0.05 * l + 1.05 * i.x,
-                b = b + 0.05 * m + 1.05 * i.y,
-                K.lineWidth = 5 * e,
-                K.m(c, d).l(a, b).s().lineWidth = 2 * e,
-                K.l(a - (8 + q()) * e * f, b - (4 + q()) * e * f).m(a, b).l(a - (8 + q()) * e * f, b + (4 + q()) * e * f).s()
+                K["ba"]().m(c + 5 * e, d)["a"](c, d, 5 * e, 0, 2 * Math.PI, !0).s()["ba"]();
+                switch (this.cosmetics.head){
+                case "cap":
+                    c = a + 0.4 * l + 1.1 * i.x;
+                    d = b + 0.4 * m + 1.1 * i.y;
+                    a = a + 0.05 * l + 1.05 * i.x;
+                    b = b + 0.05 * m + 1.05 * i.y;
+                    K.m(a, b).l(c, d).s();
+                    break;
+                case "hat":
+                    c = a + 0.35 * l + 1.15 * i.x;
+                    d = b + 0.35 * m + 1.15 * i.y;
+                    h = a - 0.05 * l + 1.1 * i.x;
+                    C = b - 0.05 * m + 1.1 * i.y;
+                    M = a + 0.25 * l + 1.13 * i.x;
+                    X = b + 0.25 * m + 1.13 * i.y;
+                    a = a + 0.05 * l + 1.11 * i.x;
+                    b = b + 0.05 * m + 1.11 * i.y;
+                    ya = c - 0.1 * l + 0.2 * i.x;
+                    T = d - 0.1 * m + 0.2 * i.y;
+                    l = h + 0.02 * l + 0.2 * i.x;
+                    m = C + 0.02 * m + 0.2 * i.y;
+                    K.fillStyle = "#000";
+                    K.m(c, d).l(M, X).l(ya, T).l(l, m).l(a, b).l(h, C).s()["f"]();
+                    break;
+                case "ninja":
+                    c = a + 0.26 * l + 1.1 * i.x,
+                    d = b + 0.26 * m + 1.1 * i.y,
+                    a = a + 0.05 * l + 1.05 * i.x,
+                    b = b + 0.05 * m + 1.05 * i.y,
+                    K.lineWidth = 5 * e,
+                    K.m(c, d).l(a, b).s().lineWidth = 2 * e,
+                    K.l(a - (8 + Math.random()) * e * f, b - (4 + Math.random()) * e * f).m(a, b).l(a - (8 + Math.random()) * e * f, b + (4 + Math.random()) * e * f).s()
+                }
+                l = n - w;
+                m = x - y;
+                i = {
+                    x: m * f * e * e,
+                    y: -l * f * e * e
+                };
+                f = l * l + m * m;
+                l = w + 0.4 * l + 130 * i.x / f;
+                m = y + 0.4 * m + 130 * i.y / f;
+                K.lineWidth = 5 * e;
+                K["ba"]().m(n, x).l(l, m).l(w, y).s()
             }
-            l = n - w;
-            m = x - y;
-            i = {
-                x: m * f * e * e,
-                y: -l * f * e * e
+        }
+    }
+    class MTB extends Bike {
+        constructor(a){
+            super(a, MTB_DEFAULT[MTB_DEFAULT.length - 1], !1);
+            this.track = a;
+            this.vehicle = "MTB";
+            var b = MTB_DEFAULT[MTB_DEFAULT.length - 1],
+            c = this;
+            c.na = MTB_DEFAULT;
+            c.bike = [c.head = new BodyPart(new Vector(b[0],b[1]),c), c.rearWheel = new Wheel(new Vector(b[6],b[7]),c), c.frontWheel = new Wheel(new Vector(b[13],b[14]),c)];
+            c.bike[0].oldPos = new Vector(b[2],b[3]);
+            c.bike[0].velocity = new Vector(b[4],b[5]);
+            c.bike[1].oldPos = new Vector(b[8],b[9]);
+            c.bike[1].velocity = new Vector(b[10],b[11]);
+            c.bike[1].speed = b[12];
+            c.bike[2].oldPos = new Vector(b[15],b[16]);
+            c.bike[2].velocity = new Vector(b[17],b[18]);
+            c.bike[2].speed = b[19];
+            c.head.size = 14;
+            c.head.drive = function(){
+                c.die()
             };
-            f = l * l + m * m;
-            l = w + 0.4 * l + 130 * i.x / f;
-            m = y + 0.4 * m + 130 * i.y / f;
-            K.lineWidth = 5 * e;
-            K[A]().m(n, x).l(l, m).l(w, y).s()
-        }
-    }
-    ;
-    Ja.gb = function() {
-        var a = {}
-          , b = this.n.c.i(this.g.c)
-          , c = new F(b.y * this.direction,-b.x * this.direction);
-        a.head = this.g.c.b(b.a(0.35)).b(this.head.c.i(this.n.c.b(this.g.c).a(0.5)).a(1.2));
-        a.ga = a.Pa = this.g.c.b(b.a(0.8)).b(c.a(0.68));
-        var d = a.head.i(a.ga)
-          , d = new F(d.y * this.direction,-d.x * this.direction);
-        a.Ba = a.Ga = a.head.b(a.ga).a(0.5).b(d.a(130 / d.X()));
-        a.T = this.g.c.b(b.a(0.2)).b(c.a(0.5));
-        var e = new F(6 * r(this.M),6 * ca(this.M));
-        a.fa = this.g.c.b(b.a(0.4)).b(c.a(0.05)).b(e);
-        d = a.T.i(a.fa);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Da = a.T.b(a.fa).a(0.5).b(d.a(160 / d.X()));
-        a.ia = this.g.c.b(b.a(0.4)).b(c.a(0.05)).i(e);
-        d = a.T.i(a.ia);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Ha = a.T.b(a.ia).a(0.5).b(d.a(160 / d.X()));
-        return a
-    }
-    ;
-    Ja.toString = ba("BMX");
-    function Ka(a, b) {
-        var c = Da[Da.length - 1];
-        Fa.call(this, a, c, b);
-        this.f = [new J(new F(c[0],c[1]),this), new pa(new F(c[6],c[7]),this), new pa(new F(c[13],c[14]),this)];
-        this.f[0].q = new F(c[2],c[3]);
-        this.f[0].h = new F(c[4],c[5]);
-        this.f[1].q = new F(c[8],c[9]);
-        this.f[1].h = new F(c[10],c[11]);
-        this.f[1].w = c[12];
-        this.f[2].q = new F(c[15],c[16]);
-        this.f[2].h = new F(c[17],c[18]);
-        this.f[2].w = c[19];
-        this.head = this.f[0];
-        this.head.size = 14;
-        this.head.la = aa();
-        this.g = this.f[1];
-        this.g.size = 11.7;
-        this.n = this.f[2];
-        this.n.size = 11.7;
-        this.F = [this.z = new L(this.f[0],this.f[1],this), this.D = new L(this.f[1],this.f[2],this), this.A = new L(this.f[2],this.f[0],this)];
-        this.z.Q = 45;
-        this.z.p = c[20];
-        this.z.R = 0.35;
-        this.z.S = 0.3;
-        this.D.Q = 42;
-        this.D.p = c[21];
-        this.D.R = 0.35;
-        this.D.S = 0.3;
-        this.A.Q = 45;
-        this.A.p = c[22];
-        this.A.R = 0.35;
-        this.A.S = 0.3;
-        this.direction = c[23];
-        this.P = new F(c[24],c[25]);
-        this.$ = c[26];
-        this.ba = c[27];
-        this.ca = c[28];
-        this.W = c[29];
-        this.K = c[30];
-        this.time = this.Z[5]
-    }
-    var La = Ka.prototype;
-    E(La, Fa.prototype);
-    La.va = function() {
-        this.g.w += (this.W - this.f[1].w) / 10;
-        this.W && (this.M += this.g.da / 5);
-        this.g.K = this.n.K = this.K;
-        var a = this.ba - this.ca;
-        this.z.V(5 * a * this.direction);
-        this.A.V(5 * -a * this.direction);
-        this.D.rotate(a / 6);
-        !a && this.W && (this.z.V(-7),
-        this.A.V(7))
-    }
-    ;
-    La.I = function() {
-        var a = this.j
-          , b = this.g.c.C()
-          , c = this.n.c.C()
-          , d = a.d;
-        K[A]();
-        K.strokeStyle = "rgba(0, 0, 0, 0.5)";
-        K.lineWidth = 3.5 * d;
-        K[z](b.x, b.y, 10 * d, 0, p, j);
-        K.m(c.x + 10 * d, c.y);
-        K[z](c.x, c.y, 10 * d, 0, p, j);
-        K.s();
-        var e = c.i(b)
-          , c = new F((c.y - b.y) * this.direction,(b.x - c.x) * this.direction)
-          , f = b.b(e.a(0.3)).b(c.a(0.25))
-          , h = b.b(e.a(0.84)).b(c.a(0.42))
-          , i = b.b(e.a(0.84)).b(c.a(0.37))
-          , l = b.b(e.a(0.4)).b(c.a(0.05));
-        K[A]();
-        K.lineWidth = 3 * d;
-        K.m(b.x, b.y);
-        K.l(f.x, f.y);
-        K.l(h.x, h.y);
-        K.m(i.x, i.y);
-        K.l(l.x, l.y);
-        K.l(b.x, b.y);
-        var i = new F(6 * d * r(this.M),6 * d * ca(this.M))
-          , h = l.b(i)
-          , i = l.i(i)
-          , m = b.b(e.a(0.17)).b(c.a(0.38))
-          , n = b.b(e.a(0.3)).b(c.a(0.45))
-          , x = b.b(e.a(0.25)).b(c.a(0.4));
-        K.m(h.x, h.y);
-        K.l(i.x, i.y);
-        K.m(m.x, m.y);
-        K.l(n.x, n.y);
-        K.m(l.x, l.y);
-        K.l(x.x, x.y);
-        var m = b.b(e.a(1)).b(c.a(0))
-          , n = b.b(e.a(0.97)).b(c.a(0))
-          , x = b.b(e.a(0.8)).b(c.a(0.48))
-          , w = b.b(e.a(0.86)).b(c.a(0.5))
-          , y = b.b(e.a(0.82)).b(c.a(0.65))
-          , l = b.b(e.a(0.78)).b(c.a(0.67));
-        K.m(m.x, m.y);
-        K.l(n.x, n.y);
-        K.l(x.x, x.y);
-        K.l(w.x, w.y);
-        K.l(y.x, y.y);
-        K.l(l.x, l.y);
-        K.s();
-        c = this.head.c.C().i(b.b(e.a(0.5)));
-        b = f.i(e.a(0.1)).b(c.a(0.3));
-        n = h.i(b);
-        x = new F(n.y * this.direction,-n.x * this.direction);
-        x = x.a(d * d);
-        m = b.b(n.a(0.5)).b(x.a(200 / n.X()));
-        n = i.i(b);
-        x = new F(n.y * this.direction,-n.x * this.direction);
-        x = x.a(d * d);
-        n = b.b(n.a(0.5)).b(x.a(200 / n.X()));
-        K[A]();
-        K.lineWidth = 6 * d;
-        K.strokeStyle = "rgba(0, 0, 0, 0.25)";
-        K.m(i.x, i.y);
-        K.l(n.x, n.y);
-        K.l(b.x, b.y);
-        K.s();
-        K[A]();
-        K.strokeStyle = "rgba(0, 0, 0, 0.5)";
-        K.lineWidth = 6 * d;
-        K.m(h.x, h.y);
-        K.l(m.x, m.y);
-        K.l(b.x, b.y);
-        K.s();
-        h = f.b(e.a(0.05)).b(c.a(0.9));
-        K[A]();
-        K.lineWidth = 8 * d;
-        K.m(b.x, b.y);
-        K.l(h.x, h.y);
-        K.s();
-        K[A]();
-        K.lineWidth = 2 * d;
-        switch (this.Ja) {
-        case "cap":
-            i = f.b(e.a(0.4)).b(c.a(1.1));
-            e = f.b(e.a(0.05)).b(c.a(1.05));
-            K.m(i.x, i.y);
-            K.l(e.x, e.y);
-            K.s();
-            break;
-        case "hat":
-            i = f.b(e.a(0.35)).b(c.a(1.15));
-            b = f.i(e.a(0.05)).b(c.a(1.1));
-            m = f.b(e.a(0.25)).b(c.a(1.13));
-            f = f.b(e.a(0.05)).b(c.a(1.11));
-            n = i.i(e.a(0.1)).G(c.a(0.2));
-            x = b.x + 0.02 * e.x + 0.2 * c.x;
-            e = b.y + 0.02 * e.y + 0.2 * c.y;
-            K.m(i.x, i.y);
-            K.l(m.x, m.y);
-            K.l(n.x, n.y);
-            K.l(x, e);
-            K.l(f.x, f.y);
-            K.l(b.x, b.y);
-            K.fillStyle = "rgba(0, 0, 0, 0.5)";
-            K.s();
-            K[B]();
-            break;
-        case "party":
-            i = f.x + 0.28 * e.x + 1.15 * c.x,
-            b = f.y + 0.28 * e.y + 1.15 * c.y,
-            m = f.x + 0 * e.x + 1.1 * c.x,
-            f = f.y + 0 * e.y + 1.1 * c.y,
-            n = m + 0.07 * e.x + 0.33 * c.x,
-            x = f + 0.07 * e.y + 0.33 * c.y,
-            K.fillStyle = "#3960ad",
-            K.m(i, b).l(n, x).l(m, f)[B]().strokeStyle = "#70d135",
-            K.lineWidth = 4 * d,
-            K[A]().m(i, b).l(m, f).s().fillStyle = "#ffd600",
-            K.lineWidth = 2 * d,
-            K[A]().m(n, x)[z](n - 0.01 * e.x - 0.03 * c.x, x - 0.01 * e.y - 0.03 * c.y, 3 * d, 0, p)[B]().fillStyle = K.strokeStyle = "#000"
-        }
-        e = h.i(l);
-        c = {
-            x: e.y * this.direction,
-            y: -e.x * this.direction
-        };
-        c = {
-            x: c.x * d * d,
-            y: c.y * d * d
-        };
-        f = 130 / (e.x * e.x + e.y * e.y);
-        d = l.x + 0.4 * e.x + c.x * f;
-        e = l.y + 0.4 * e.y + c.y * f;
-        K[A]();
-        K.lineWidth = 5 * a.d;
-        K.m(h.x, h.y);
-        K.l(d, e);
-        K.l(l.x, l.y);
-        K.s();
-        K.strokeStyle = "#000"
-    }
-    ;
-    La.toString = ba("BMX");
-    function Ma(a) {
-        ua.call(this, a);
-        var b = Na[Na.length - 1]
-          , c = this;
-        c.na = Na;
-        this.f = [this.head = new J(new F(b[0],b[1]),this), this.g = new pa(new F(b[6],b[7]),this), this.n = new pa(new F(b[13],b[14]),this)];
-        this.f[0].q = new F(b[2],b[3]);
-        this.f[0].h = new F(b[4],b[5]);
-        this.f[1].q = new F(b[8],b[9]);
-        this.f[1].h = new F(b[10],b[11]);
-        this.f[1].w = b[12];
-        this.f[2].q = new F(b[15],b[16]);
-        this.f[2].h = new F(b[17],b[18]);
-        this.f[2].w = b[19];
-        this.head.size = 14;
-        this.head.la = function() {
-            c.eb()
-        }
-        ;
-        this.g.size = 14;
-        this.n.size = 14;
-        this.F = [this.z = new L(this.f[0],this.f[1],this), this.D = new L(this.f[1],this.f[2],this), this.A = new L(this.f[2],this.f[0],this)];
-        this.z.Q = 47;
-        this.z.p = b[20];
-        this.z.R = 0.2;
-        this.z.S = 0.3;
-        this.D.Q = 45;
-        this.D.p = b[21];
-        this.D.R = 0.2;
-        this.D.S = 0.3;
-        this.A.Q = 45;
-        this.A.p = b[22];
-        this.A.R = 0.2;
-        this.A.S = 0.3;
-        this.direction = b[23];
-        this.P = new F(b[24],b[25]);
-        this.$ = b[26];
-        a.ea = b[27];
-        for (var d = 0; d < a.k.length; d++)
-            a.k[d].ha = b[28][d];
-        if (this.time = b[29]) {
-            this.ba = b[30];
-            this.ca = b[31];
-            this.W = b[32];
-            this.K = b[33];
-            for (a = 0; a < N.length; a++)
-                for (var e in N[a])
-                    e >= this.time && delete N[a][e]
-        } else
-            N = [{}, {}, {}, {}, {}]
-    }
-    var Oa = Ma.prototype;
-    E(Oa, ua.prototype);
-    Oa.va = function() {
-        xa && this.ya();
-        this.g.w += (O - this.g.w) / 10;
-        O && (this.M += this.g.da / 5);
-        this.g.K = this.n.K = Ca;
-        var a = Aa - Ba;
-        this.z.V(5 * a * this.direction);
-        this.A.V(5 * -a * this.direction);
-        this.D.rotate(a / 8);
-        !a && O && (this.z.V(-7),
-        this.A.V(7))
-    }
-    ;
-    Oa.I = function() {
-        var a = this.j
-          , b = this.g.c.C()
-          , c = this.n.c.C()
-          , d = this.head.c.C()
-          , e = c.i(b)
-          , f = new F((c.y - b.y) * this.direction,(b.x - c.x) * this.direction)
-          , h = d.i(b.b(e.a(0.5)));
-        K.strokeStyle = "#000";
-        K.lineWidth = 3.5 * a.d;
-        K[A]()[z](b.x, b.y, 12.5 * a.d, 0, p, j).m(c.x + 12.5 * a.d, c.y)[z](c.x, c.y, 12.5 * a.d, 0, p, j).s()[A]().fillStyle = "grey";
-        K.m(b.x + 5 * a.d, b.y)[z](b.x, b.y, 5 * a.d, 0, p, j).m(c.x + 4 * a.d, c.y)[z](c.x, c.y, 4 * a.d, 0, p, j)[B]()[A]().lineWidth = 5 * a.d;
-        K.m(b.x, b.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).s()[A]().lineWidth = 2 * a.d;
-        var i = new F(6 * r(this.M) * a.d,6 * ca(this.M) * a.d);
-        K.m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.43 * e.x + 0.05 * f.x, b.y + 0.43 * e.y + 0.05 * f.y).m(b.x + 0.45 * e.x + 0.3 * h.x, b.y + 0.45 * e.y + 0.3 * h.y).l(b.x + 0.3 * e.x + 0.4 * h.x, b.y + 0.3 * e.y + 0.4 * h.y).l(b.x + 0.25 * e.x + 0.6 * h.x, b.y + 0.25 * e.y + 0.6 * h.y).m(b.x + 0.17 * e.x + 0.6 * h.x, b.y + 0.17 * e.y + 0.6 * h.y).l(b.x + 0.3 * e.x + 0.6 * h.x, b.y + 0.3 * e.y + 0.6 * h.y).m(b.x + 0.43 * e.x + 0.05 * f.x + i.x, b.y + 0.43 * e.y + 0.05 * f.y + i.y).l(b.x + 0.43 * e.x + 0.05 * f.x - i.x, b.y + 0.43 * e.y + 0.05 * f.y - i.y).s()[A]().lineWidth = a.d;
-        K.m(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.28 * e.x + 0.5 * h.x, b.y + 0.28 * e.y + 0.5 * h.y).s()[A]().lineWidth = 3 * a.d;
-        K.m(c.x, c.y).l(b.x + 0.71 * e.x + 0.73 * h.x, b.y + 0.71 * e.y + 0.73 * h.y).l(b.x + 0.73 * e.x + 0.77 * h.x, b.y + 0.73 * e.y + 0.77 * h.y).l(b.x + 0.7 * e.x + 0.8 * h.x, b.y + 0.7 * e.y + 0.8 * h.y).s();
-        if (!this.Y) {
-            K.lineCap = "round";
-            var f = d.i(b.b(e.a(0.5)))
-              , c = b.b(e.a(0.3)).b(f.a(0.25))
-              , h = b.b(e.a(0.4)).b(f.a(0.05))
-              , d = h.b(i)
-              , l = h.i(i)
-              , b = b.b(e.a(0.67)).b(f.a(0.8))
-              , i = c.b(e.a(-0.05)).b(f.a(0.42))
-              , m = d.i(i)
-              , h = (new F(m.y * this.direction,-m.x * this.direction)).Fa(a.d * a.d)
-              , n = i.b(m.a(0.5)).b(h.a(200 / m.X()))
-              , m = l.i(i)
-              , h = (new F(m.y * this.direction,-m.x * this.direction)).Fa(a.d * a.d)
-              , h = i.b(m.a(0.5)).b(h.a(200 / m.X()));
-            K[A]().lineWidth = 6 * a.d;
-            K.strokeStyle = "rgba(0, 0, 0, 0.5)";
-            K.m(l.x, l.y).l(h.x, h.y).l(i.x, i.y).s()[A]().strokeStyle = "#000";
-            K.m(d.x, d.y).l(n.x, n.y).l(i.x, i.y).s().lineWidth = 8 * a.d;
-            h = c.b(e.a(0.1)).b(f.a(0.93));
-            d = c.b(e.a(0.2)).b(f.a(1.09));
-            K[A]().m(i.x, i.y).l(h.x, h.y).s()[A]().lineWidth = 2 * a.d;
-            K.m(d.x + 5 * a.d, d.y)[z](d.x, d.y, 5 * a.d, 0, p, j).s()[A]();
-            switch (this.Ja) {
-            case "cap":
-                d = c.b(e.a(0.4)).b(f.a(1.15));
-                e = c.b(e.a(0.1)).b(f.a(1.05));
-                K.m(d.x, d.y).l(e.x, e.y).s();
-                break;
-            case "hat":
-                d = c.b(e.a(0.37)).b(f.a(1.19)),
-                i = c.i(e.a(0.02)).b(f.a(1.14)),
-                l = c.b(e.a(0.28)).b(f.a(1.17)),
-                c = c.b(e.a(0.09)).b(f.a(1.15)),
-                n = d.i(e.a(0.1)).G(f.a(0.2)),
-                e = i.b(e.a(0.02)).G(f.a(0.2)),
-                K.fillStyle = "#000",
-                K.m(d.x, d.y).l(l.x, l.y).l(n.x, n.y).l(e.x, e.y).l(c.x, c.y).l(i.x, i.y).s()[B]()
+            c.rearWheel.size = 14;
+            c.frontWheel.size = 14;
+            c.F = [c.z = new Joint(c.bike[0],c.bike[1],c), c.D = new Joint(c.bike[1],c.bike[2],c), c.A = new Joint(c.bike[2],c.bike[0],c)];
+            c.z.distanceBetween = 47;
+            c.z.p = b[20];
+            c.z.spring = 0.2;
+            c.z.damp = 0.3;
+            c.D.distanceBetween = 45;
+            c.D.p = b[21];
+            c.D.spring = 0.2;
+            c.D.damp = 0.3;
+            c.A.distanceBetween = 45;
+            c.A.p = b[22];
+            c.A.spring = 0.2;
+            c.A.damp = 0.3;
+            c.direction = b[23];
+            c.gravity = new Vector(b[24],b[25]);
+            c.slow = b[26];
+            a.collected = b[27];
+            for(var d = 0; d < a.powerups.length; d++)
+                a.powerups[d].used = b[28][d];
+            if(c.time = b[29]){
+                c.ba = b[30];
+                c.ca = b[31];
+                c.W = b[32];
+                c.K = b[33];
+                for(a = 0; a < N.length; a++)
+                    for(var e in N[a])
+                        e >= c.time && delete N[a][e]
+            } else {
+                N = [{}, {}, {}, {}, {}]
             }
-            e = h.i(b);
-            f = new F(e.y * this.direction,-e.x * this.direction);
-            f = f.a(a.d * a.d);
-            e = b.b(e.a(0.3)).b(f.a(80 / e.X()));
-            K.lineWidth = 5 * a.d;
-            K[A]().m(h.x, h.y).l(e.x, e.y).l(b.x, b.y).s()
+        }
+        setProperties(){
+            xa && this.turn();
+            this.rearWheel.speed += (cameraLock - this.rearWheel.speed) / 10;
+            cameraLock && (this.M += this.rearWheel.da / 5);
+            this.rearWheel.K = this.frontWheel.K = Ca;
+            var a = Aa - Ba;
+            this.z.lean(5 * a * this.direction);
+            this.A.lean(5 * -a * this.direction);
+            this.D.rotate(a / 8);
+            !a && cameraLock && (this.z.lean(-7),
+            this.A.lean(7))
+        }
+        draw(){
+            var a = this.track
+            , b = this.rearWheel.pos.toPixel()
+            , c = this.frontWheel.pos.toPixel()
+            , d = this.head.pos.toPixel()
+            , e = c.sub(b)
+            , f = new Vector((c.y - b.y) * this.direction,(b.x - c.x) * this.direction)
+            , h = d.sub(b.add(e.scale(0.5)));
+            K.strokeStyle = "#000";
+            K.lineWidth = 3.5 * a.zoom;
+            K["ba"]()["a"](b.x, b.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0).m(c.x + 12.5 * a.zoom, c.y)["a"](c.x, c.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0).s()["ba"]().fillStyle = "grey";
+            K.m(b.x + 5 * a.zoom, b.y)["a"](b.x, b.y, 5 * a.zoom, 0, 2 * Math.PI, !0).m(c.x + 4 * a.zoom, c.y)["a"](c.x, c.y, 4 * a.zoom, 0, 2 * Math.PI, !0)["f"]()["ba"]().lineWidth = 5 * a.zoom;
+            K.m(b.x, b.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).s()["ba"]().lineWidth = 2 * a.zoom;
+            var i = new Vector(6 * Math.cos(this.M) * a.zoom,6 * Math.sin(this.M) * a.zoom);
+            K.m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.43 * e.x + 0.05 * f.x, b.y + 0.43 * e.y + 0.05 * f.y).m(b.x + 0.45 * e.x + 0.3 * h.x, b.y + 0.45 * e.y + 0.3 * h.y).l(b.x + 0.3 * e.x + 0.4 * h.x, b.y + 0.3 * e.y + 0.4 * h.y).l(b.x + 0.25 * e.x + 0.6 * h.x, b.y + 0.25 * e.y + 0.6 * h.y).m(b.x + 0.17 * e.x + 0.6 * h.x, b.y + 0.17 * e.y + 0.6 * h.y).l(b.x + 0.3 * e.x + 0.6 * h.x, b.y + 0.3 * e.y + 0.6 * h.y).m(b.x + 0.43 * e.x + 0.05 * f.x + i.x, b.y + 0.43 * e.y + 0.05 * f.y + i.y).l(b.x + 0.43 * e.x + 0.05 * f.x - i.x, b.y + 0.43 * e.y + 0.05 * f.y - i.y).s()["ba"]().lineWidth = a.zoom;
+            K.m(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.28 * e.x + 0.5 * h.x, b.y + 0.28 * e.y + 0.5 * h.y).s()["ba"]().lineWidth = 3 * a.zoom;
+            K.m(c.x, c.y).l(b.x + 0.71 * e.x + 0.73 * h.x, b.y + 0.71 * e.y + 0.73 * h.y).l(b.x + 0.73 * e.x + 0.77 * h.x, b.y + 0.73 * e.y + 0.77 * h.y).l(b.x + 0.7 * e.x + 0.8 * h.x, b.y + 0.7 * e.y + 0.8 * h.y).s();
+            if(!this.dead){
+                K.lineCap = "round";
+                var f = d.sub(b.add(e.scale(0.5)))
+                , c = b.add(e.scale(0.3)).add(f.scale(0.25))
+                , h = b.add(e.scale(0.4)).add(f.scale(0.05))
+                , d = h.add(i)
+                , l = h.sub(i)
+                , b = b.add(e.scale(0.67)).add(f.scale(0.8))
+                , i = c.add(e.scale(-0.05)).add(f.scale(0.42))
+                , m = d.sub(i)
+                , h = (new Vector(m.y * this.direction,-m.x * this.direction)).scaleSelf(a.zoom * a.zoom)
+                , n = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()))
+                , m = l.sub(i)
+                , h = (new Vector(m.y * this.direction,-m.x * this.direction)).scaleSelf(a.zoom * a.zoom)
+                , h = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()));
+                K["ba"]().lineWidth = 6 * a.zoom;
+                K.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                K.m(l.x, l.y).l(h.x, h.y).l(i.x, i.y).s()["ba"]().strokeStyle = "#000";
+                K.m(d.x, d.y).l(n.x, n.y).l(i.x, i.y).s().lineWidth = 8 * a.zoom;
+                h = c.add(e.scale(0.1)).add(f.scale(0.93));
+                d = c.add(e.scale(0.2)).add(f.scale(1.09));
+                K["ba"]().m(i.x, i.y).l(h.x, h.y).s()["ba"]().lineWidth = 2 * a.zoom;
+                K.m(d.x + 5 * a.zoom, d.y)["a"](d.x, d.y, 5 * a.zoom, 0, 2 * Math.PI, !0).s()["ba"]();
+                switch (this.cosmetics.head){
+                case "cap":
+                    d = c.add(e.scale(0.4)).add(f.scale(1.15));
+                    e = c.add(e.scale(0.1)).add(f.scale(1.05));
+                    K.m(d.x, d.y).l(e.x, e.y).s();
+                    break;
+                case "hat":
+                    d = c.add(e.scale(0.37)).add(f.scale(1.19)),
+                    i = c.sub(e.scale(0.02)).add(f.scale(1.14)),
+                    l = c.add(e.scale(0.28)).add(f.scale(1.17)),
+                    c = c.add(e.scale(0.09)).add(f.scale(1.15)),
+                    n = d.sub(e.scale(0.1)).addToSelf(f.scale(0.2)),
+                    e = i.add(e.scale(0.02)).addToSelf(f.scale(0.2)),
+                    K.fillStyle = "#000",
+                    K.m(d.x, d.y).l(l.x, l.y).l(n.x, n.y).l(e.x, e.y).l(c.x, c.y).l(i.x, i.y).s()["f"]()
+                }
+                e = h.sub(b);
+                f = new Vector(e.y * this.direction,-e.x * this.direction);
+                f = f.scale(a.zoom * a.zoom);
+                e = b.add(e.scale(0.3)).add(f.scale(80 / e.lengthSquared()));
+                K.lineWidth = 5 * a.zoom;
+                K["ba"]().m(h.x, h.y).l(e.x, e.y).l(b.x, b.y).s()
+            }
         }
     }
-    ;
-    Oa.gb = function() {
-        var a = {}
-          , b = this.n.c.i(this.g.c)
-          , c = new F(b.y * this.direction,-b.x * this.direction);
-        a.head = this.g.c.b(b.a(0.35)).b(this.head.c.i(this.n.c.b(this.g.c).a(0.5)).a(1.2));
-        a.ga = a.Pa = this.g.c.b(b.a(0.8)).b(c.a(0.68));
-        var d = a.head.i(a.ga)
-          , d = new F(d.y * this.direction,-d.x * this.direction);
-        a.Ba = a.Ga = a.head.b(a.ga).a(0.5).b(d.a(130 / d.X()));
-        a.T = this.g.c.b(b.a(0.2)).b(c.a(0.5));
-        var e = new F(6 * r(this.M),6 * ca(this.M));
-        a.fa = this.g.c.b(b.a(0.4)).b(c.a(0.05)).b(e);
-        d = a.T.i(a.fa);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Da = a.T.b(a.fa).a(0.5).b(d.a(160 / d.X()));
-        a.ia = this.g.c.b(b.a(0.4)).b(c.a(0.05)).i(e);
-        d = a.T.i(a.ia);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Ha = a.T.b(a.ia).a(0.5).b(d.a(160 / d.X()));
-        return a
-    }
-    ;
-    Oa.toString = ba("MTB");
-    function Pa(a, b) {
-        var c = Da[Da.length - 1];
-        Fa.call(this, a, c, b);
-        this.f = [this.head = new J(new F(c[0],c[1]),this), this.g = new pa(new F(c[6],c[7]),this), this.n = new pa(new F(c[13],c[14]),this)];
-        this.head.q = new F(c[2],c[3]);
-        this.head.h = new F(c[4],c[5]);
-        this.g.q = new F(c[8],c[9]);
-        this.g.h = new F(c[10],c[11]);
-        this.g.w = c[12];
-        this.n.q = new F(c[15],c[16]);
-        this.n.h = new F(c[17],c[18]);
-        this.n.w = c[19];
-        this.head.size = 14;
-        this.head.la = aa();
-        this.g.size = 14;
-        this.n.size = 14;
-        this.F = [this.z = new L(this.head,this.g,this), this.D = new L(this.g,this.n,this), this.A = new L(this.n,this.head,this)];
-        this.z.Q = 47;
-        this.z.p = c[20];
-        this.z.R = 0.2;
-        this.z.S = 0.3;
-        this.D.Q = 45;
-        this.D.p = c[21];
-        this.D.R = 0.2;
-        this.D.S = 0.3;
-        this.A.Q = 45;
-        this.A.p = c[22];
-        this.A.R = 0.2;
-        this.A.S = 0.3;
-        this.direction = c[23];
-        this.P = new F(c[24],c[25]);
-        this.$ = c[26];
-        this.ba = c[27];
-        this.ca = c[28];
-        this.W = c[29];
-        this.K = c[30];
-        this.time = a[5]
-    }
-    var Qa = Pa.prototype;
-    E(Qa, Fa.prototype);
-    Qa.va = function() {
-        this.g.w += (this.W - this.f[1].w) / 10;
-        this.W && (this.M += this.g.da / 5);
-        this.g.K = this.n.K = this.K;
-        var a = this.ba - this.ca;
-        this.z.V(5 * a * this.direction);
-        this.A.V(5 * -a * this.direction);
-        this.D.rotate(a / 8);
-        !a && this.W && (this.z.V(-7),
-        this.A.V(7))
-    }
-    ;
-    Qa.I = function() {
-        var a = this.g.c.C()
-          , b = this.n.c.C()
-          , c = this.head.c.C()
-          , d = b.i(a)
-          , e = new F((b.y - a.y) * this.direction,(a.x - b.x) * this.direction)
-          , f = c.i(a.b(d.a(0.5)));
-        K.strokeStyle = "rgba(0, 0, 0, 0.5)";
-        K.lineWidth = 3.5 * H.d;
-        K[A]()[z](a.x, a.y, 12.5 * H.d, 0, p, j).m(b.x + 12.5 * H.d, b.y)[z](b.x, b.y, 12.5 * H.d, 0, p, j).s()[A]().fillStyle = "rgba(0, 0, 0, 0.25)";
-        K.m(a.x + 5 * H.d, a.y)[z](a.x, a.y, 5 * H.d, 0, p, j).m(b.x + 4 * H.d, b.y)[z](b.x, b.y, 4 * H.d, 0, p, j)[B]()[A]().lineWidth = 5 * H.d;
-        K.m(a.x, a.y).l(a.x + 0.4 * d.x + 0.05 * e.x, a.y + 0.4 * d.y + 0.05 * e.y).m(a.x + 0.72 * d.x + 0.64 * f.x, a.y + 0.72 * d.y + 0.64 * f.y).l(a.x + 0.46 * d.x + 0.4 * f.x, a.y + 0.46 * d.y + 0.4 * f.y).l(a.x + 0.4 * d.x + 0.05 * e.x, a.y + 0.4 * d.y + 0.05 * e.y).s()[A]().lineWidth = 2 * H.d;
-        var h = new F(6 * r(this.M) * H.d,6 * ca(this.M) * H.d);
-        K.m(a.x + 0.72 * d.x + 0.64 * f.x, a.y + 0.72 * d.y + 0.64 * f.y).l(a.x + 0.43 * d.x + 0.05 * e.x, a.y + 0.43 * d.y + 0.05 * e.y).m(a.x + 0.45 * d.x + 0.3 * f.x, a.y + 0.45 * d.y + 0.3 * f.y).l(a.x + 0.3 * d.x + 0.4 * f.x, a.y + 0.3 * d.y + 0.4 * f.y).l(a.x + 0.25 * d.x + 0.6 * f.x, a.y + 0.25 * d.y + 0.6 * f.y).m(a.x + 0.17 * d.x + 0.6 * f.x, a.y + 0.17 * d.y + 0.6 * f.y).l(a.x + 0.3 * d.x + 0.6 * f.x, a.y + 0.3 * d.y + 0.6 * f.y).m(a.x + 0.43 * d.x + 0.05 * e.x + h.x, a.y + 0.43 * d.y + 0.05 * e.y + h.y).l(a.x + 0.43 * d.x + 0.05 * e.x - h.x, a.y + 0.43 * d.y + 0.05 * e.y - h.y).s()[A]().lineWidth = H.d;
-        K.m(a.x + 0.46 * d.x + 0.4 * f.x, a.y + 0.46 * d.y + 0.4 * f.y).l(a.x + 0.28 * d.x + 0.5 * f.x, a.y + 0.28 * d.y + 0.5 * f.y).s()[A]().lineWidth = 3 * H.d;
-        K.m(b.x, b.y).l(a.x + 0.71 * d.x + 0.73 * f.x, a.y + 0.71 * d.y + 0.73 * f.y).l(a.x + 0.73 * d.x + 0.77 * f.x, a.y + 0.73 * d.y + 0.77 * f.y).l(a.x + 0.7 * d.x + 0.8 * f.x, a.y + 0.7 * d.y + 0.8 * f.y).s().lineWidth = 6 * H.d;
-        var e = c.i(a.b(d.a(0.5)))
-          , b = a.b(d.a(0.3)).b(e.a(0.25))
-          , f = a.b(d.a(0.4)).b(e.a(0.05))
-          , c = f.b(h)
-          , h = f.i(h)
-          , a = a.b(d.a(0.67)).b(e.a(0.8))
-          , i = b.b(d.a(-0.05)).b(e.a(0.42))
-          , l = c.i(i)
-          , f = new F(l.y * this.direction,-l.x * this.direction)
-          , f = f.a(H.d * H.d)
-          , m = i.b(l.a(0.5)).b(f.a(200 / l.X()))
-          , l = h.i(i)
-          , f = new F(l.y * this.direction,-l.x * this.direction)
-          , f = f.a(H.d * H.d)
-          , f = i.b(l.a(0.5)).b(f.a(200 / l.X()));
-        K.strokeStyle = "rgba(0, 0, 0, 0.25)";
-        K[A]().m(h.x, h.y).l(f.x, f.y).l(i.x, i.y).s()[A]().strokeStyle = "rgba(0, 0, 0, 0.5)";
-        K.m(c.x, c.y).l(m.x, m.y).l(i.x, i.y).s()[A]().lineWidth = 8 * H.d;
-        f = b.b(d.a(0.1)).b(e.a(0.95));
-        K.m(i.x, i.y).l(f.x, f.y).s()[A]().lineWidth = 2 * H.d;
-        switch (this.Ja) {
-        case "cap":
-            c = b.b(d.a(0.4)).b(e.a(1.15));
-            d = b.b(d.a(0.1)).b(e.a(1.05));
-            K.m(c.x, c.y).l(d.x, d.y).s();
-            break;
-        case "hat":
-            c = b.b(d.a(0.37)).b(e.a(1.19)),
-            h = b.i(d.a(0.02)).b(e.a(1.14)),
-            i = b.b(d.a(0.28)).b(e.a(1.17)),
-            b = b.b(d.a(0.09)).b(e.a(1.15)),
-            m = c.i(d.a(0.1)).G(e.a(0.2)),
-            d = h.b(d.a(0.02)).G(e.a(0.2)),
-            K.m(c.x, c.y).l(i.x, i.y).l(m.x, m.y).l(d.x, d.y).l(b.x, b.y).l(h.x, h.y).fillStyle = "rgba(0, 0, 0, 0.5)",
-            K.s()[B]()
+    class Ghost extends Bike {
+        constructor(a, b, c){
+            var d = Da[Da.length - 1];
+            super(b, d, c);
+            this.isGhost = true;
+            this.ghost_data = a;
+            this.name = a[7] || "Ghost";
+            this.collected = b[31] || 0;
+            this.bike = [this.head = new BodyPart(new Vector(d[0],d[1]),this), this.rearWheel = new Wheel(new Vector(d[6],d[7]),this), this.frontWheel = new Wheel(new Vector(d[13],d[14]),this)];
+            this.head.oldPos = new Vector(d[2],d[3]);
+            this.head.velocity = new Vector(d[4],d[5]);
+            this.rearWheel.oldPos = new Vector(d[8],d[9]);
+            this.rearWheel.velocity = new Vector(d[10],d[11]);
+            this.rearWheel.speed = d[12];
+            this.frontWheel.oldPos = new Vector(d[15],d[16]);
+            this.frontWheel.velocity = new Vector(d[17],d[18]);
+            this.frontWheel.speed = d[19];
+            this.head.size = 14;
+            this.rearWheel.size = c ? 11.7 : 14;
+            this.frontWheel.size = c ? 11.7 : 14;
+            this.F = [this.z = new Joint(this.head,this.rearWheel,this), this.D = new Joint(this.rearWheel,this.frontWheel,this), this.A = new Joint(this.frontWheel,this.head,this)];
+            this.z.distanceBetween = c ? 45 : 47;
+            this.z.p = d[20];
+            this.z.spring = c ? 0.35 : 0.2;
+            this.z.damp = 0.3;
+            this.D.distanceBetween = c ? 42 : 45;
+            this.D.p = d[21];
+            this.D.spring = c ? 0.35 : 0.2;
+            this.D.damp = 0.3;
+            this.A.distanceBetween = 45;
+            this.A.p = d[22];
+            this.A.spring = c ? 0.35 : 0.2;
+            this.A.damp = 0.3;
+            this.direction = d[23];
+            this.gravity = new Vector(d[24],d[25]);
+            this.slow = d[26];
+            this.ba = d[27];
+            this.ca = d[28];
+            this.W = d[29];
+            this.K = d[30];
+            this.time = this.ghost_data[5];
+            this.physics = !0;
+            this.ha = {}
         }
-        d = f.i(a);
-        e = new F(d.y * this.direction,-d.x * this.direction);
-        e = e.a(H.d * H.d);
-        d = a.b(d.a(0.3)).b(e.a(80 / d.X()));
-        K[A]().lineWidth = 5 * H.d;
-        K.m(f.x, f.y).l(d.x, d.y).l(a.x, a.y).s().strokeStyle = "#000"
-    }
-    ;
-    Qa.toString = ba("MTB");
-    function Ra() {}
-    var Ra = function(a) {
-        ua.call(this, a);
-        var b = Sa[Sa.length - 1]
-          , c = this;
-        c.na = Sa;
-        this.Ja = "hat";
-        this.j = a;
-        this.f = [this.head = new J(new F(b[0],b[1]),this), this.g = new pa(new F(b[6],b[7]),this), this.n = new pa(new F(b[13],b[14]),this)];
-        this.f[0].q = new F(b[2],b[3]);
-        this.f[0].h = new F(b[4],b[5]);
-        this.f[1].q = new F(b[8],b[9]);
-        this.f[1].h = new F(b[10],b[11]);
-        this.f[1].w = b[12];
-        this.f[2].q = new F(b[15],b[16]);
-        this.f[2].h = new F(b[17],b[18]);
-        this.f[2].w = b[19];
-        this.head.size = 14;
-        this.head.la = function() {
-            c.eb()
+        turn(){
+            this.direction *= -1;
+            this.D.turn();
+            var a = this.F[0].p;
+            this.z.p = this.F[2].p;
+            this.A.p = a
         }
-        ;
-        this.g.size = 13;
-        this.n.size = 13;
-        this.F = [this.z = new L(this.f[0],this.f[1],this), this.D = new L(this.f[1],this.f[2],this), this.A = new L(this.f[2],this.f[0],this)];
-        this.z.Q = 35;
-        this.z.p = b[20];
-        this.z.R = 0.5;
-        this.z.S = 0.7;
-        this.D.Q = 45;
-        this.D.p = b[21];
-        this.D.R = 0.2;
-        this.D.S = 0.3;
-        this.A.Q = 45;
-        this.A.p = b[22];
-        this.A.R = 0.2;
-        this.A.S = 0.3;
-        this.Y = this.ka = k;
-        this.M = 0;
-        this.direction = b[23];
-        this.P = new F(b[24],b[25]);
-        this.$ = b[26];
-        H.ea = b[27];
-        for (a = 0; a < H.k.length; a++)
-            H.k[a].ha = b[28][a];
-        this.K = this.W = this.ca = this.ba = 0;
-        if (this.time = b[29]) {
-            this.ba = b[30];
-            this.ca = b[31];
-            this.W = b[32];
-            this.K = b[33];
-            for (b = 0; b < N.length; b++)
-                for (var d in N[b])
-                    d >= this.time && delete N[b][d]
-        } else
-            N = [{}, {}, {}, {}, {}]
-    }
-      , Ta = Ra.prototype;
-    E(Ta, ua.prototype);
-    Ta.va = function() {
-        xa && this.ya();
-        this.g.w += (O - this.g.w) / 10;
-        O && (this.M += this.g.da / 5);
-        this.g.K = this.n.K = Ca;
-        var a = Aa - Ba;
-        this.z.V(5 * a * this.direction);
-        this.A.V(5 * -a * this.direction);
-        this.D.rotate(a / 10);
-        !a && O && (this.z.V(-7),
-        this.A.V(7))
-    }
-    ;
-    Ta.I = function() {
-        var a = this.j
-          , b = this.g.c.C()
-          , c = this.n.c.C()
-          , d = c.i(b)
-          , e = new F((c.y - b.y) * this.direction,(b.x - c.x) * this.direction)
-          , f = this.head.c.C().i(b.b(d.a(0.5)));
-        K[A]();
-        K.strokeStyle = "#000";
-        K.lineWidth = 3.5 * a.d;
-        K[z](b.x, b.y, 12.5 * a.d, 0, p, j);
-        K.m(c.x + 12.5 * a.d, c.y);
-        K[z](c.x, c.y, 12.5 * a.d, 0, p, j);
-        K.s();
-        K[A]();
-        K.fillStyle = "grey";
-        K.m(b.x + 5 * a.d, b.y);
-        K[z](b.x, b.y, 5 * a.d, 0, p, j);
-        K.m(c.x + 4 * a.d, c.y);
-        K[z](c.x, c.y, 4 * a.d, 0, p, j);
-        K[B]();
-        K[A]();
-        K.lineWidth = 5 * a.d;
-        K.m(b.x, b.y);
-        K.l(b.x + 0.4 * d.x + 0.05 * e.x, b.y + 0.4 * d.y + 0.05 * e.y);
-        K.m(b.x + 0.57 * d.x + 0.64 * f.x, b.y + 0.57 * d.y + 0.64 * f.y);
-        K.l(b.x + 0.46 * d.x + 0.4 * f.x, b.y + 0.46 * d.y + 0.4 * f.y);
-        K.l(b.x + 0.4 * d.x + 0.05 * e.x, b.y + 0.4 * d.y + 0.05 * e.y);
-        K.s();
-        K[A]();
-        K.lineWidth = 2 * a.d;
-        K.m(b.x + 0.57 * d.x + 0.64 * f.x, b.y + 0.57 * d.y + 0.64 * f.y);
-        K.l(b.x + 0.43 * d.x + 0.05 * e.x, b.y + 0.43 * d.y + 0.05 * e.y);
-        K.m(b.x + 0.45 * d.x + 0.3 * f.x, b.y + 0.45 * d.y + 0.3 * f.y);
-        K.l(b.x + 0.3 * d.x + 0.4 * f.x, b.y + 0.3 * d.y + 0.4 * f.y);
-        K.l(b.x + 0.25 * d.x + 0.6 * f.x, b.y + 0.25 * d.y + 0.6 * f.y);
-        K.m(b.x + 0.17 * d.x + 0.6 * f.x, b.y + 0.17 * d.y + 0.6 * f.y);
-        K.l(b.x + 0.3 * d.x + 0.6 * f.x, b.y + 0.3 * d.y + 0.6 * f.y);
-        K.m(b.x + 0.57 * d.x + 0.64 * f.x, b.y + 0.57 * d.y + 0.64 * f.y);
-        K.l(b.x + 0.8 * d.x + 0.2 * f.x, b.y + 0.8 * d.y + 0.2 * f.y);
-        K.l(b.x + 0.3 * d.x + 0.05 * e.x, b.y + 0.3 * d.y + 0.05 * e.y);
-        K.l(b.x + 0.5 * d.x + 0.05 * e.x, b.y + 0.5 * d.y + 0.05 * e.y);
-        K.s();
-        K[A]();
-        K.lineWidth = a.d;
-        K.m(b.x + 0.46 * d.x + 0.4 * f.x, b.y + 0.46 * d.y + 0.4 * f.y);
-        K.l(b.x + 0.28 * d.x + 0.5 * f.x, b.y + 0.28 * d.y + 0.5 * f.y);
-        K.s();
-        K[A]();
-        K.lineWidth = 3 * a.d;
-        K.m(c.x, c.y);
-        K.l(b.x + 0.56 * d.x + 0.73 * f.x, b.y + 0.56 * d.y + 0.73 * f.y);
-        K.l(b.x + 0.58 * d.x + 0.77 * f.x, b.y + 0.58 * d.y + 0.77 * f.y);
-        K.l(b.x + 0.55 * d.x + 0.8 * f.x, b.y + 0.55 * d.y + 0.8 * f.y);
-        K.s()
-    }
-    ;
-    Ta.gb = function() {
-        var a = {}
-          , b = this.n.c.i(this.g.c)
-          , c = new F(b.y * this.direction,-b.x * this.direction);
-        a.head = this.g.c.b(b.a(0.35)).b(this.head.c.i(this.n.c.b(this.g.c).a(0.5)).a(1.2));
-        a.ga = a.Pa = this.g.c.b(b.a(0.8)).b(c.a(0.68));
-        var d = a.head.i(a.ga)
-          , d = new F(d.y * this.direction,-d.x * this.direction);
-        a.Ba = a.Ga = a.head.b(a.ga).a(0.5).b(d.a(130 / d.X()));
-        a.T = this.g.c.b(b.a(0.2)).b(c.a(0.5));
-        var e = new F(6 * r(this.M),6 * ca(this.M));
-        a.fa = this.g.c.b(b.a(0.4)).b(c.a(0.05)).b(e);
-        d = a.T.i(a.fa);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Da = a.T.b(a.fa).a(0.5).b(d.a(160 / d.X()));
-        a.ia = this.g.c.b(b.a(0.4)).b(c.a(0.05)).i(e);
-        d = a.T.i(a.ia);
-        d = new F(-d.y * this.direction,d.x * this.direction);
-        a.Ha = a.T.b(a.ia).a(0.5).b(d.a(160 / d.X()));
-        return a
-    }
-    ;
-    Ta.toString = ba("HAR");
-    function Ua(a, b) {
-        this.Y = j;
-        var c = new F(0,0)
-          , d = 0
-          , e = 0;
-        this.direction = 1;
-        this.j = b;
-        this.mb = b.j;
-        this.f = [this.head = new J(c,this), this.T = new J(c,this), this.Ba = new J(c,this), this.Ga = new J(c,this), this.ga = new J(c,this), this.Pa = new J(c,this), this.Da = new J(c,this), this.Ha = new J(c,this), this.fa = new J(c,this), this.ia = new J(c,this)];
-        this.F = [new L(this.head,this.T,this), new L(this.head,this.Ba,this), new L(this.Ba,this.ga,this), new L(this.head,this.Ga,this), new L(this.Ga,this.Pa,this), new L(this.T,this.Da,this), new L(this.Da,this.fa,this), new L(this.T,this.Ha,this), new L(this.Ha,this.ia,this)];
-        d = 0;
-        for (e = this.f.length; d < e; d++)
-            this.f[d].size = 3,
-            this.f[d].oa = 0.05;
-        this.head.size = this.T.size = 8;
-        d = 0;
-        for (e = this.F.length; d < e; d++)
-            this.F[d].R = 0.4,
-            this.F[d].S = 0.7;
-        for (d in a)
-            a.hasOwnProperty(d) && this[d].c.copy(a[d])
-    }
-    var Va = Ua.prototype;
-    Va.I = function() {
-        var a = this.mb
-          , b = this.head.c.C()
-          , c = this.Ba.c.C()
-          , d = this.ga.c.C()
-          , e = this.Ga.c.C()
-          , f = this.Pa.c.C()
-          , h = this.Da.c.C()
-          , i = this.fa.c.C()
-          , l = this.Ha.c.C()
-          , m = this.ia.c.C()
-          , n = this.T.c.C();
-        K.lineWidth = 5 * a.d;
-        K.strokeStyle = "rgba(0,0,0,0.5)";
-        K[A]().m(b.x, b.y).l(e.x, e.y).l(f.x, f.y).m(n.x, n.y).l(l.x, l.y).l(m.x, m.y).s();
-        K.strokeStyle = "#000";
-        K[A]().m(b.x, b.y).l(c.x, c.y).l(d.x, d.y).m(n.x, n.y).l(h.x, h.y).l(i.x, i.y).s();
-        K.lineWidth = 8 * a.d;
-        K[A]().m(n.x, n.y).l(b.x, b.y).s();
-        b.G(b.i(n).a(0.25));
-        K.lineWidth = 2 * a.d;
-        K[A]().m(b.x + 5 * a.d, b.y)[z](b.x, b.y, 5 * a.d, 0, p, j).s()
-    }
-    ;
-    Va.J = function() {
-        for (var a = this.F.length - 1; 0 <= a; a--)
-            this.F[a].J();
-        for (a = this.f.length - 1; 0 <= a; a--)
-            this.f[a].J()
-    }
-    ;
-    Va.Jb = function(a, b) {
-        a.Fa(0.7);
-        b.Fa(0.7);
-        var c, d, e, f;
-        c = 0;
-        for (d = this.F.length; c < d; c++)
-            e = this.F[c].sa(),
-            20 < e && (e = 20),
-            this.F[c].Q = this.F[c].p = e;
-        for (c = 1; 5 > c; c++)
-            this.F[c].Q = 13,
-            this.F[c].p = 13;
-        e = [this.head, this.Ba, this.Ga, this.ga, this.Pa];
-        f = [this.T, this.Da, this.Ha, this.fa, this.ia];
-        c = 0;
-        for (d = e.length; c < d; c++)
-            e[c].q = e[c].c.i(a);
-        c = 0;
-        for (d = f.length; c < d; c++)
-            f[c].q = f[c].c.i(b);
-        for (c = this.f.length - 1; 0 <= c; c--)
-            this.f[c].h.copy(this.f[c].c.i(this.f[c].q)),
-            this.f[c].h.x += q() - q(),
-            this.f[c].h.y += q() - q()
-    }
-    ;
-    function Ea(a, b, c) {
-        this.Y = j;
-        this.j = c;
-        this.Oa = new Ua(b,this);
-        this.Oa.Jb(a.head.h, a.g.h);
-        this.Oa.direction = a.direction;
-        this.P = this.Oa.P = a.P;
-        this.time = a.time;
-        this.head = this.Oa.head;
-        this.t = a;
-        this.Bb = a.clone()
-    }
-    var Wa = Ea.prototype;
-    Wa.I = function() {
-        this.t.I();
-        this.Oa.I();
-        this.Ca && this.Ca.I()
-    }
-    ;
-    Wa.J = function() {
-        this.t.J();
-        this.Oa.J();
-        this.Ca && this.Ca.J()
-    }
-    ;
-    function Xa(a, b, c, d) {
-        this.Y = j;
-        this.j = d;
-        this.w = 30 + 20 * q();
-        this.Vb = 0;
-        this.$a = [new ra(a,this), new ra(a,this), new ra(a,this), new ra(a,this), new ra(a,this)];
-        this.c = a.clone();
-        this.P = b;
-        this.time = c;
-        this.head = new J(a,this);
-        this.head.h.x = 20
-    }
-    var Ya = Xa.prototype;
-    Ya.I = function() {
-        var a, b;
-        if (0 < this.w) {
-            this.w -= 10;
-            b = this.c.C();
-            var c = q() * p
-              , d = this.w / 2
-              , e = b.x + d * r(c)
-              , d = b.y + d * ca(c);
-            K.fillStyle = "#ff0";
-            K[A]().m(e, d);
-            for (a = 1; 16 > a; a++)
-                d = (this.w + 30 * q()) / 2,
-                e = b.x + d * r(c + p * a / 16),
-                d = b.y + d * ca(c + p * a / 16),
-                K.l(e, d);
-            K[B]()
+        setProperties(){
+            this.rearWheel.speed += (this.W - this.rearWheel.speed ) / 10;
+            this.W && (this.M += this.rearWheel.da / 5);
+            this.rearWheel.K = this.frontWheel.K = this.K;
+            var a = this.ba - this.ca;
+            this.z.lean(5 * a * this.direction);
+            this.A.lean(5 * -a * this.direction);
+            if(this.vehicle == "BMX"){
+                this.D.rotate(a / 6);
+            } else {
+                this.D.rotate(a / 8);
+            }
+            !a && this.W && (this.z.lean(-7),
+            this.A.lean(7))
         }
-        a = 0;
-        for (b = this.$a.length; a < b; a++)
-            this.$a[a].I()
-    }
-    ;
-    Ya.J = function() {
-        for (var a = this.$a.length - 1; 0 <= a; a--)
-            this.$a[a].J()
-    }
-    ;
-    function Za(a, b, c) {
-        this.c = new F(a,b);
-        this.j = c;
-        this.pb = ia++
-    }
-    var $a = Za.prototype;
-    $a.I = function() {
-        var a = this.j
-          , b = this.c.C();
-        K.fillStyle = this.ua;
-        K[A]().m(b.x + 7 * a.d, b.y)[z](b.x, b.y, 7 * a.d, 0, p, j)[B]().s()
-    }
-    ;
-    $a.L = function(a) {
-        500 > a.c.Ya(this.c) && !a.j.tb && this.Ea(a)
-    }
-    ;
-    $a.Ua = function(a) {
-        return a.fb(this.c) < ab + 7 ? (this.remove(),
-        this) : k
-    }
-    ;
-    $a.remove = function() {
-        this.qa = j;
-        this.j.remove(this.c);
-        this.ub();
-        return this
-    }
-    ;
-    $a.toString = function() {
-        return this.Aa + " " + this.c.toString()
-    }
-    ;
-    $a.Ea = $a.ub = aa();
-    function bb(a, b, c) {
-        Za.call(this, a, b, c);
-        this.ha = k
-    }
-    var cb = bb.prototype;
-    E(cb, Za.prototype);
-    cb.I = function() {
-        var a = this.j
-          , b = this.c.C();
-        K.fillStyle = this.ha ? this.qb : this.ua;
-        K.lineWidth = 2 * a.d;
-        K[A]().m(b.x + 7 * a.d, b.y)[z](b.x, b.y, 7 * a.d, 0, p, j)[B]().s()
-    }
-    ;
-    cb.L = function(a) {
-        500 > a.c.Ya(this.c) && this.Ea(a)
-    }
-    ;
-    cb.Ea = function(a) {
-        a.j.tb ? this.vb(a) : this.ha || (this.ha = j,
-        this.ib(a))
-    }
-    ;
-    cb.ib = cb.vb = aa();
-    function db(a, b, c, d) {
-        Za.call(this, a, b, d);
-        a = c * Math.PI / 180;
-        this.rotation = c;
-        this.direction = new F(-ca(a),r(a))
-    }
-    var eb = db.prototype;
-    E(eb, Za.prototype);
-    eb.I = function() {
-        var a = this.j
-          , b = this.c.C();
-        K.fillStyle = this.ua;
-        K[A]().save();
-        K.translate(b.x, b.y);
-        K.rotate(this.rotation * Math.PI / 180);
-        K.m(-7 * a.d, -10 * a.d).l(0, 10 * a.d).l(7 * a.d, -10 * a.d).l(-7 * a.d, -10 * a.d)[B]().s().restore()
-    }
-    ;
-    eb.L = function(a) {
-        1E3 > a.c.Ya(this.c) && this.Ea(a)
-    }
-    ;
-    eb.toString = function() {
-        return this.Aa + " " + this.c.toString() + " " + (this.rotation - 180).toString(32)
-    }
-    ;
-    function fb(a, b, c) {
-        bb.call(this, a, b, c);
-        this.ua = "#ff0";
-        this.qb = "#ffa";
-        this.Aa = "T"
-    }
-    var gb = fb.prototype;
-    E(gb, bb.prototype);
-    gb.ib = function(a) {
-        var b = this.j;
-        b.ea++;
-        b.ja && b.ea === b.ja && (a.j.ka |= 2)
-    }
-    ;
-    gb.vb = function(a) {
-        a.j.ha.hasOwnProperty(this.pb) || (a.j.ha[this.pb] = ++a.j.ea)
-    }
-    ;
-    gb.ub = function() {
-        this.j.ja--
-    }
-    ;
-    function hb(a, b, c) {
-        bb.call(this, a, b, c);
-        this.ua = "#00f";
-        this.qb = "#aaf";
-        this.Aa = "C"
-    }
-    var ib = hb.prototype;
-    E(ib, bb.prototype);
-    ib.ib = function(a) {
-        a.j.ka |= 1;
-        console.log("cp", a.j.time, JSON.stringify(a.j))
-    }
-    ;
-    function jb(a, b, c, d) {
-        db.call(this, a, b, c, d);
-        this.ua = "#ff0";
-        this.Aa = "B"
-    }
-    var kb = jb.prototype;
-    E(kb, db.prototype);
-    kb.Ea = function(a) {
-        for (var a = a.j.f, b = 0, c = a.length; b < c; b++)
-            a[b].c.G(this.direction)
-    }
-    ;
-    function lb(a, b, c, d) {
-        db.call(this, a, b, c, d);
-        this.direction.Fa(0.3);
-        this.ua = "#0f0";
-        this.Aa = "G"
-    }
-    var mb = lb.prototype;
-    E(mb, db.prototype);
-    mb.Ea = function(a) {
-        a.j.P.copy(this.direction)
-    }
-    ;
-    function nb(a, b, c) {
-        Za.call(this, a, b, c);
-        this.ua = "#eee";
-        this.Aa = "S";
-        this.zb = "s"
-    }
-    var ob = nb.prototype;
-    E(ob, Za.prototype);
-    ob.L = function(a) {
-        500 > a.c.Ya(this.c) && (a.j.$ = j)
-    }
-    ;
-    function pb(a, b, c) {
-        Za.call(this, a, b, c);
-        this.ua = "#f00";
-        this.Aa = "O";
-        this.zb = "e"
-    }
-    var qb = pb.prototype;
-    E(qb, Za.prototype);
-    qb.Ea = function(a) {
-        this.j.t = new Xa(this.c,a.j.P,a.j.time,this.j)
-    }
-    ;
-    function rb(a, b, c, d, e) {
-        this.u = a instanceof F ? a : new F(a,b);
-        this.r = b instanceof F ? b : new F(c,d);
-        this.ta = this.r.i(this.u);
-        this.p = this.ta.sa();
-        this.qa = k;
-        this.j = e
-    }
-    var sb = rb.prototype;
-    sb.I = function(a, b, c) {
-        a.beginPath();
-        a.moveTo(this.u.x * this.j.d - b, this.u.y * this.j.d - c);
-        a.lineTo(this.r.x * this.j.d - b, this.r.y * this.j.d - c);
-        a.stroke()
-    }
-    ;
-    sb.Ua = function(a) {
-        var b = a.i(this.u).ra(this.ta.rb(this.p))
-          , c = new F(0,0);
-        0 >= b ? c.copy(this.u) : b >= this.p ? c.copy(this.r) : c.copy(this.u.b(this.ta.rb(this.p).a(b)));
-        return a.i(c).sa() <= ab ? (this.remove(),
-        this) : k
-    }
-    ;
-    sb.remove = function() {
-        this.qa = j;
-        this.j.remove(this.u, this.r);
-        return this
-    }
-    ;
-    sb.xb = function() {
-        this.j.Ta(this)
-    }
-    ;
-    sb.toString = function() {
-        return this.u + this.xa()
-    }
-    ;
-    sb.toJSON = function(a) {
-        return {
-            Wa: a,
-            u: this.u.toJSON(),
-            r: this.r.toJSON()
+        draw(){
+            if(this.vehicle == "BMX"){
+                var a, b, c, d, e = this.track.zoom, f = this.direction, h = this.rearWheel.pos.toPixel(), i = this.frontWheel.pos.toPixel();
+                K.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                K.lineWidth = 3.5 * e;
+                K["ba"]()["a"](h.x, h.y, 10 * e, 0, 2 * Math.PI, !0).m(i.x + 10 * e, i.y)["a"](i.x, i.y, 10 * e, 0, 2 * Math.PI, !0).s();
+                var l = i.x - h.x
+                , m = i.y - h.y
+                , i = new Vector((i.y - h.y) * f,(h.x - i.x) * f);
+                a = h.x + 0.3 * l + 0.25 * i.x;
+                b = h.y + 0.3 * m + 0.25 * i.y;
+                var n = h.x + 0.84 * l + 0.42 * i.x
+                , x = h.y + 0.84 * m + 0.42 * i.y;
+                c = h.x + 0.84 * l + 0.37 * i.x;
+                d = h.y + 0.84 * m + 0.37 * i.y;
+                var w = h.x + 0.4 * l + 0.05 * i.x
+                , y = h.y + 0.4 * m + 0.05 * i.y;
+                K.lineWidth = 3 * e;
+                K["ba"]().m(h.x, h.y).l(a, b).l(n, x).m(c, d).l(w, y).l(h.x, h.y);
+                c = 6 * Math.cos(this.M) * e;
+                d = 6 * Math.sin(this.M) * e;
+                n = w + c;
+                x = y + d;
+                c = w - c;
+                d = y - d;
+                var C = h.x + 0.17 * l + 0.38 * i.x
+                , M = h.y + 0.17 * m + 0.38 * i.y
+                , X = h.x + 0.3 * l + 0.45 * i.x
+                , ya = h.y + 0.3 * m + 0.45 * i.y
+                , T = h.x + 0.25 * l + 0.4 * i.x
+                , Y = h.y + 0.25 * m + 0.4 * i.y;
+                K.m(n, x).l(c, d).m(C, M).l(X, ya).m(w, y).l(T, Y);
+                var C = h.x + 0.97 * l
+                , M = h.y + 0.97 * m
+                , X = h.x + 0.8 * l + 0.48 * i.x
+                , ya = h.y + 0.8 * m + 0.48 * i.y
+                , T = h.x + 0.86 * l + 0.5 * i.x
+                , Y = h.y + 0.86 * m + 0.5 * i.y
+                , za = h.x + 0.82 * l + 0.65 * i.x
+                , rc = h.y + 0.82 * m + 0.65 * i.y
+                , w = h.x + 0.78 * l + 0.67 * i.x
+                , y = h.y + 0.78 * m + 0.67 * i.y;
+                K.m(h.x + l, h.y + m).l(C, M).l(X, ya).l(T, Y).l(za, rc).l(w, y).s();
+                if(!this.dead){
+                    K.lineCap = "round";
+                    i = this.head.pos.toPixel();
+                    i = {
+                        x: i.x - h.x - 0.5 * l,
+                        y: i.y - h.y - 0.5 * m
+                    };
+                    h = a - 0.1 * l + 0.3 * i.x;
+                    C = b - 0.1 * m + 0.3 * i.y;
+                    T = n - h;
+                    Y = x - C;
+                    za = T * T + Y * Y;
+                    M = h + 0.5 * T + 200 * Y * f * e * e / za;
+                    X = C + 0.5 * Y + 200 * -T * f * e * e / za;
+                    T = c - h;
+                    Y = d - C;
+                    za = T * T + Y * Y;
+                    ya = h + 0.5 * T + 200 * Y * f * e * e / za;
+                    T = C + 0.5 * Y + 200 * -T * f * e * e / za;
+                    K.lineWidth = 6 * e;
+                    K.strokeStyle = "rgba(0, 0, 0, 0.25)";
+                    K["ba"]().m(c, d).l(ya, T).l(h, C).s();
+                    K.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                    K["ba"]().m(n, x).l(M, X).l(h, C).s();
+                    n = a + 0.05 * l + 0.88 * i.x;
+                    x = b + 0.05 * m + 0.88 * i.y;
+                    K.lineWidth = 8 * e;
+                    K["ba"]().m(h, C).l(n, x).s();
+                    c = a + 0.15 * l + 1.05 * i.x;
+                    d = b + 0.15 * m + 1.05 * i.y;
+                    K.lineWidth = 2 * e;
+                    K["ba"]().m(c + 5 * e, d)["a"](c, d, 5 * e, 0, 2 * Math.PI, !0).s()["ba"]();
+                    switch (this.cosmetics.head){
+                        case "cap":
+                            c = a + 0.4 * l + 1.1 * i.x;
+                            d = b + 0.4 * m + 1.1 * i.y;
+                            a = a + 0.05 * l + 1.05 * i.x;
+                            b = b + 0.05 * m + 1.05 * i.y;
+                            K.m(a, b).l(c, d).s();
+                            break;
+                        case "hat":
+                            c = a + 0.35 * l + 1.15 * i.x;
+                            d = b + 0.35 * m + 1.15 * i.y;
+                            h = a - 0.05 * l + 1.1 * i.x;
+                            C = b - 0.05 * m + 1.1 * i.y;
+                            M = a + 0.25 * l + 1.13 * i.x;
+                            X = b + 0.25 * m + 1.13 * i.y;
+                            a = a + 0.05 * l + 1.11 * i.x;
+                            b = b + 0.05 * m + 1.11 * i.y;
+                            ya = c - 0.1 * l + 0.2 * i.x;
+                            T = d - 0.1 * m + 0.2 * i.y;
+                            l = h + 0.02 * l + 0.2 * i.x;
+                            m = C + 0.02 * m + 0.2 * i.y;
+                            K.fillStyle = "rgba(0, 0, 0, 0.5)";
+                            K.m(c, d).l(M, X).l(ya, T).l(l, m).l(a, b).l(h, C).s()["f"]();
+                            break;
+                        case "ninja":
+                            c = a + 0.26 * l + 1.1 * i.x,
+                            d = b + 0.26 * m + 1.1 * i.y,
+                            a = a + 0.05 * l + 1.05 * i.x,
+                            b = b + 0.05 * m + 1.05 * i.y,
+                            K.lineWidth = 5 * e,
+                            K.m(c, d).l(a, b).s().lineWidth = 2 * e,
+                            K.l(a - (8 + Math.random()) * e * f, b - (4 + Math.random()) * e * f).m(a, b).l(a - (8 + Math.random()) * e * f, b + (4 + Math.random()) * e * f).s()
+                    }
+                    l = n - w;
+                    m = x - y;
+                    i = {
+                        x: m * f * e * e,
+                        y: -l * f * e * e
+                    };
+                    f = l * l + m * m;
+                    l = w + 0.4 * l + 130 * i.x / f;
+                    m = y + 0.4 * m + 130 * i.y / f;
+                    K.lineWidth = 5 * e;
+                    K["ba"]().m(n, x).l(l, m).l(w, y).s()
+                }
+            } else {
+                var a = this.track
+                , b = this.rearWheel.pos.toPixel()
+                , c = this.frontWheel.pos.toPixel()
+                , d = this.head.pos.toPixel()
+                , e = c.sub(b)
+                , f = new Vector((c.y - b.y) * this.direction,(b.x - c.x) * this.direction)
+                , h = d.sub(b.add(e.scale(0.5)));
+                K.strokeStyle = "rgba(0, 0, 0, 0.5)";
+                K.lineWidth = 3.5 * a.zoom;
+                K["ba"]()["a"](b.x, b.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0).m(c.x + 12.5 * a.zoom, c.y)["a"](c.x, c.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0).s()["ba"]().fillStyle = "grey";
+                K.m(b.x + 5 * a.zoom, b.y)["a"](b.x, b.y, 5 * a.zoom, 0, 2 * Math.PI, !0).m(c.x + 4 * a.zoom, c.y)["a"](c.x, c.y, 4 * a.zoom, 0, 2 * Math.PI, !0)["f"]()["ba"]().lineWidth = 5 * a.zoom;
+                K.m(b.x, b.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y).s()["ba"]().lineWidth = 2 * a.zoom;
+                var i = new Vector(6 * Math.cos(this.M) * a.zoom,6 * Math.sin(this.M) * a.zoom);
+                K.m(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y).l(b.x + 0.43 * e.x + 0.05 * f.x, b.y + 0.43 * e.y + 0.05 * f.y).m(b.x + 0.45 * e.x + 0.3 * h.x, b.y + 0.45 * e.y + 0.3 * h.y).l(b.x + 0.3 * e.x + 0.4 * h.x, b.y + 0.3 * e.y + 0.4 * h.y).l(b.x + 0.25 * e.x + 0.6 * h.x, b.y + 0.25 * e.y + 0.6 * h.y).m(b.x + 0.17 * e.x + 0.6 * h.x, b.y + 0.17 * e.y + 0.6 * h.y).l(b.x + 0.3 * e.x + 0.6 * h.x, b.y + 0.3 * e.y + 0.6 * h.y).m(b.x + 0.43 * e.x + 0.05 * f.x + i.x, b.y + 0.43 * e.y + 0.05 * f.y + i.y).l(b.x + 0.43 * e.x + 0.05 * f.x - i.x, b.y + 0.43 * e.y + 0.05 * f.y - i.y).s()["ba"]().lineWidth = a.zoom;
+                K.m(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y).l(b.x + 0.28 * e.x + 0.5 * h.x, b.y + 0.28 * e.y + 0.5 * h.y).s()["ba"]().lineWidth = 3 * a.zoom;
+                K.m(c.x, c.y).l(b.x + 0.71 * e.x + 0.73 * h.x, b.y + 0.71 * e.y + 0.73 * h.y).l(b.x + 0.73 * e.x + 0.77 * h.x, b.y + 0.73 * e.y + 0.77 * h.y).l(b.x + 0.7 * e.x + 0.8 * h.x, b.y + 0.7 * e.y + 0.8 * h.y).s();
+                if(!this.dead){
+                    K.lineCap = "round";
+                    var f = d.sub(b.add(e.scale(0.5)))
+                    , c = b.add(e.scale(0.3)).add(f.scale(0.25))
+                    , h = b.add(e.scale(0.4)).add(f.scale(0.05))
+                    , d = h.add(i)
+                    , l = h.sub(i)
+                    , b = b.add(e.scale(0.67)).add(f.scale(0.8))
+                    , i = c.add(e.scale(-0.05)).add(f.scale(0.42))
+                    , m = d.sub(i)
+                    , h = (new Vector(m.y * this.direction,-m.x * this.direction)).scaleSelf(a.zoom * a.zoom)
+                    , n = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()))
+                    , m = l.sub(i)
+                    , h = (new Vector(m.y * this.direction,-m.x * this.direction)).scaleSelf(a.zoom * a.zoom)
+                    , h = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()));
+                    K["ba"]().lineWidth = 6 * a.zoom;
+                    K.strokeStyle = "rgba(0, 0, 0, 0.25)";
+                    K.m(l.x, l.y).l(h.x, h.y).l(i.x, i.y).s()["ba"]().strokeStyle = "rgba(0, 0, 0, 0.5)";
+                    K.m(d.x, d.y).l(n.x, n.y).l(i.x, i.y).s().lineWidth = 8 * a.zoom;
+                    h = c.add(e.scale(0.1)).add(f.scale(0.93));
+                    d = c.add(e.scale(0.2)).add(f.scale(1.09));
+                    K["ba"]().m(i.x, i.y).l(h.x, h.y).s()["ba"]().lineWidth = 2 * a.zoom;
+                    K.m(d.x + 5 * a.zoom, d.y)["a"](d.x, d.y, 5 * a.zoom, 0, 2 * Math.PI, !0).s()["ba"]();
+                    switch (this.cosmetics.head){
+                    case "cap":
+                        d = c.add(e.scale(0.4)).add(f.scale(1.15));
+                        e = c.add(e.scale(0.1)).add(f.scale(1.05));
+                        K.m(d.x, d.y).l(e.x, e.y).s();
+                        break;
+                    case "hat":
+                        d = c.add(e.scale(0.37)).add(f.scale(1.19)),
+                        i = c.sub(e.scale(0.02)).add(f.scale(1.14)),
+                        l = c.add(e.scale(0.28)).add(f.scale(1.17)),
+                        c = c.add(e.scale(0.09)).add(f.scale(1.15)),
+                        n = d.sub(e.scale(0.1)).addToSelf(f.scale(0.2)),
+                        e = i.add(e.scale(0.02)).addToSelf(f.scale(0.2)),
+                        K.fillStyle = "rgba(0, 0, 0, 0.5)",
+                        K.m(d.x, d.y).l(l.x, l.y).l(n.x, n.y).l(e.x, e.y).l(c.x, c.y).l(i.x, i.y).s()["f"]()
+                    }
+                    e = h.sub(b);
+                    f = new Vector(e.y * this.direction,-e.x * this.direction);
+                    f = f.scale(a.zoom * a.zoom);
+                    e = b.add(e.scale(0.3)).add(f.scale(80 / e.lengthSquared()));
+                    K.lineWidth = 5 * a.zoom;
+                    K["ba"]().m(h.x, h.y).l(e.x, e.y).l(b.x, b.y).s()
+                }
+            }
+        }
+        update(){
+            var a = this.track.currentTime
+            , b = 0;
+            a > this.time && (this.update = () => {});
+            this.ghost_data[0][a] && (this.ba = this.ba ? 0 : 1);
+            this.ghost_data[1][a] && (this.ca = this.ca ? 0 : 1);
+            this.ghost_data[2][a] && (this.W = this.W ? 0 : 1);
+            this.ghost_data[3][a] && (this.K = this.K ? 0 : 1);
+            this.ghost_data[4][a] && this.turn();
+            this.setProperties();
+            for(b = this.F.length - 1; 0 <= b; b--)
+                this.F[b].update();
+            for(b = this.bike.length - 1; 0 <= b; b--)
+                this.bike[b].update();
+            this.rearWheel.wa && this.frontWheel.wa && (this.slow = !1);
+            if(!this.slow){
+                this.setProperties();
+                for(b = this.F.length - 1; 0 <= b; b--)
+                    this.F[b].update();
+                for(b = this.bike.length - 1; 0 <= b; b--)
+                    this.bike[b].update()
+            }
+        }
+        toString(){
+            this.vehicle
         }
     }
-    ;
-    function tb(a, b, c, d, e) {
-        rb.call(this, a, b, c, d, e)
+    class DeadRider {
+        constructor(a, b){
+            this.dead = !0;
+            var vector = new Vector(0,0);
+            this.direction = 1;
+            this.bike = b;
+            this.track = b.track;
+            this.points = [
+                this.head = new BodyPart(vector,this),
+                this.hip = new BodyPart(vector,this),
+                this.elbow = new BodyPart(vector,this),
+                this.shadowElbow = new BodyPart(vector,this),
+                this.hand = new BodyPart(vector,this),
+                this.shadowHand = new BodyPart(vector,this),
+                this.knee = new BodyPart(vector,this),
+                this.shadowKnee = new BodyPart(vector,this),
+                this.foot = new BodyPart(vector,this),
+                this.shadowFoot = new BodyPart(vector,this)
+            ];
+            this.joints = [
+                new Joint(this.head,this.hip,this),
+                new Joint(this.head,this.elbow,this),
+                new Joint(this.elbow,this.hand,this),
+                new Joint(this.head,this.shadowElbow,this),
+                new Joint(this.shadowElbow,this.shadowHand,this),
+                new Joint(this.hip,this.knee,this),
+                new Joint(this.knee,this.foot,this),
+                new Joint(this.hip,this.shadowKnee,this),
+                new Joint(this.shadowKnee,this.shadowFoot,this)
+            ];
+            for(var point in this.points){
+                this.points[point].size = 3,
+                this.points[point].friction = 0.05;
+            }
+            this.head.size = this.hip.size = 8;
+            for(var joint in this.joints){
+                this.joints[joint].spring = 0.4,
+                this.joints[joint].damp = 0.7;
+            }
+            for(var part in a) {
+                if(a.hasOwnProperty(part)) {
+                    this[part].pos.copy(a[part])
+                }
+            }
+        }
+        draw(){
+            var a = this.track,
+                head = this.head.pos.toPixel(),
+                elbow = this.elbow.pos.toPixel(), 
+                hand = this.hand.pos.toPixel(), 
+                shadowElbow = this.shadowElbow.pos.toPixel(),
+                shadowHand = this.shadowHand.pos.toPixel(),
+                knee = this.knee.pos.toPixel(),
+                foot = this.foot.pos.toPixel(),
+                shadowKnee = this.shadowKnee.pos.toPixel(),
+                shadowFoot = this.shadowFoot.pos.toPixel(),
+                hip = this.hip.pos.toPixel();
+            K.lineWidth = 5 * a.zoom;
+            K.strokeStyle = "rgba(0,0,0,0.5)";
+            K["ba"]().m(head.x, head.y).l(shadowElbow.x, shadowElbow.y).l(shadowHand.x, shadowHand.y).m(hip.x, hip.y).l(shadowKnee.x, shadowKnee.y).l(shadowFoot.x, shadowFoot.y).s();
+            K.strokeStyle = "#000";
+            K["ba"]().m(head.x, head.y).l(elbow.x, elbow.y).l(hand.x, hand.y).m(hip.x, hip.y).l(knee.x, knee.y).l(foot.x, foot.y).s();
+            K.lineWidth = 8 * a.zoom;
+            K["ba"]().m(hip.x, hip.y).l(head.x, head.y).s();
+            head.addToSelf(head.sub(hip).scale(0.25));
+            K.lineWidth = 2 * a.zoom;
+            K["ba"]().m(head.x + 5 * a.zoom, head.y)["a"](head.x, head.y, 5 * a.zoom, 0, 2 * Math.PI, !0).s()
+        }
+        update(){
+            for(var a = this.joints.length - 1; 0 <= a; a--)
+                this.joints[a].update();
+            for(a = this.points.length - 1; 0 <= a; a--)
+                this.points[a].update()
+        }
+        setVelocity(a, b){
+            a.scaleSelf(0.7);
+            b.scaleSelf(0.7);
+            var c, d, e, f;
+            c = 0;
+            for(d = this.joints.length; c < d; c++)
+                e = this.joints[c].getLength(),
+                20 < e && (e = 20),
+                this.joints[c].distanceBetween = this.joints[c].p = e;
+            for(c = 1; 5 > c; c++)
+                this.joints[c].distanceBetween = 13,
+                this.joints[c].p = 13;
+            e = [this.head, this.elbow, this.shadowElbow, this.hand, this.shadowHand];
+            f = [this.hip, this.knee, this.shadowKnee, this.foot, this.shadowFoot];
+            c = 0;
+            for(d = e.length; c < d; c++)
+                e[c].oldPos = e[c].pos.sub(a);
+            c = 0;
+            for(d = f.length; c < d; c++)
+                f[c].oldPos = f[c].pos.sub(b);
+            for(c = this.points.length - 1; 0 <= c; c--)
+                this.points[c].velocity.copy(this.points[c].pos.sub(this.points[c].oldPos)),
+                this.points[c].velocity.x += Math.random() - Math.random(),
+                this.points[c].velocity.y += Math.random() - Math.random()
+        }
     }
-    var ub = tb.prototype;
-    E(ub, rb.prototype);
-    ub.L = function(a) {
-        if (this.yb)
+    class DeadBike extends Bike {
+        constructor(a, b, c){
+            super(c);
+            this.dead = !0;
+            this.rider = new DeadRider(b,this);
+            this.rider.setVelocity(a.head.velocity, a.rearWheel.velocity);
+            this.rider.direction = a.direction;
+            this.rider.gravity = this.gravity = a.gravity;
+            this.time = a.time;
+            this.head = this.rider.head;
+            this.bike = a;
+            this.deathPoint = a.clone()
+        }
+        draw(){
+            this.bike.draw();
+            this.rider.draw();
+            if(this.hat) {
+                this.hat.draw()
+            }
+        }
+        update(){
+            this.bike.update();
+            this.rider.update();
+            if(this.hat) {
+                this.hat.update()
+            }
+        }
+    }
+    class Player {
+        constructor(a, b, c, d){
+            this.dead = !0;
+            this.track = d;
+            this.speed = 30 + 20 * Math.random();
+            this.Vb = 0;
+            this.$a = [
+                new Shard(a,this),
+                new Shard(a,this),
+                new Shard(a,this),
+                new Shard(a,this),
+                new Shard(a,this)
+            ];
+            this.pos = a.clone();
+            this.gravity = b;
+            this.time = c;
+            this.head = new BodyPart(a,this);
+            this.head.velocity.x = 20
+        }
+        draw(){
+            var a, b;
+            if(0 < this.speed){
+                this.speed -= 10;
+                b = this.pos.toPixel();
+                var e = b.x + this.speed / 2 * Math.cos(Math.random() * 2 * Math.PI)
+                  , d = b.y + this.speed / 2 * Math.sin(Math.random() * 2 * Math.PI);
+                K.fillStyle = "#ff0";
+                K["ba"]().m(b.x + this.speed / 2 * Math.cos(Math.random() * 2 * Math.PI), d);
+                for(a = 1; 16 > a; a++)
+                    d = (this.speed + 30 * Math.random()) / 2,
+                    e = b.x + d * Math.cos(Math.random() * 2 * Math.PI + 2 * Math.PI * a / 16),
+                    d = b.y + d * Math.sin(Math.random() * 2 * Math.PI + 2 * Math.PI * a / 16),
+                    K.l(e, d);
+                K["f"]()
+            }
+            a = 0;
+            for(b = this.$a.length; a < b; a++)
+                this.$a[a].draw()
+        }
+        update(){
+            for(var a = this.$a.length - 1; 0 <= a; a--)
+                this.$a[a].update()
+        }
+    }
+    class Item {
+        constructor(a, b, c){
+            this.pos = new Vector(a, b);
+            this.track = c;
+            this.id = ia++
+        }
+        draw(){
+            var a = this.track,
+                b = this.pos.toPixel();
+            K.fillStyle = this.color;
+            K.beginPath();
+            K.moveTo(b.x + 7 * a.zoom, b.y);
+            K.arc(b.x, b.y, 7 * a.zoom, 0, 2 * Math.PI, !0);
+            K.fill();
+            K.stroke();
+        }
+        collide(a){
+            500 > a.pos.distanceToSquared(this.pos) && !a.track.tb && this.Ea(a)
+        }
+        erase(a){
+            if(a.distanceTo(this.pos) < ab + 7) {
+                this.remove();
+                return this
+            }
+            return false;
+        }
+        remove(){
+            this.Remove = !0;
+            this.track.remove(this.pos);
+            this.ub();
+            return this
+        }
+        toString(){
+            return this.d ? this.type + " " + this.pos.toString() + " " + this.d.toString() : this.type + " " + this.pos.toString()
+        }
+        Ea(){}
+        ub(){}
+    }
+    class SingleUseItem extends Item {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.used = !1
+        }
+        draw(){
+            var a = this.track,
+                b = this.pos.toPixel();
+            K.fillStyle = this.used ? this.newColor : this.color;
+            K.lineWidth = 2 * a.zoom;
+            K["ba"]().m(b.x + 7 * a.zoom, b.y)["a"](b.x, b.y, 7 * a.zoom, 0, 2 * Math.PI, !0)["f"]().s();
+            this.d ? K["ba"]().m(this.d.toPixel().x + 7 * a.zoom, this.d.toPixel().y)["a"](this.d.toPixel().x, this.d.toPixel().y, 7 * a.zoom, 0, 2 * Math.PI, !0)["f"]().s() : null
+        }
+        collide(a){
+            500 > a.pos.distanceToSquared(this.pos) && this.Ea(a);
+            this.d ? 500 > a.pos.distanceToSquared(this.d) && this.Ea(a) : null
+        }
+        Ea(a){
+            a.track.tb ? this.vb(a) : this.used || (this.used = !0,
+            this.ib(a))
+        }
+        ib(){}
+        vb(){}
+    }
+    class Triangle extends Item {
+        constructor(a, b, c, d){
+            super(a, b, d);
+            this.rotation = c;
+            this.direction = new Vector(-Math.sin(c * Math.PI / 180),Math.cos(c * Math.PI / 180))
+        }
+        draw(){
+            var a = this.track,
+                b = this.pos.toPixel();
+            K.fillStyle = this.color;
+            K["ba"]().save();
+            K.translate(b.x, b.y);
+            K.rotate(this.rotation * Math.PI / 180);
+            K.m(-7 * a.zoom, -10 * a.zoom).l(0, 10 * a.zoom).l(7 * a.zoom, -10 * a.zoom).l(-7 * a.zoom, -10 * a.zoom)["f"]().s().restore()
+        }
+        collide(a){
+            1E3 > a.pos.distanceToSquared(this.pos) && this.Ea(a)
+        }
+        toString(){
+            return this.type + " " + this.pos.toString() + " " + (this.rotation - 180).toString(32)
+        }
+    }
+    class Target extends SingleUseItem {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.color = "#ff0";
+            this.newColor = "#ffa";
+            this.type = "T"
+        }
+        ib(a){
+            this.track.collected++;
+            this.track.targets && this.track.collected === this.track.targets && (a.track.pastCheckpoint |= 2)
+        }
+        vb(){
+            a.track.ha.hasOwnProperty(this.id) || (a.track.ha[this.id] = ++a.track.collected)
+        }
+        ub(){
+            this.track.targets--
+        }
+    }
+    class Checkpoint extends SingleUseItem {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.color = "#00f";
+            this.newColor = "#aaf";
+            this.type = "C"
+        }
+        ib(a){
+            a.track.pastCheckpoint |= 1;
+            //console.log("Checkpoint", a.track.time, JSON.stringify(a.track))
+        }
+    }
+    class Boost extends Triangle {
+        constructor(a, b, c, d){
+            super(a, b, c, d);
+            this.color = "#ff0";
+            this.type = "B"
+        }
+        Ea(a){
+            for(var a = a.track.bike, b = 0, c = a.length; b < c; b++)
+                a[b].pos.addToSelf(this.direction)
+        }
+    }
+    class Gravity extends Triangle {
+        constructor(a, b, c, d){
+            super(a, b, c, d);
+            this.direction.scaleSelf(0.3);
+            this.color = "#0f0";
+            this.type = "G"
+        }
+        Ea(a){
+            a.track.gravity.copy(this.direction)
+        }
+    }
+    class Slowmo extends Item {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.color = "#eee";
+            this.type = "S";
+            this.zb = "s"
+        }
+        collide(a){
+            500 > a.pos.distanceToSquared(this.pos) && (a.track.slow = !0)
+        }
+    }
+    class Antigravity extends Item {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.color = "#00ffff";
+            this.type = "A"
+        }
+        Ea(a){
+            a.track.gravity.x = a.track.gravity.y = 0
+        }
+    }
+    class Teleporter extends SingleUseItem {
+        constructor(a, b, c, d = null, e = null){
+            super(a, b, c);
+            this.color = "#ff00ff";
+            this.newColor = "#ffaaff";
+            this.type = "W";
+            if(d != null && e != null){
+                this.tpb(d, e)
+            }
+            this.a = a;
+            this.b = b
+        }
+        tpb(a, b){
+            this.d = new Vector(a,b);
+            this.x = a;
+            this.y = b;
+        }
+        ib(a){
+            a.track.rearWheel.pos.x = a.track.rearWheel.oldPos.x = this.x + a.track.rearWheel.pos.x - a.track.head.pos.x;
+            a.track.rearWheel.pos.y = a.track.rearWheel.oldPos.y = this.y + a.track. rearWheel.pos.y - a.track.head.pos.y;
+
+            a.track.frontWheel.pos.x = a.track.frontWheel.oldPos.x = this.x + a.track.frontWheel.pos.x - a.track.head.pos.x;
+            a.track.frontWheel.pos.y = a.track.frontWheel.oldPos.y = this.y + a.track.frontWheel.pos.y - a.track.head.pos.y;
+
+            a.track.head.pos.x = a.track.head.oldPos.x = a.track.track.camera.x = this.x;
+            a.track.head.pos.y = a.track.head.oldPos.y = a.track.track.camera.y = this.y - 1;
+
+            return this.track
+        }
+    }
+    class Bomb extends Item {
+        constructor(a, b, c){
+            super(a, b, c);
+            this.color = "#f00";
+            this.type = "O";
+            this.zb = "e"
+        }
+        Ea(a){
+            this.track.player = new Player(this.pos,a.track.gravity,a.track.time,this.track)
+        }
+    }
+    class Line {
+        constructor(a, b, c, d, e){
+            this.a = a instanceof Vector ? a : new Vector(a, b);
+            this.b = b instanceof Vector ? b : new Vector(c, d);
+            this.vector = this.b.sub(this.a);
+            this.len = this.vector.getLength();
+            this.Remove = false;
+            this.track = e;
+        }
+        draw(a, b, c){
+            a.beginPath();
+            a.moveTo(this.a.x * this.track.zoom - b, this.a.y * this.track.zoom - c);
+            a.lineTo(this.b.x * this.track.zoom - b, this.b.y * this.track.zoom - c);
+            a.stroke()
+        }
+        erase(a){
+            var b = a.sub(this.a).dot(this.vector.oppositeScale(this.len)),
+                c = new Vector(0,0);
+            if(b <= 0) {
+                c.copy(this.a)
+            } else if(b >= this.len) {
+                c.copy(this.b)
+            } else {
+                c.copy(this.a.add(this.vector.oppositeScale(this.len).scale(b)));
+            }
+            return a.sub(c).getLength() <= ab ? (this.remove(),
+            this) : !1
+        }
+        remove(){
+            this.Remove = !0;
+            this.track.remove(this.a, this.b);
+            return this
+        }
+        xb(){
+            this.track.addLineInternal(this)
+        }
+        toString(){
+            return this.a + this.getEnd()
+        }
+        toJSON(a){
+            return {
+                type: a,
+                a: this.a.toJSON(),
+                b: this.b.toJSON()
+            }
+        }
+    }
+    class Physics extends Line {
+        constructor(a, b, c, d, e){
+            super(a, b, c, d, e);
+        }
+        collide(a){
+            if(this.yb)
             return this;
-        this.yb = j;
-        var b = a.c
-          , c = a.h
-          , d = a.size
-          , e = new F(0,0)
-          , f = 0
-          , e = b.i(this.u)
-          , h = e.ra(this.ta) / this.p / this.p;
-        if (0 <= h && 1 >= h && (c = 0 > (e.x * this.ta.y - e.y * this.ta.x) * ((e.x - c.x) * this.ta.y - (e.y - c.y) * this.ta.x) ? -1 : 1,
-        e = e.i(this.ta.a(h)),
-        f = e.sa(),
-        (f < d || 0 > c) && (0 !== f || 514 === this.j.id)))
-            return b.G(e.a((d * c - f) / f)),
-            a.la(new F(-e.y / f,e.x / f)),
-            this;
-        if (h * this.p < -d || h * this.p > this.p + d)
-            return this;
-        e = b.i(0 < h ? this.r : this.u);
-        f = e.sa();
-        if (f < d && 0 !== f)
-            return b.G(e.a((d - f) / f)),
-            a.la(new F(-e.y / f,e.x / f)),
-            this
+            this.yb = !0;
+            var b = a.pos,
+                c = a.velocity,
+                d = a.size,
+                e = new Vector(0,0),
+                f = 0,
+                e = b.sub(this.a),
+                h = e.dot(this.vector) / this.len / this.len;
+            if(0 <= h && 1 >= h && (c = 0 > (e.x * this.vector.y - e.y * this.vector.x) * ((e.x - c.x) * this.vector.y - (e.y - c.y) * this.vector.x) ? -1 : 1,
+            e = e.sub(this.vector.scale(h)),
+            f = e.getLength(),
+            (f < d || 0 > c) && (0 !== f || 514 === this.track.id)))
+                return b.addToSelf(e.scale((d * c - f) / f)),
+                a.drive(new Vector(-e.y / f,e.x / f)),
+                this;
+            if(h * this.len < -d || h * this.len > this.len + d)
+                return this;
+            e = b.sub(0 < h ? this.b : this.a);
+            f = e.getLength();
+            if(f < d && 0 !== f)
+                return b.addToSelf(e.scale((d - f) / f)),
+                a.drive(new Vector(-e.y / f,e.x / f)),
+                this
+        }
+        getEnd(){
+            this.ma = !0;
+            var a = " " + this.b.toString(),
+                b = this.track.grid[Math.floor(this.b.x / this.track.scale)][Math.floor(this.b.y / this.track.scale)].search(this.b, "line");
+            b !== void 0 && (a += b.getEnd());
+            return a
+        }
+        toString(){
+            return this.a + this.getEnd()
+        }
+        toJSON(){
+            return this.toJSON.call(this, "SolidLine")
+        }
     }
-    ;
-    ub.xa = function() {
-        this.ma = j;
-        var a = " " + this.r.toString()
-          , b = this.j.e[t(this.r.x / this.j.v)][t(this.r.y / this.j.v)].search(this.r, "line");
-        b !== g && (a += b.xa());
-        return a
+    class Scenery extends Line {
+        constructor(a, b, c, d, e){
+            super(a, b, c, d, e);
+            this.hb = !0
+        }
+        getEnd(){
+            this.ma = !0;
+            var a = " " + this.b.toString(),
+            b = this.track.grid[Math.floor(this.b.x / this.track.scale)][Math.floor(this.b.y / this.track.scale)].search(this.b, "sline");
+            b !== void 0 && (a += b.getEnd());
+            return a
+        }
+        toString(){
+            return this.a + this.getEnd()
+        }
+        toJSON(){
+            return this.toJSON.call(this, "SceneryLine")
+        }
     }
-    ;
-    ub.toString = function() {
-        return this.u + this.xa()
+    class xb {
+        constructor(){
+            this.physics = [];
+            this.scenery= [];
+            this.powerups = []
+        }
+        collide(a){
+            for(var b = this.physics.length - 1; 0 <= b; b--)
+                this.physics[b].collide(a);
+            if(!a.track.dead)
+                for(b = this.powerups.length - 1; 0 <= b; b--)
+                    this.powerups[b].collide(a);
+            return this
+        }
+        za(){
+            for(var a = 0, b = this.physics.length; a < b; a++)
+                this.physics[a].yb = !1
+        }
+        remove(){
+            for(var a = [], b = 0, c = this.physics.length; b < c; b++)
+                this.physics[b] && this.physics[b].Remove && a.push(this.physics.splice(b--, 1)[0]);
+            b = 0;
+            for(c = this.scenery.length; b < c; b++)
+                this.scenery[b] && this.scenery[b].Remove && a.push(this.scenery.splice(b--, 1)[0]);
+            b = 0;
+            for(c = this.powerups.length; b < c; b++)
+                this.powerups[b] && this.powerups[b].Remove && a.push(this.powerups.splice(b--, 1)[0]);
+            return a
+        }
+        search(a, b){
+            var c = 0, d, e, f = "sline" === b ? this.scenery: this.physics;
+            for(d = f.length; c < d; c++)
+                if((e = f[c]) && e.a.x === a.x && e.a.y === a.y && !e.ma)
+                    return e
+        }
     }
-    ;
-    ub.toJSON = function() {
-        return rb.prototype.toJSON.call(this, "SolidLine")
-    }
-    ;
-    function vb(a, b, c, d, e) {
-        rb.call(this, a, b, c, d, e);
-        this.hb = j
-    }
-    var wb = vb.prototype;
-    E(wb, rb.prototype);
-    wb.xa = function() {
-        this.ma = j;
-        var a = " " + this.r.toString()
-          , b = this.j.e[t(this.r.x / this.j.v)][t(this.r.y / this.j.v)].search(this.r, "sline");
-        b !== g && (a += b.xa());
-        return a
-    }
-    ;
-    wb.toString = function() {
-        return this.u + this.xa()
-    }
-    ;
-    wb.toJSON = function() {
-        return rb.prototype.toJSON.call(this, "SceneryLine")
-    }
-    ;
-    function xb() {
-        this.o = [];
-        this.B = [];
-        this.k = []
-    }
-    var yb = xb.prototype;
-    yb.L = function(a) {
-        for (var b = this.o.length - 1; 0 <= b; b--)
-            this.o[b].L(a);
-        if (!a.j.Y)
-            for (b = this.k.length - 1; 0 <= b; b--)
-                this.k[b].L(a);
-        return this
-    }
-    ;
-    yb.za = function() {
-        for (var a = 0, b = this.o.length; a < b; a++)
-            this.o[a].yb = k
-    }
-    ;
-    yb.remove = function() {
-        for (var a = [], b = 0, c = this.o.length; b < c; b++)
-            this.o[b] && this.o[b].qa && a.push(this.o.splice(b--, 1)[0]);
-        b = 0;
-        for (c = this.B.length; b < c; b++)
-            this.B[b] && this.B[b].qa && a.push(this.B.splice(b--, 1)[0]);
-        b = 0;
-        for (c = this.k.length; b < c; b++)
-            this.k[b] && this.k[b].qa && a.push(this.k.splice(b--, 1)[0]);
-        return a
-    }
-    ;
-    yb.search = function(a, b) {
-        var c = 0, d, e, f = "sline" === b ? this.B : this.o;
-        for (d = f.length; c < d; c++)
-            if ((e = f[c]) && e.u.x === a.x && e.u.y === a.y && !e.ma)
-                return e
-    }
-    ;
     var zb = {};
-    function Ab(a, b, c) {
+    function Ab(a, b, c){
         zb[c] || (zb[c] = {});
         var d = a + ";" + b;
-        if (zb[c][d])
+        if(zb[c][d])
             return zb[c][d];
         var d = zb[c][d] = []
-          , e = new F(a.x,a.y)
+          , e = new Vector(a.x,a.y)
           , f = (b.y - a.y) / (b.x - a.x)
-          , h = new F(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
+          , h = new Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
           , i = 0;
-        for (d.push(a); 5E3 > i && !(t(e.x / c) === t(b.x / c) && t(e.y / c) === t(b.y / c)); ) {
-            var l = new F(0 > h.x ? s(da((e.x + 1) / c + h.x) * c) - 1 : s(t(e.x / c + h.x) * c),0);
-            l.y = s(a.y + (l.x - a.x) * f);
-            var m = new F(0,0 > h.y ? s(da((e.y + 1) / c + h.y) * c) - 1 : s(t(e.y / c + h.y) * c));
-            m.x = s(a.x + (m.y - a.y) / f);
-            ea(l.x - a.x, 2) + ea(l.y - a.y, 2) < ea(m.x - a.x, 2) + ea(m.y - a.y, 2) ? (e = l,
+        for(d.push(a); 5E3 > i && !(Math.floor(e.x / c) === Math.floor(b.x / c) && Math.floor(e.y / c) === Math.floor(b.y / c)); ){
+            var l = new Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
+            l.y = Math.round(a.y + (l.x - a.x) * f);
+            var m = new Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
+            m.x = Math.round(a.x + (m.y - a.y) / f);
+            Math.pow(l.x - a.x, 2) + Math.pow(l.y - a.y, 2) < Math.pow(m.x - a.x, 2) + Math.pow(m.y - a.y, 2) ? (e = l,
             d.push(l)) : (e = m,
             d.push(m));
             i++
         }
         return d
     }
-    function Bb(a) {
-        return a.map(function(a) {
+    function Bb(a){
+        return a.map(function(a){
             a = a.concat();
             a[28] = a[29] = a[30] = 0;
             return a
         })
     }
-    function Cb() {
-        this.Sa = [];
-        this.Ra = 0
-    }
-    var Db = Cb.prototype;
-    Db.push = function(a) {
-        this.Sa.length = Math.min(this.Sa.length, this.Ra + 1);
-        this.Ra = this.Sa.push(a) - 1;
-        return this
-    }
-    ;
-    Db.Qa = function() {
-        if (0 <= this.Ra) {
-            var a = this.Sa[this.Ra--].Qa;
-            "function" === typeof a && a(this)
+    class UndoManager {
+        constructor(){
+            this.undoStack = [];
+            this.undoPosition = 0
         }
-        return this
-    }
-    ;
-    Db.Ma = function() {
-        if (this.Ra < this.Sa.length - 1) {
-            var a = this.Sa[++this.Ra].Ma;
-            "function" === typeof a && a(this)
+        push(a){
+            this.undoStack.length = Math.min(this.undoStack.length, this.undoPosition + 1);
+            this.undoPosition = this.undoStack.push(a) - 1;
+            return this
         }
-        return this
-    }
-    ;
-    function Eb(a) {
-        var b, c, d, e;
-        this.e = {};
-        this.v = 100;
-        this.canvas = I;
-        this.U = {};
-        this.d = 0.6;
-        this.currentTime = 0;
-        this.id = a;
-        this.aa = "BMX";
-        this.Kb = 1;
-        this.nb = new Cb;
-        this.paused = k;
-        this.watchGhost = this.ob;
-        K[ha]("Loading track... Please wait.", 36, 16);
-        this.N = new F(0,0);
-        this.id ? 7 < this.id.length ? (a = this.id,
-        this.id = g,
-        Fb.style.display = "block",
-        P = "line") : (a = new XMLHttpRequest,
-        a.open("POST", "/tracks/load", k),
-        a.setRequestHeader("Content-type", "application/x-www-form-urlencoded"),
-        a.send("id=" + this.id),
-        a = a.responseText,
-        "v1," !== a.substr(0, 3) && (this.Kb = 0)) : (a = "-18 1i 18 1i##",
-        Fb.style.display = "block",
-        P = "line");
-        this.origCode = a;
-        var f = a.split("#")
-          , h = f[0] ? f[0].split(",") : []
-          , a = 0;
-        for (c = h.length; a < c; a++)
-            if (e = h[a].split(/\s+/g),
-            3 < e.length) {
-                b = 0;
-                for (d = e.length - 2; b < d; b += 2)
-                    this.pa({
-                        x: u(e[b], 32),
-                        y: u(e[b + 1], 32)
-                    }, {
-                        x: u(e[b + 2], 32),
-                        y: u(e[b + 3], 32)
-                    })
+        undo(){
+            if(this.undoPosition >= 0){
+                var a = this.undoStack[this.undoPosition--].undo;
+                if(typeof a === "function") {
+                    a(this)
+                }
             }
-        if (1 < f.length) {
-            h = f[1].split(",");
-            a = 0;
-            for (c = h.length; a < c; a++)
-                if (e = h[a].split(/\s+/g),
-                3 < e.length) {
-                    b = 0;
-                    for (d = e.length - 2; b < d; b += 2)
-                        this.pa({
-                            x: u(e[b], 32),
-                            y: u(e[b + 1], 32)
-                        }, {
-                            x: u(e[b + 2], 32),
-                            y: u(e[b + 3], 32)
-                        }, j)
-                }
+            return this
         }
-        this.ea = this.ja = 0;
-        this.k = [];
-        e = f[2] ? f[2].split(",") : [];
-        var i, a = 0;
-        for (c = e.length; a < c; a++)
-            if (h = e[a].split(/\s+/g),
-            2 < h.length) {
-                b = u(h[1], 32);
-                d = u(h[2], 32);
-                switch (h[0]) {
-                case "T":
-                    i = new fb(b,d,this);
-                    this.ja++;
-                    this.k.push(i);
-                    break;
-                case "C":
-                    i = new hb(b,d,this);
-                    this.k.push(i);
-                    break;
-                case "B":
-                    i = new jb(b,d,u(h[3], 32) + 180,this);
-                    break;
-                case "G":
-                    i = new lb(b,d,u(h[3], 32) + 180,this);
-                    break;
-                case "O":
-                    i = new pb(b,d,this);
-                    break;
-                case "S":
-                    i = new nb(b,d,this)
-                }
-                i && (b = t(b / this.v),
-                d = t(d / this.v),
-                this.e[b] === g && (this.e[b] = {}),
-                this.e[b][d] === g && (this.e[b][d] = new xb),
-                this.e[b][d].k.push(i))
+        redo(){
+            if(this.undoPosition < this.undoStack.length - 1){
+                var a = this.undoStack[++this.undoPosition].redo;
+                "function" === typeof a && a(this)
             }
-        "MTB" === f[3] || "BMX" === f[3] || "HAR" === f[3] ? (this.aa = f[3],
-        this.time = "" !== f[4] ? f[4] : k) : this.time = "" !== f[3] ? f[3] : k
-    }
-    var Q = Eb.prototype;
-    Q.jb = function() {
-        1 < Ia.length && Ia.pop();
-        1 < Na.length && Na.pop();
-        this.H && 1 < Da.length && Da.pop()
-    }
-    ;
-    Q.Na = function() {
-        this.kb();
-        this.paused = k;
-        var a = this.t = this.aa ? "BMX" === this.aa ? new Ha(this) : "HAR" === this.aa ? new Ra(this) : new Ma(this) : k;
-        a && (this.O = a.head,
-        this.currentTime = a.na[a.na.length - 1][29],
-        this.N = a.head.c.clone());
-        if (this.H) {
-            var b = this.H = "BMX" === this.Z[6] ? new Ka(this.Z,this) : new Pa(this.Z,this);
-            if (!a || 1 === a.na.length && !O)
-                this.O = b.head
-        }
-    }
-    ;
-    Q.reset = function() {
-        Ia = [[0, -1, 0, -1, 0, 0, -21, 38, -21, 38, 0, 0, 0, 21, 38, 21, 38, 0, 0, 0, 45, 42, 45, 1, 0, 0.3, k, 0, [], 0]];
-        Na = [[2, -3, 2, -3, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 47, 45, 45, 1, 0, 0.3, k, 0, [], 0]];
-        this.H && (Da = Bb("BMX" === this.Z[6] ? Ia : Na));
-        this.Na()
-    }
-    ;
-    Q.kb = function() {
-        var a, b, c, d, e;
-        for (a in this.e)
-            if (this.e.hasOwnProperty(a))
-                for (b in this.e[a])
-                    if (this.e[a].hasOwnProperty(b)) {
-                        e = this.e[a][b];
-                        c = 0;
-                        for (d = e.k.length; c < d; c++)
-                            e.k[c].ha !== g && (e.k[c].ha = k)
-                    }
-    }
-    ;
-    Q.ob = function(a) {
-        (a = "string" === typeof a && "g" === a.charAt(0) ? u(a.substr(1), 10) : this.sb[u(a, 10) - 1]) && Gb(a, this);
-        return this
-    }
-    ;
-    Q.L = function(a) {
-        var b = t(a.c.x / this.v - 0.5)
-          , c = t(a.c.y / this.v - 0.5)
-          , d = this.e;
-        d[b] !== g && (d[b][c] !== g && d[b][c].za(),
-        d[b][c + 1] !== g && d[b][c + 1].za());
-        d[b + 1] !== g && (d[b + 1][c] !== g && d[b + 1][c].za(),
-        d[b + 1][c + 1] !== g && d[b + 1][c + 1].za());
-        d[b] !== g && d[b][c] !== g && d[b][c].L(a);
-        d[b + 1] !== g && (d[b + 1][c] !== g && d[b + 1][c].L(a),
-        d[b + 1][c + 1] !== g && d[b + 1][c + 1].L(a));
-        d[b] !== g && d[b][c + 1] !== g && d[b][c + 1].L(a);
-        return this
-    }
-    ;
-    Q.J = function() {
-        this.paused || (this.t && this.t.J(),
-        this.H && this.H.J(),
-        this.currentTime += __);
-        this.I();
-        this.t && this.t.I();
-        this.H && this.H.I();
-        return this
-    }
-    ;
-    Q.I = function() {
-        function a() {
-            K.fillStyle = "#ffb6c1";
-            K[A]()[z](f.x, f.y, (ab - 1) * d, 0, p, j)[B]()
-        }
-        var b = this.t
-          , c = this.currentTime
-          , d = this.d
-          , e = this.v
-          , f = R.C()
-          , h = this.e;
-        this.O && this.N.G(this.O.c.i(this.N).a(0.2));
-        K.clearRect(0, 0, I.width, I.height);
-        K.lineWidth = Math.max(2 * d, 0.5);
-        if (S && !Hb && ("line" === P || "scenery line" === P || "brush" === P || "scenery brush" === P))
-            50 > f.x ? (this.N.x -= 10 / d,
-            R.x -= 10 / d) : f.x > I.width - 50 && (this.N.x += 10 / d,
-            R.x += 10 / d),
-            50 > f.y ? (this.N.y -= 10 / d,
-            R.y -= 10 / d) : f.y > I.height - 50 && (this.N.y += 10 / d,
-            R.y += 10 / d),
-            K.strokeStyle = "#f00",
-            f = R.C(),
-            K[A]().m(U.C().x, U.C().y).l(f.x, f.y).s();
-        var i = (new F(0,0)).Ka()
-          , l = (new F(I.width,I.height)).Ka();
-        i.x = t(i.x / e);
-        i.y = t(i.y / e);
-        l.x = t(l.x / e);
-        l.y = t(l.y / e);
-        var m = [], n, x, w, y, C;
-        for (w = i.x; w <= l.x; w++)
-            for (y = i.y; y <= l.y; y++)
-                if (h[w] !== g && h[w][y] !== g) {
-                    if (0 < h[w][y].o.length || 0 < h[w][y].B.length) {
-                        m[C = w + "_" + y] = 1;
-                        if (this.U[C] === g) {
-                            n = this.U[C] = v.createElement("canvas");
-                            n.width = e * d;
-                            n.height = e * d;
-                            var M = n.getContext("2d");
-                            M.lineCap = "round";
-                            M.lineWidth = Math.max(2 * d, 0.5);
-                            M.strokeStyle = "#aaa";
-                            n = 0;
-                            for (x = h[w][y].B.length; n < x; n++)
-                                h[w][y].B[n].I(M, w * e * d, y * e * d);
-                            M.strokeStyle = "#000";
-                            Ib && (M.shadowOffsetX = M.shadowOffsetY = 2,
-                            M.shadowBlur = Math.max(2, 10 * d),
-                            M.shadowColor = "#000");
-                            n = 0;
-                            for (x = h[w][y].o.length; n < x; n++)
-                                h[w][y].o[n].I(M, w * e * d, y * e * d)
-                        }
-                        K.drawImage(this.U[C], t(I.width / 2 - this.N.x * d + w * e * d), t(I.height / 2 - this.N.y * d + y * e * d))
-                    }
-                    K.strokeStyle = "#000";
-                    n = 0;
-                    for (x = h[w][y].k.length; n < x; n++)
-                        h[w][y].k[n].I()
-                }
-        for (var X in this.U)
-            m[X] === g && delete this.U[X];
-        if (250 !== I.width) {
-            if (Hb)
-                a();
-            else if ("camera" !== P && !this.O)
-                switch (P) {
-                case "line":
-                case "scenery line":
-                case "brush":
-                case "scenery brush":
-                    K.lineWidth = 1;
-                    K.strokeStyle = "#000";
-                    w = f.x;
-                    y = f.y;
-                    K[A]().m(w - 10, y).l(w + 10, y).m(w, y + 10).l(w, y - 10).s();
-                    break;
-                case "eraser":
-                    a();
-                    break;
-                case "goal":
-                case "checkpoint":
-                case "bomb":
-                case "slow-mo":
-                    K.fillStyle = "goal" === P ? "#ff0" : "checkpoint" === P ? "#00f" : "bomb" === P ? "#f00" : "#eee";
-                    K[A]()[z](f.x, f.y, 7 * d, 0, p, j)[B]().s();
-                    break;
-                case "boost":
-                case "gravity":
-                    K[A]().fillStyle = "boost" === P ? "#ff0" : "#0f0",
-                    K.save(),
-                    S ? (K.translate(U.C().x, U.C().y),
-                    K.rotate(Math.atan2(-(R.x - U.x), R.y - U.y))) : K.translate(f.x, f.y),
-                    K.m(-7 * d, -10 * d).l(0, 10 * d).l(7 * d, -10 * d).l(-7 * d, -10 * d)[B]().s().restore()
-                }
-            K[A]();
-            K.fillStyle = "#ff0";
-            K.lineWidth = 1;
-            K[z](40, 12, 3.5, 0, p, j)[B]().s()[A]();
-            K.lineWidth = 10;
-            K.strokeStyle = "#fff";
-            K.fillStyle = "#000";
-            e = t(c / 6E4);
-            h = t(c % 6E4 / 1E3);
-            c = t((c - 6E4 * e - 1E3 * h) / 100);
-            i = "";
-            10 > e && (e = "0" + e);
-            10 > h && (h = "0" + h);
-            i = e + ":" + h + "." + c;
-            if (this.paused)
-                i += " - Game paused";
-            else if (b && b.Y)
-                i = "Press ENTER to restart" + (1 < Ia.length + Na.length ? " or BACKSPACE to cancel Checkpoint" : "");
-            else if (this.id === g) {
-                if (10 === Jb && ("line" === P || "scenery line" === P || "brush" === P || "scenery brush" === P))
-                    i += " - Grid ";
-                i += " - " + P;
-                if ("brush" === P || "scenery brush" === P)
-                    i += " ( size " + Kb + " )"
-            }
-            V && (!V[0] && !V[1]) && (i += " - " + (this.paused ? "Unp" : "P") + "ause ( SPACE )");
-            K.strokeText(i = ": " + this.ea + " / " + this.ja + "  -  " + i, 50, 16);
-            K.fillText(i, 50, 16);
-            this.H && (K.fillStyle = "#aaa",
-            K.textAlign = "right",
-            K.strokeText(i = (this.H.name || "Ghost") + (this.H.ea === this.ja ? " finished!" : ": " + this.H.ea + " / " + this.ja), I.width - 7, 16),
-            K.fillText(i, I.width - 7, 16),
-            K.textAlign = "left",
-            K.fillStyle = "#000");
-            V && (V[0] ? (K.textAlign = "right",
-            v.documentElement.offsetHeight <= window.innerHeight ? (K.strokeText(V[2], I.width - 36, 15 + 25 * V[1]),
-            K.fillText(V[2], I.width - 36, 15 + 25 * V[1])) : (K.strokeText(V[2], I.width - 51, 15 + 25 * V[1]),
-            K.fillText(V[2], I.width - 51, 15 + 25 * V[1])),
-            K.textAlign = "left") : (K.strokeText(V[2], 36, 15 + 25 * V[1]),
-            K.fillText(V[2], 36, 15 + 25 * V[1])));
-            this.Ab && (b = (I.width - 250) / 2,
-            c = (I.height - 150) / 2,
-            K.lineWidth = 1,
-            K.strokeStyle = "#fff",
-            K.fillStyle = "rgba(0, 0, 0, 0.4)",
-            K.fc(0, 0, I.width, c).fc(0, c + 150, I.width, c).fc(0, c, b, 150).fc(b + 250, c, b, 150).sR(b, c, 250, 150));
             return this
         }
     }
-    ;
-    Q.Ua = function(a) {
-        function b(b) {
-            (b = b.Ua(a)) && l.push(b)
-        }
-        var c = t(a.x / this.v - 0.5), d = t(a.y / this.v - 0.5), e = this.e[c], c = this.e[c + 1], f, h, i, l = [];
-        if (e !== g) {
-            f = e[d];
-            h = e[d + 1];
-            if (f !== g) {
-                e = 0;
-                for (i = f.o.length; e < i; e++)
-                    f.o[e] && b(f.o[e]);
-                e = 0;
-                for (i = f.B.length; e < i; e++)
-                    f.B[e] && b(f.B[e]);
-                e = 0;
-                for (i = f.k.length; e < i; e++)
-                    f.k[e] && b(f.k[e])
-            }
-            if (h !== g) {
-                e = 0;
-                for (i = h.o.length; e < i; e++)
-                    h.o[e] && b(h.o[e]);
-                e = 0;
-                for (i = h.B.length; e < i; e++)
-                    h.B[e] && b(h.B[e]);
-                e = 0;
-                for (i = h.k.length; e < i; e++)
-                    h.k[e] && b(h.k[e])
-            }
-        }
-        if (c !== g) {
-            f = c[d];
-            d = c[d + 1];
-            if (f !== g) {
-                e = 0;
-                for (i = f.o.length; e < i; e++)
-                    f.o[e] && b(f.o[e]);
-                e = 0;
-                for (i = f.B.length; e < i; e++)
-                    f.B[e] && b(f.B[e]);
-                e = 0;
-                for (i = f.k.length; e < i; e++)
-                    f.k[e] && b(f.k[e])
-            }
-            if (d !== g) {
-                e = 0;
-                for (i = d.o.length; e < i; e++)
-                    d.o[e] && b(d.o[e]);
-                e = 0;
-                for (i = d.B.length; e < i; e++)
-                    d.B[e] && b(d.B[e]);
-                e = 0;
-                for (i = d.k.length; e < i; e++)
-                    d.k[e] && b(d.k[e])
-            }
-        }
-        e = 0;
-        for (i = this.k.length; e < i; e++)
-            this.k[e] && this.k[e].qa !== g && l.push(this.k.splice(e--, 1)[0]);
-        return l
-    }
-    ;
-    Q.pa = function(a, b, c) {
-        a = new (c ? vb : tb)(a.x,a.y,b.x,b.y,this);
-        if (2 <= a.p && 1E5 > a.p && (this.Ta(a),
-        "brush" === P || "line" === P || "scenery brush" === P || "scenery line" === P))
-            "brush" === P || "line" === P ? Lb.copy(R) : Mb.copy(R),
-            U.copy(R);
-        return a
-    }
-    ;
-    Q.Ta = function(a) {
-        var b = Ab(a.u, a.r, this.v), c, d, e, f;
-        e = 0;
-        for (f = b.length; e < f; e++)
-            c = t(b[e].x / this.v),
-            d = t(b[e].y / this.v),
-            this.e[c] === g && (this.e[c] = {}),
-            this.e[c][d] === g && (this.e[c][d] = new xb),
-            a.hb ? this.e[c][d].B.push(a) : this.e[c][d].o.push(a),
-            delete this.U[c + "_" + d]
-    }
-    ;
-    Q.cb = function(a) {
-        var b = t(a.c.x / this.v)
-          , c = t(a.c.y / this.v);
-        this.e[b] === g && (this.e[b] = {});
-        this.e[b][c] === g && (this.e[b][c] = new xb);
-        this.e[b][c].k.push(a)
-    }
-    ;
-    Q.G = function(a, b) {
-        for (var c = 0, d = a.length; c < d; c++)
-            a[c].type && (a[c] = new a[c].type(a[c].x,a[c].y,this)),
-            a[c].Eb ? this.cb(a[c]) : b ? this.Ta(a[c]) : this.pa(a[c].u, a[c].r, a[c].hb)
-    }
-    ;
-    Q.remove = function(a, b) {
-        b === g && (b = a);
-        for (var c = Ab(a, b, this.v), d = [], e = 0, f = c.length; e < f; e++) {
-            var h = t(c[e].x / this.v)
-              , i = t(c[e].y / this.v)
-              , d = d.concat(this.e[h][i].remove());
-            delete this.U[h + "_" + i]
-        }
-        e = 0;
-        for (f = d.length; e < f; e++)
-            d[e].qa = k
-    }
-    ;
-    Q.La = function(a, b) {
-        this.nb.push({
-            Qa: a,
-            Ma: b
-        });
-        return this
-    }
-    ;
-    Q.Qa = function() {
-        this.nb.Qa();
-        return this
-    }
-    ;
-    Q.Ma = function() {
-        this.nb.Ma();
-        return this
-    }
-    ;
-    Q.lb = function() {
-        if ("scenery line" === P || "scenery brush" === P) {
-            var a = t(Mb.x / this.v)
-              , b = t(Mb.y / this.v);
-            (a = this.e[a][b].B[this.e[a][b].B.length - 1]) && a.r.x === s(Mb.x) && a.r.y === s(Mb.y) ? (a.qa = j,
-            Mb.copy(a.u),
-            this.remove(a.u, a.r)) : alert("No more scenery line to erase!")
-        } else
-            a = t(Lb.x / this.v),
-            b = t(Lb.y / this.v),
-            a = this.e[a][b].o[this.e[a][b].o.length - 1],
-            a !== g && a.r.x === s(Lb.x) && a.r.y === s(Lb.y) ? (a.qa = j,
-            Lb.copy(a.u),
-            this.remove(a.u, a.r)) : alert("No more line to erase!")
-    }
-    ;
-    Q.all = function() {
-        var a = {
-            o: [],
-            B: [],
-            k: [],
-            t: this.aa
-        }, b, c, d;
-        for (c in this.e)
-            for (d in this.e[c])
-                b = this.e[c][d],
-                la(a.o, b.o),
-                la(a.B, b.B),
-                la(a.k, b.k);
-        return a
-    }
-    ;
-    Q.toString = function() {
-        var a = "", b = "", c = "", d;
-        for (d in this.e)
-            for (var e in this.e[d])
-                if (this.e[d][e].o) {
-                    for (var f = 0; f < this.e[d][e].o.length; f++)
-                        this.e[d][e].o[f].ma || (a += this.e[d][e].o[f].u + this.e[d][e].o[f].xa() + ",");
-                    for (f = 0; f < this.e[d][e].B.length; f++)
-                        this.e[d][e].B[f].ma || (b += this.e[d][e].B[f].u + this.e[d][e].B[f].xa() + ",");
-                    for (f = 0; f < this.e[d][e].k.length; f++)
-                        c += this.e[d][e].k[f] + ","
+    class Track {
+        constructor(a){
+            var b, c, d, e;
+            this.grid = {};
+            this.scale = 100;
+            this.canvas = canvas;
+            this.U = {};
+            this.zoom = 0.6;
+            this.currentTime = 0;
+            this.id = a;
+            this.vehicle = "BMX";
+            this.Kb = 1;
+            this.undoManager = new UndoManager();
+            this.paused = !1;
+            K["fx"]("Loading track... Please wait.", 36, 16);
+            this.camera = new Vector(0,0);
+            this.id ? 7 < this.id.length ? (Fb.style.display ? (a = this.id,
+            this.id = void 0,
+            Fb.style.display = "block",
+            tool = "line") : ("v1," !== a.substr(0, 3) && (this.Kb = 0))) : ("v1," !== a.substr(0, 3) && (this.Kb = 0)) : (a = "-18 1i 18 1i##",
+            Fb.style.display = "block",
+            tool = "line");
+            this.code = a;
+            var f = a.split("#")
+              , h = f[0] ? f[0].split(",") : []
+              , a = 0;
+            for(c = h.length; a < c; a++)
+                if(e = h[a].split(/\s+/g),
+                3 < e.length){
+                    b = 0;
+                    for(d = e.length - 2; b < d; b += 2)
+                        this.addLine({
+                            x: parseInt(e[b], 32),
+                            y: parseInt(e[b + 1], 32)
+                        }, {
+                            x: parseInt(e[b + 2], 32),
+                            y: parseInt(e[b + 3], 32)
+                        })
                 }
-        for (d in this.e)
-            for (e in this.e[d])
-                if (this.e[d][e].o) {
-                    for (f = 0; f < this.e[d][e].o.length; f++)
-                        this.e[d][e].o[f].ma = k;
-                    for (f = 0; f < this.e[d][e].B.length; f++)
-                        this.e[d][e].B[f].ma = k
-                }
-        return a.substr(0, a.length - 1) + "#" + b.substr(0, b.length - 1) + "#" + c.substr(0, c.length - 1) + "#" + this.aa
-    }
-    ;
-    function Nb() {
-        this.e = {};
-        this.v = 100;
-        this.U = {};
-        this.d = 0.6;
-        this.currentTime = 0;
-        this.id = "SURVIVAL";
-        this.aa = "BMX";
-        this.paused = k;
-        K.fillText("Building track... Please wait.", 36, 16);
-        this.N = new F(0,0);
-        this.o = [];
-        this.k = [];
-        this.Xa = 0.5
-    }
-    var W = Nb.prototype;
-    W.jb = function() {
-        1 < Ia.length && Ia.pop();
-        1 < Na.length && Na.pop();
-        this.H && 1 < Da.length && Da.pop()
-    }
-    ;
-    W.Na = function() {
-        this.kb();
-        this.paused = k;
-        var a = this.t = "BMX" === this.aa ? new Ha(this) : "HAR" === this.aa ? new Ra(this) : new Ma(this);
-        this.O = a.head;
-        if (this.H) {
-            var b = this.H = "BMX" === this.Z[6] ? new Ka(this.Z,this) : new Pa(this.Z,this);
-            1 === a.na.length && !O && (this.O = b.head)
-        }
-        this.currentTime = a.na[a.na.length - 1][29];
-        this.N = a.head.c.clone()
-    }
-    ;
-    W.reset = function() {
-        Ia = [[0, -1, 0, -1, 0, 0, -21, 38, -21, 38, 0, 0, 0, 21, 38, 21, 38, 0, 0, 0, 45, 42, 45, 1, 0, 0.3, k, 0, [], 0]];
-        Na = [[2, -3, 2, -3, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 47, 45, 45, 1, 0, 0.3, k, 0, [], 0]];
-        this.H && (Da = Bb("BMX" === this.Z[6] ? Ia : Na));
-        this.Na()
-    }
-    ;
-    W.ob = function(a) {
-        (a = "string" === typeof a && "g" === a.charAt(0) ? u(a.substr(1), 10) : this.sb[u(a, 10) - 1]) && Gb(a, this);
-        return this
-    }
-    ;
-    W.L = function(a) {
-        var b = t(a.c.x / this.v - 0.5)
-          , c = t(a.c.y / this.v - 0.5);
-        this.e[b] !== g && (this.e[b][c] !== g && this.e[b][c].za(),
-        this.e[b][c + 1] !== g && this.e[b][c + 1].za());
-        this.e[b + 1] !== g && (this.e[b + 1][c] !== g && this.e[b + 1][c].za(),
-        this.e[b + 1][c + 1] !== g && this.e[b + 1][c + 1].za());
-        this.e[b] !== g && this.e[b][c] !== g && this.e[b][c].L(a);
-        this.e[b + 1] !== g && (this.e[b + 1][c] !== g && this.e[b + 1][c].L(a),
-        this.e[b + 1][c + 1] !== g && this.e[b + 1][c + 1].L(a));
-        this.e[b] !== g && this.e[b][c + 1] !== g && this.e[b][c + 1].L(a);
-        return this
-    }
-    ;
-    W.J = function() {
-        this.paused || (this.H && this.H.J(),
-        this.t && this.t.J(),
-        this.currentTime += __);
-        var a;
-        a = (a = this.o[this.o.length - 1]) ? a.r : new F(-50,50);
-        !this.t.Y && 2E3 > a.fb(this.t.n.c) && (this.pa(a, F.prototype.b.call(a, {
-            x: t(100 * q() / this.Xa),
-            y: t(20 * (q() - 0.5) * this.Xa)
-        })),
-        this.Xa += 0.001);
-        this.I();
-        this.H && this.H.I();
-        this.t && this.t.I();
-        return this
-    }
-    ;
-    W.I = function() {
-        var a = this.t;
-        this.O && this.N.G(this.O.c.i(this.N).a(0.2));
-        K.clearRect(0, 0, I.width, I.height);
-        var b = (new F(0,0)).Ka()
-          , c = (new F(I.width,I.height)).Ka();
-        b.x = t(b.x / this.v);
-        b.y = t(b.y / this.v);
-        c.x = t(c.x / this.v);
-        c.y = t(c.y / this.v);
-        var d = [], e, f, h, i;
-        for (h = b.x; h <= c.x; h++)
-            for (i = b.y; i <= c.y; i++)
-                if (this.e[h] !== g && this.e[h][i] !== g) {
-                    if (0 < this.e[h][i].o.length) {
-                        d[h + "_" + i] = 1;
-                        if (this.U[h + "_" + i] === g) {
-                            e = this.U[h + "_" + i] = v.createElement("canvas");
-                            e.width = this.v * this.d;
-                            e.height = this.v * this.d;
-                            e = e.getContext("2d");
-                            e.lineCap = "round";
-                            e.lineWidth = Math.max(2 * this.d, 0.5);
-                            e.strokeStyle = "#000";
-                            e = 0;
-                            for (f = this.e[h][i].o.length; e < f; e++)
-                                this.e[h][i].o[e].I(this.U[h + "_" + i].getContext("2d"), h * this.v * this.d, i * this.v * this.d)
-                        }
-                        K.drawImage(this.U[h + "_" + i], t(I.width / 2 - this.N.x * this.d + h * this.v * this.d), t(I.height / 2 - this.N.y * this.d + i * this.v * this.d))
+            if(1 < f.length){
+                h = f[1].split(",");
+                a = 0;
+                for(c = h.length; a < c; a++)
+                    if(e = h[a].split(/\s+/g),
+                    3 < e.length){
+                        b = 0;
+                        for(d = e.length - 2; b < d; b += 2)
+                            this.addLine({
+                                x: parseInt(e[b], 32),
+                                y: parseInt(e[b + 1], 32)
+                            }, {
+                                x: parseInt(e[b + 2], 32),
+                                y: parseInt(e[b + 3], 32)
+                            }, !0)
                     }
-                    K.strokeStyle = "#000"
+            }
+            this.collected = this.targets = 0;
+            this.powerups = [];
+            e = f[2] ? f[2].split(",") : [];
+            var i, a = 0;
+            for(c = e.length; a < c; a++)
+                if(h = e[a].split(/\s+/g),
+                2 < h.length){
+                    b = parseInt(h[1], 32);
+                    d = parseInt(h[2], 32);
+                    switch (h[0]){
+                    case "T":
+                        i = new Target(b,d,this);
+                        this.targets++;
+                        this.powerups.push(i);
+                        break;
+                    case "C":
+                        i = new Checkpoint(b,d,this);
+                        this.powerups.push(i);
+                        break;
+                    case "B":
+                        i = new Boost(b,d,parseInt(h[3], 32) + 180,this);
+                        break;
+                    case "G":
+                        i = new Gravity(b,d,parseInt(h[3], 32) + 180,this);
+                        break;
+                    case "O":
+                        i = new Bomb(b,d,this);
+                        break;
+                    case "S":
+                        i = new Slowmo(b,d,this);
+                        break;
+                    case "A":
+                        i = new Antigravity(b,d,this);
+                        break;
+                    case "W":
+                        i = new Teleporter(b,d,this,parseInt(h[3], 32),parseInt(h[4], 32))
+                    }
+                    i && (b = Math.floor(b / this.scale),
+                    d = Math.floor(d / this.scale),
+                    this.grid[b] === void 0 && (this.grid[b] = {}),
+                    this.grid[b][d] === void 0 && (this.grid[b][d] = new xb),
+                    this.grid[b][d].powerups.push(i))
                 }
-        for (var l in this.U)
-            d[l] === g && delete this.U[l];
-        E(K[A](), {
-            lineWidth: 10,
-            strokeStyle: "#fff",
-            fillStyle: "#000"
-        });
-        !this.t.Y && this.t.n.c.x > this.Cb && (this.Cb = this.t.n.c.x);
-        b = t((this.t.Y ? this.t.Bb : this.t).n.c.x / 10) / 10;
-        c = Math.max(0, t(9 * (this.t.Y ? this.t.t : this.t).n.h.x) / 10);
-        0 === b % 1 && (b += ".0");
-        0 === c % 1 && (c += ".0");
-        K.strokeText(a = "Distance: " + b + " meters; Speed: " + c + " km/h" + (a.Y ? " - Press ENTER to retry" : ""), 28, 16);
-        K.fillText(a, 28, 16);
-        this.H && (K.fillStyle = "#aaa",
-        K.textAlign = "right",
-        K.strokeText(a = (this.H.name || "Ghost") + t(this.H.n.c.x / 10) / 10, I.width - 7, 16),
-        K.fillText(a, I.width - 7, 16),
-        K.textAlign = "left",
-        K.fillStyle = "#000");
-        this.t.I();
-        return this
+            "MTB" === f[3] || "BMX" === f[3] ? (this.vehicle = f[3],
+            this.time = "" !== f[4] ? f[4] : !1) : this.time = "" !== f[3] ? f[3] : !1;
+        }
+        play(){
+            if(this.delta < 4){
+                this.delta ++;
+            } else {
+                for(var a = Sb.length; a--;){
+                    Sb[a]()
+                }
+                this.delta = 0;
+            }
+            requestAnimationFrame(() => this.play());
+        }
+        jb(){
+            1 < BMX_DEFAULT.length && BMX_DEFAULT.pop();
+            1 < MTB_DEFAULT.length && MTB_DEFAULT.pop();
+            this.ghost && 1 < Da.length && Da.pop()
+        }
+        cp(){
+            this.removeCollectedItems();
+            this.paused = JSON.parse(localStorage.pauseOnEnter) ? true : !1;
+            JSON.parse(localStorage.pauseOnEnter) ? window.autoPause = true : null;
+            var a = this.player = this.vehicle ? "BMX" === this.vehicle ? new BMX(this, BMX_DEFAULT[BMX_DEFAULT.length - 1], !0) : new MTB(this, MTB_DEFAULT[MTB_DEFAULT.length - 1], !1) : !1;
+            a && (this.cameraLock = a.head,
+            this.currentTime = a.na[a.na.length - 1][29],
+            this.camera = a.head.pos.clone());
+            if(this.ghost){
+                var b = this.ghost = "BMX" === this.ghost_data[6] ? new Ghost(this.ghost_data, this, !0) : new Ghost(this.ghost_data, this, !1);
+                if(!a || 1 === a.na.length && !cameraLock)
+                    this.cameraLock = b.head
+            }
+        }
+        reset(){
+            BMX_DEFAULT = [[0, -1, 0, -1, 0, 0, -21, 38, -21, 38, 0, 0, 0, 21, 38, 21, 38, 0, 0, 0, 45, 42, 45, 1, 0, 0.3, !1, 0, [], 0]];
+            MTB_DEFAULT = [[2, -3, 2, -3, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 47, 45, 45, 1, 0, 0.3, !1, 0, [], 0]];
+            this.ghost && (Da = Bb("BMX" === this.ghost_data[6] ? BMX_DEFAULT : MTB_DEFAULT));
+            this.cp()
+        }
+        removeCollectedItems(){
+            var a, b, c, d, e;
+            for(a in this.grid)
+                if(this.grid.hasOwnProperty(a))
+                    for(b in this.grid[a])
+                        if(this.grid[a].hasOwnProperty(b)){
+                            e = this.grid[a][b];
+                            c = 0;
+                            for(d = e.powerups.length; c < d; c++)
+                                e.powerups[c].used !== void 0 && (e.powerups[c].used = !1)
+                        }
+        }
+        watchGhost(a){
+            watchGhost(a, this);
+            return this
+        }
+        collide(a){
+            var b = Math.floor(a.pos.x / this.scale - 0.5),
+                c = Math.floor(a.pos.y / this.scale - 0.5),
+                d = this.grid;
+            if(d[b] !== void 0) {
+                if(d[b][c] !== void 0) {
+                    d[b][c].za()
+                }
+                if(d[b][c + 1] !== void 0) {
+                    d[b][c + 1].za()
+                }
+            }
+            if(d[b + 1] !== void 0) {
+                if(d[b + 1][c] !== void 0) {
+                    d[b + 1][c].za()
+                }
+                if(d[b + 1][c + 1] !== void 0) {
+                    d[b + 1][c + 1].za()
+                }
+            }
+            if(d[b] !== void 0) {
+                if(d[b][c] !== void 0) {
+                    d[b][c].collide(a)
+                }
+            }
+            if(d[b + 1] !== void 0) {
+                if(d[b + 1][c] !== void 0) {
+                    d[b + 1][c].collide(a)
+                }
+                if(d[b + 1][c + 1] !== void 0) {
+                    d[b + 1][c + 1].collide(a)
+                }
+                if(d[b] !== void 0) {
+                    if(d[b][c + 1] !== void 0) {
+                        d[b][c + 1].collide(a)
+                    }
+                }
+            }
+            return this
+        }
+        update(){
+            this.paused || (this.player && this.player.update(),
+            this.ghost && this.ghost.update(),
+            this.currentTime += 1000 / 25);
+            this.draw();
+            this.player && this.player.draw();
+            this.ghost && this.ghost.draw();
+            return this
+        }
+        draw(){
+            function a(){
+                K.fillStyle = "#ffb6c1";
+                K["ba"]()["a"](f.x, f.y, (ab - 1) * d, 0, 2 * Math.PI, !0)["f"]()
+            }
+            var b = this.player
+              , c = this.currentTime
+              , d = this.zoom
+              , e = this.scale
+              , f = R.toPixel()
+              , h = this.grid;
+            this.cameraLock && this.camera.addToSelf(this.cameraLock.pos.sub(this.camera).scale(0.2));
+            K.clearRect(0, 0, canvas.width, canvas.height);
+            K.lineWidth = Math.max(2 * d, 0.5);
+            if(S && !Hb && ("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool || "teleporter" === tool))
+                50 > f.x ? (this.camera.x -= 10 / d,
+                R.x -= 10 / d) : f.x > canvas.width - 50 && (this.camera.x += 10 / d,
+                R.x += 10 / d),
+                50 > f.y ? (this.camera.y -= 10 / d,
+                R.y -= 10 / d) : f.y > canvas.height - 50 && (this.camera.y += 10 / d,
+                R.y += 10 / d),
+                K.strokeStyle = "#f00",
+                f = R.toPixel(),
+                K["ba"]().m(U.toPixel().x, U.toPixel().y).l(f.x, f.y).s();
+            var i = (new Vector(0,0)).adjustToCanvas()
+              , l = (new Vector(canvas.width,canvas.height)).adjustToCanvas();
+            i.x = Math.floor(i.x / e);
+            i.y = Math.floor(i.y / e);
+            l.x = Math.floor(l.x / e);
+            l.y = Math.floor(l.y / e);
+            var m = [], n, x, w, y, C;
+            for(w = i.x; w <= l.x; w++)
+                for(y = i.y; y <= l.y; y++)
+                    if(h[w] !== void 0 && h[w][y] !== void 0){
+                        if(0 < h[w][y].physics.length || 0 < h[w][y].scenery.length){
+                            m[C = w + "_" + y] = 1;
+                            if(this.U[C] === void 0){
+                                n = this.U[C] = document.createElement("canvas");
+                                n.width = e * d;
+                                n.height = e * d;
+                                var M = n.getContext("2d");
+                                M.lineCap = "round";
+                                M.lineWidth = Math.max(2 * d, 0.5);
+                                M.strokeStyle = "#aaa";
+                                n = 0;
+                                for(x = h[w][y].scenery.length; n < x; n++)
+                                    h[w][y].scenery[n].draw(M, w * e * d, y * e * d);
+                                M.strokeStyle = "#000";
+                                Ib && (M.shadowOffsetX = M.shadowOffsetY = 2,
+                                M.shadowBlur = Math.max(2, 10 * d),
+                                M.shadowColor = "#000");
+                                n = 0;
+                                for(x = h[w][y].physics.length; n < x; n++)
+                                    h[w][y].physics[n].draw(M, w * e * d, y * e * d)
+                            }
+                            K.drawImage(this.U[C], Math.floor(canvas.width / 2 - this.camera.x * d + w * e * d), Math.floor(canvas.height / 2 - this.camera.y * d + y * e * d))
+                        }
+                        K.strokeStyle = "#000";
+                        n = 0;
+                        for(x = h[w][y].powerups.length; n < x; n++)
+                            h[w][y].powerups[n].draw()
+                    }
+            for(var X in this.U)
+                m[X] === void 0 && delete this.U[X];
+            if(250 !== canvas.width){
+                if(Hb)
+                    a();
+                else if("camera" !== tool && !this.cameraLock)
+                    switch (tool){
+                    case "line":
+                    case "scenery line":
+                    case "brush":
+                    case "scenery brush":
+                        K.lineWidth = 1;
+                        K.strokeStyle = "#000";
+                        w = f.x;
+                        y = f.y;
+                        K["ba"]().m(w - 10, y).l(w + 10, y).m(w, y + 10).l(w, y - 10).s();
+                        break;
+                    case "eraser":
+                        a();
+                        break;
+                    case "goal":
+                    case "checkpoint":
+                    case "bomb":
+                    case "slow-mo":
+                    case "antigravity":
+                    case "teleporter":
+                        K.fillStyle = "goal" === tool ? "#ff0" : "checkpoint" === tool ? "#00f" : "bomb" === tool ? "#f00" : "#eee" ? "slow-mo" === tool : "antigravity" === tool ? "00ffff" : "ff00ff";
+                        K["ba"]()["a"](f.x, f.y, 7 * d, 0, 2 * Math.PI, !0)["f"]().s();
+                        break;
+                    case "boost":
+                    case "gravity":
+                        K["ba"]().fillStyle = "boost" === tool ? "#ff0" : "#0f0",
+                        K.save(),
+                        S ? (K.translate(U.toPixel().x, U.toPixel().y),
+                        K.rotate(Math.atan2(-(R.x - U.x), R.y - U.y))) : K.translate(f.x, f.y),
+                        K.m(-7 * d, -10 * d).l(0, 10 * d).l(7 * d, -10 * d).l(-7 * d, -10 * d)["f"]().s().restore()
+                    }
+                K["ba"]();
+                K.fillStyle = "#ff0";
+                K.lineWidth = 1;
+                K["a"](40, 12, 3.5, 0, 2 * Math.PI, !0)["f"]().s()["ba"]();
+                K.lineWidth = 10;
+                K.strokeStyle = "#fff";
+                K.fillStyle = "#000";
+                e = Math.floor(c / 6E4);
+                h = Math.floor(c % 6E4 / 1E3);
+                c = Math.floor((c - 6E4 * e - 1E3 * h) / 100);
+                i = "";
+                10 > e && (e = "0" + e);
+                10 > h && (h = "0" + h);
+                i = e + ":" + h + "." + c;
+                if(this.paused && !window.autoPause)
+                    i += " - Game paused";
+                else if(b && b.dead)
+                    i = "Press ENTER to restart" + (1 < BMX_DEFAULT.length + MTB_DEFAULT.length ? " or BACKSPACE to cancel Checkpoint" : "");
+                else if(this.id === void 0){
+                    if(10 === Jb && ("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool))
+                        i += " - Grid ";
+                    i += " - " + tool;
+                    if("brush" === tool || "scenery brush" === tool)
+                        i += " ( size " + Kb + " )"
+                }
+                V && (!V[0] && !V[1]) && (i += " - " + (this.paused ? "Unp" : "P") + "ause ( SPACE )");
+                K.strokeText(i = ": " + this.collected + " / " + this.targets + "  -  " + i, 50, 16);
+                K.fillText(i, 50, 16);
+                this.ghost && (K.fillStyle = "#aaa",
+                K.textAlign = "right",
+                K.strokeText(i = (this.ghost.name || "Ghost") + (this.ghost.collected === this.targets ? " finished!" : ": " + this.ghost.collected + " / " + this.targets), canvas.width - 7, 16),
+                K.fillText(i, canvas.width - 7, 16),
+                K.textAlign = "left",
+                K.fillStyle = "#000");
+                V && (V[0] ? (K.textAlign = "right",
+                document.documentElement.offsetHeight <= window.innerHeight ? (K.strokeText(V[2], canvas.width - 36, 15 + 25 * V[1]),
+                K.fillText(V[2], canvas.width - 36, 15 + 25 * V[1])) : (K.strokeText(V[2], canvas.width - 51, 15 + 25 * V[1]),
+                K.fillText(V[2], canvas.width - 51, 15 + 25 * V[1])),
+                K.textAlign = "left") : (K.strokeText(V[2], 36, 15 + 25 * V[1]),
+                K.fillText(V[2], 36, 15 + 25 * V[1])));
+                this.Ab && (b = (canvas.width - 250) / 2,
+                c = (canvas.height - 150) / 2,
+                K.lineWidth = 1,
+                K.strokeStyle = "#fff",
+                K.fillStyle = "rgba(0, 0, 0, 0.4)",
+                K.fc(0, 0, canvas.width, c).fc(0, c + 150, canvas.width, c).fc(0, c, b, 150).fc(b + 250, c, b, 150).sR(b, c, 250, 150));
+                return this
+            }
+        }
+        erase(a){
+            function b(b){
+                (b = b.erase(a)) && l.push(b)
+            }
+            var c = Math.floor(a.x / this.scale - 0.5), d = Math.floor(a.y / this.scale - 0.5), e = this.grid[c], c = this.grid[c + 1], f, h, i, l = [];
+            if(e !== void 0){
+                f = e[d];
+                h = e[d + 1];
+                if(f !== void 0){
+                    e = 0;
+                    for(i = f.physics.length; e < i; e++)
+                        f.physics[e] && b(f.physics[e]);
+                    e = 0;
+                    for(i = f.scenery.length; e < i; e++)
+                        f.scenery[e] && b(f.scenery[e]);
+                    e = 0;
+                    for(i = f.powerups.length; e < i; e++)
+                        f.powerups[e] && b(f.powerups[e])
+                }
+                if(h !== void 0){
+                    e = 0;
+                    for(i = h.physics.length; e < i; e++)
+                        h.physics[e] && b(h.physics[e]);
+                    e = 0;
+                    for(i = h.scenery.length; e < i; e++)
+                        h.scenery[e] && b(h.scenery[e]);
+                    e = 0;
+                    for(i = h.powerups.length; e < i; e++)
+                        h.powerups[e] && b(h.powerups[e])
+                }
+            }
+            if(c !== void 0){
+                f = c[d];
+                d = c[d + 1];
+                if(f !== void 0){
+                    e = 0;
+                    for(i = f.physics.length; e < i; e++)
+                        f.physics[e] && b(f.physics[e]);
+                    e = 0;
+                    for(i = f.scenery.length; e < i; e++)
+                        f.scenery[e] && b(f.scenery[e]);
+                    e = 0;
+                    for(i = f.powerups.length; e < i; e++)
+                        f.powerups[e] && b(f.powerups[e])
+                }
+                if(d !== void 0){
+                    e = 0;
+                    for(i = d.physics.length; e < i; e++)
+                        d.physics[e] && b(d.physics[e]);
+                    e = 0;
+                    for(i = d.scenery.length; e < i; e++)
+                        d.scenery[e] && b(d.scenery[e]);
+                    e = 0;
+                    for(i = d.powerups.length; e < i; e++)
+                        d.powerups[e] && b(d.powerups[e])
+                }
+            }
+            e = 0;
+            for(i = this.powerups.length; e < i; e++)
+                this.powerups[e] && this.powerups[e].Remove !== void 0 && l.push(this.powerups.splice(e--, 1)[0]);
+            return l
+        }
+        addLine(a, b, c){
+            a = new (c ? Scenery : Physics)(a.x,a.y,b.x,b.y,this);
+            if(2 <= a.len && 1E5 > a.len && (this.addLineInternal(a),
+            "brush" === tool || "line" === tool || "scenery brush" === tool || "scenery line" === tool))
+                "brush" === tool || "line" === tool ? Lb.copy(R) : Mb.copy(R),
+                U.copy(R);
+            return a
+        }
+        addLineInternal(a){
+            var b = Ab(a.a, a.b, this.scale), c, d, e, f;
+            e = 0;
+            for(f = b.length; e < f; e++)
+                c = Math.floor(b[e].x / this.scale),
+                d = Math.floor(b[e].y / this.scale),
+                this.grid[c] === void 0 && (this.grid[c] = {}),
+                this.grid[c][d] === void 0 && (this.grid[c][d] = new xb),
+                a.hb ? this.grid[c][d].scenery.push(a) : this.grid[c][d].physics.push(a),
+                delete this.U[c + "_" + d]
+        }
+        addObject(a){
+            var b = Math.floor(a.pos.x / this.scale),
+                c = Math.floor(a.pos.y / this.scale);
+            if(this.grid[b] === void 0) {
+                this.grid[b] = {}
+            }
+            if(this.grid[b][c] === void 0) {
+                this.grid[b][c] = new xb
+            }
+            this.grid[b][c].powerups.push(a)
+        }
+        addToSelf(a, b){
+            for(var i = 0, d = a.length; i < d; i++){
+                if(a[i].type) {
+                    a[i] = new a[i].type(a[i].x,a[i].y,this)
+                }
+                if(a[i].Eb) {
+                    this.addObject(a[i])
+                } else if(b) {
+                    this.addLineInternal(a[i])
+                } else {
+                    this.addLine(a[i].a, a[i].b, a[i].hb)
+                }
+            }
+        }
+        remove(a, b){
+            b === void 0 && (b = a);
+            for(var c = Ab(a, b, this.scale), d = [], e = 0, f = c.length; e < f; e++){
+                var h = Math.floor(c[e].x / this.scale),
+                    i = Math.floor(c[e].y / this.scale),
+                    d = d.concat(this.grid[h][i].remove());
+                delete this.U[h + "_" + i]
+            }
+            e = 0;
+            for(f = d.length; e < f; e++)
+                d[e].Remove = !1
+        }
+        pushUndo(a, b){
+            this.undoManager.push({
+                undo: a,
+                redo: b
+            });
+            return this
+        }
+        undo(){
+            if("scenery line" === tool || "scenery brush" === tool){
+                var a = Math.floor(Mb.x / this.scale)
+                  , b = Math.floor(Mb.y / this.scale);
+                (a = this.grid[a][b].scenery[this.grid[a][b].scenery.length - 1]) && a.b.x === Math.round(Mb.x) && a.b.y === Math.round(Mb.y) ? (a.Remove = !0,
+                Mb.copy(a.a),
+                this.remove(a.a, a.b)) : alert("No more scenery line to erase!")
+            } else
+                a = Math.floor(Lb.x / this.scale),
+                b = Math.floor(Lb.y / this.scale),
+                a = this.grid[a][b].physics[this.grid[a][b].physics.length - 1],
+                a !== void 0 && a.b.x === Math.round(Lb.x) && a.b.y === Math.round(Lb.y) ? (a.Remove = !0,
+                Lb.copy(a.a),
+                this.remove(a.a, a.b)) : alert("No more line to erase!")
+        }
+        all(){
+            var a = {
+                physics: [],
+                scenery: [],
+                powerups: [],
+                vehicle: this.vehicle
+            }, b, c, d;
+            for(c in this.grid)
+                for(d in this.grid[c])
+                    b = this.grid[c][d],
+                    la(a.physics, b.physics),
+                    la(a.scenery, b.scenery),
+                    la(a.powerups, b.powerups);
+            return a
+        }
+        toString(){
+            var a = "", b = "", c = "", d;
+            for(d in this.grid)
+                for(var e in this.grid[d])
+                    if(this.grid[d][e].physics){
+                        for(var f = 0; f < this.grid[d][e].physics.length; f++)
+                            this.grid[d][e].physics[f].ma || (a += this.grid[d][e].physics[f].a + this.grid[d][e].physics[f].getEnd() + ",");
+                        for(f = 0; f < this.grid[d][e].scenery.length; f++)
+                            this.grid[d][e].scenery[f].ma || (b += this.grid[d][e].scenery[f].a + this.grid[d][e].scenery[f].getEnd() + ",");
+                        for(f = 0; f < this.grid[d][e].powerups.length; f++)
+                            c += this.grid[d][e].powerups[f] + ","
+                    }
+            for(d in this.grid)
+                for(e in this.grid[d])
+                    if(this.grid[d][e].physics){
+                        for(f = 0; f < this.grid[d][e].physics.length; f++)
+                            this.grid[d][e].physics[f].ma = !1;
+                        for(f = 0; f < this.grid[d][e].scenery.length; f++)
+                            this.grid[d][e].scenery[f].ma = !1
+                    }
+            return a.substr(0, a.length - 1) + "#" + b.substr(0, b.length - 1) + "#" + c.substr(0, c.length - 1) + "#" + this.vehicle
+        }
     }
-    ;
-    W.pa = function(a, b, c) {
-        a = new (c ? vb : tb)(a.x,a.y,b.x,b.y,this);
-        this.Ta(a);
-        return a
-    }
-    ;
-    W.Ta = function(a) {
-        var b = Ab(a.u, a.r, this.v), c, d, e, f;
-        e = 0;
-        for (f = b.length; e < f; e++)
-            c = t(b[e].x / this.v),
-            d = t(b[e].y / this.v),
-            this.e[c] === g && (this.e[c] = {}),
-            this.e[c][d] === g && (this.e[c][d] = new xb),
-            this.e[c][d].o.push(a),
-            this.o.push(a),
-            delete this.U[c + "_" + d]
-    }
-    ;
-    W.cb = function(a) {
-        var b = t(a.c.x / this.v)
-          , c = t(a.c.y / this.v);
-        this.e[b] === g && (this.e[b] = {});
-        this.e[b][c] === g && (this.e[b][c] = new xb);
-        this.e[b][c].k.push(a)
-    }
-    ;
-    W.G = function(a) {
-        for (var b = 0, c = a.length; b < c; b++)
-            a[b].Eb ? this.cb(a[b]) : this.pa(a[b].u, a[b].r, a[b].hb)
-    }
-    ;
-    W.kb = W.Ua = W.remove = W.La = W.Qa = W.Ma = W.lb = function() {
-        return this
-    }
-    ;
-    W.toString = function() {
-        return "v1,SURVIVAL#" + this.aa
-    }
-    ;
-    v.createElement("canvas").getContext || (location.href = "http://canvasrider.com/error");
-    var I = v.getElementById("canvas_rider")
-      , K = I.getContext("2d");
+    document.createElement("canvas").getContext;
+    var canvas = document.getElementById("canvas_rider")
+      , K = canvas.getContext("2d");
     K.lineCap = "round";
     K.lineJoin = "round";
     K.font = "8px eiven";
-    function Ob() {
+    function Ob(){
         var a = K[Pb]
           , b = K;
-        return function() {
+        return function(){
             a.apply(b, arguments);
             return b
         }
     }
-    for (var Pb in K)
+    for(var Pb in K)
         "function" === typeof K[Pb] && (K[Pb.charAt(0) + (Pb.charAt(6) || "")] = Ob());
-    K.s = function() {
+    K.s = function(){
         K.stroke();
         return K
-    }
-    ;
-    var H, Ia = [[0, -1, 0, -1, 0, 0, -21, 38, -21, 38, 0, 0, 0, 21, 38, 21, 38, 0, 0, 0, 45, 42, 45, 1, 0, 0.3, k, 0, [], 0]], Na = [[2, -3, 2, -3, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 47, 45, 45, 1, 0, 0.3, k, 0, [], 0]], Sa = [[-5, 4.5, -5, 4.5, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 35, 45, 45, 1, 0, 0.3, k, 0, [], 0]], Da, N = [{}, {}, {}, {}, {}], Aa = 0, Ba = 0, O = 0, Ca = 0, xa = 0, wa = j, S = k, U = new F(40,50), R = new F(0,0), Kb = 20, ab = 15, Z = k, P = "camera", Qb = "camera", Rb = k, Hb = k, V = k, Jb = 1, Sb = [], Ib = k, Tb = [";Restart ( ENTER );Cancel Checkpoint ( BACKSPACE );;Switch bike ( ctrl+B - Arrows to control, Z to turn );;Enable line shading;Enable fullscreen ( F )".split(";"), "Brush ( A - Hold to snap, hold & scroll to adjust size );Scenery brush ( S - Hold to snap, hold & scroll to adjust size );Lines ( backWheel - Hold to snap );Scenery lines ( W - Hold to snap );Eraser ( E - Hold & scroll to adjust size );Camera ( R - Release or press again to switch back, scroll to zoom );Enable grid snapping ( G );;Goal;Checkpoint;Boost;Gravity modifier;Bomb;Slow-Mo;;Shorten last line ( Z )".split(";")], Lb = new F(40,50), Mb = new F(-40,50), Ub = D("trackcode"), Vb = D("charcount"), Wb = D("content"), Xb = D("new"), Yb = D("load"), Zb = D("save"), $b = D("upload"), ac = D("toolbar1"), Fb = D("toolbar2");
-    E(ac.style, {
-        top: I.offsetTop + "px",
-        left: I.offsetLeft + "px",
+    };
+    var BMX_DEFAULT = [[0, -1, 0, -1, 0, 0, -21, 38, -21, 38, 0, 0, 0, 21, 38, 21, 38, 0, 0, 0, 45, 42, 45, 1, 0, 0.3, !1, 0, [], 0]],
+        MTB_DEFAULT = [[2, -3, 2, -3, 0, 0, -23, 35, -23, 35, 0, 0, 0, 23, 35, 23, 35, 0, 0, 0, 47, 45, 45, 1, 0, 0.3, !1, 0, [], 0]],
+        Da, N = [{}, {}, {}, {}, {}],
+        Aa = 0, Ba = 0, cameraLock = 0,
+        Ca = 0, xa = 0, wa = !0, S = !1,
+        U = new Vector(40,50),
+        R = new Vector(0,0),
+        Kb = 20, ab = 15, Z = !1, tool = "camera", Qb = "camera",
+        Rb = !1, Hb = !1, V = !1, Jb = 1, Sb = [], Ib = !1,
+        Tb = [
+            ";Restart ( ENTER );Cancel Checkpoint ( BACKSPACE );;Switch bike ( ctrl+B - Arrows to control, Z to turn );;Enable line shading;Enable fullscreen ( F )".split(";"),
+            "Brush ( A - Hold to snap, hold & scroll to adjust size );Scenery brush ( S - Hold to snap, hold & scroll to adjust size );Lines ( backWheel - Hold to snap );Scenery lines ( W - Hold to snap );Eraser ( E - Hold & scroll to adjust size );Camera ( R - Release or press again to switch back, scroll to zoom );Enable grid snapping ( G );;Goal;Checkpoint;Boost;Gravity modifier;Bomb;Slow-Mo;Antigravity;Teleporter;;Shorten last line ( Z )".split(";")
+        ],
+        Lb = new Vector(40,50),
+        Mb = new Vector(-40,50),
+        code =createElement("trackcode"),
+        Vb =createElement("charcount"),
+        Wb =createElement("content"),
+        newButton =createElement("new"),
+        loadButton =createElement("load"),
+        saveButton =createElement("save"),
+        uploadButton =createElement("upload"),
+        ac =createElement("toolbar1"),
+        Fb =createElement("toolbar2");
+    createItem(ac.style, {
+        top: canvas.offsetTop + "px",
+        left: canvas.offsetLeft + "px",
         display: "block"
     });
-    E(Fb.style, {
-        top: I.offsetTop + "px",
-        left: I.offsetLeft + I.width - 22 + "px"
+    createItem(Fb.style, {
+        top: canvas.offsetTop + "px",
+        left: canvas.offsetLeft + canvas.width - 22 + "px"
     });
-    function bc(a, b) {
-        cc();
-        if ("SURVIVAL" === a)
-            var c = new Nb;
-        else
-            c = new Eb(a),
-            c.sb = b;
-        c.t = "BMX" === c.aa ? new Ha(c) : "HAR" === c.aa ? new Ra(c) : new Ma(c);
-        c.O = c.t.head;
-        Sb.push(function() {
-            c.J()
+    function ride(a, b){
+        resizeCanvas();
+        var t = new Track(a);
+        t.play();
+        t.sb = b;
+        t.player = t.vehicle === "BMX" ? new BMX(t, BMX_DEFAULT[BMX_DEFAULT.length - 1], !0) : new MTB(t, MTB_DEFAULT[MTB_DEFAULT.length - 1], !1);
+        t.cameraLock = t.player.head;
+        Sb.push(function(){
+            t.update()
         });
-        return H = c
+        return track = t
     }
-    setInterval(function() {
-        for (var a = Sb.length; a--; )
-            Sb[a]()
-    }, __);
     var dc = {
-        parse: function(a) {
-            return dc.bb.parse(a)
-        },
-        bb: {
-            wb: function(a, b) {
-                var c = a.split(","), d, e, f, h, i;
-                e = 0;
-                for (f = c.length; e < f; e++)
-                    if (d = c[e].split(" "),
-                    3 < d.length) {
-                        h = 0;
-                        for (i = d.length - 2; h < i; h += 2)
-                            b.push({
-                                u: {
-                                    x: u(d[h], 32),
-                                    y: u(d[h + 1], 32)
-                                },
-                                r: {
-                                    x: u(d[h + 2], 32),
-                                    y: u(d[h + 3], 32)
-                                }
+        parse: function(a){
+            var code = a.split("#"), c, d, e, a = {
+                physics: [],
+                scenery: [],
+                powerups: [],
+                vehicle: code[3] || "BMX"
+            };
+            0 < code.length && dc.wb(code[0], a.physics);
+            1 < code.length && dc.wb(code[1], a.scenery);
+            if(2 < code.length){
+                var f = code[2] ? code[2].split(",") : [], h, b = 0;
+                for(c = f.length; b < c; b++)
+                    if(h = f[b].split(" "),
+                    2 < h.length)
+                        switch (d = parseInt(h[1], 32),
+                        e = parseInt(h[2], 32),
+                        h[0]){
+                        case "T":
+                            a.powerups.push({
+                                type: Target,
+                                x: d,
+                                y: e
+                            });
+                            break;
+                        case "C":
+                            a.powerups.push({
+                                type: Checkpoint,
+                                x: d,
+                                y: e
+                            });
+                            break;
+                        case "B":
+                            a.powerups.push({
+                                type: Boost,
+                                x: d,
+                                y: e,
+                                dir: parseInt(h[3], 32) + 180
+                            });
+                            break;
+                        case "G":
+                            a.powerups.push({
+                                type: Gravity,
+                                x: d,
+                                y: e,
+                                dir: parseInt(h[3], 32) + 180
+                            });
+                            break;
+                        case "O":
+                            a.powerups.push({
+                                type: Bomb,
+                                x: d,
+                                y: e
+                            });
+                            break;
+                        case "S":
+                            a.powerups.push({
+                                type: Slowmo,
+                                x: d,
+                                y: e
+                            });
+                            break;
+                        case "A":
+                            a.powerups.push({
+                                type: Antigravity,
+                                x: d,
+                                y: e
+                            });
+                            break;
+                        case "W":
+                            a.powerups.push({
+                                type: Teleporter,
+                                x: d,
+                                y: e,
+                                ex: parseInt(h[3], 32),
+                                ey: parseInt(h[4], 32)
                             })
-                    }
-            },
-            parse: function(a) {
-                var b = a.split("#"), c, d, e, a = {
-                    o: [],
-                    B: [],
-                    k: [],
-                    t: b[3] || "BMX"
-                };
-                0 < b.length && dc.bb.wb(b[0], a.o);
-                1 < b.length && dc.bb.wb(b[1], a.B);
-                if (2 < b.length) {
-                    var f = b[2] ? b[2].split(",") : [], h, b = 0;
-                    for (c = f.length; b < c; b++)
-                        if (h = f[b].split(" "),
-                        2 < h.length)
-                            switch (d = u(h[1], 32),
-                            e = u(h[2], 32),
-                            h[0]) {
-                            case "T":
-                                a.k.push({
-                                    type: fb,
-                                    x: d,
-                                    y: e
-                                });
-                                break;
-                            case "C":
-                                a.k.push({
-                                    type: hb,
-                                    x: d,
-                                    y: e
-                                });
-                                break;
-                            case "B":
-                                a.k.push({
-                                    type: jb,
-                                    x: d,
-                                    y: e,
-                                    dir: u(h[3], 32) + 180
-                                });
-                                break;
-                            case "G":
-                                a.k.push({
-                                    type: lb,
-                                    x: d,
-                                    y: e,
-                                    dir: u(h[3], 32) + 180
-                                });
-                                break;
-                            case "O":
-                                a.k.push({
-                                    type: pb,
-                                    x: d,
-                                    y: e
-                                });
-                                break;
-                            case "S":
-                                a.k.push({
-                                    type: nb,
-                                    x: d,
-                                    y: e
-                                })
-                            }
-                }
-                return a
-            },
-            Ob: function(a) {
-                var b = [], c = [], d = [], e = a.t || "BMX", f, h;
-                f = 0;
-                for (h = a.o.length; f < h; f++)
-                    a.o[f].ma || b.push(a.o[f].toString());
-                f = 0;
-                for (h = a.B.length; f < h; f++)
-                    a.B[f].ma || c.push(a.B[f].toString());
-                f = 0;
-                for (h = a.k.length; f < h; f++)
-                    d.push(a.k[f].toString());
-                f = 0;
-                for (h = Math.max(a.o.length, a.B.length); f < h; f++)
-                    a.o[f] && (a.o[f].ma = k),
-                    a.B[f] && (a.B[f].ma = k);
-                return b + "#" + c + "#" + d + "#" + e
+                        }
             }
+            return a
+        },
+        wb: function(a, b){
+            var c = a.split(","), d, e, f, h, i;
+            e = 0;
+            for(f = c.length; e < f; e++)
+                if(d = c[e].split(" "),
+                3 < d.length){
+                    h = 0;
+                    for(i = d.length - 2; h < i; h += 2)
+                        b.push({
+                            u: {
+                                x: parseInt(d[h], 32),
+                                y: parseInt(d[h + 1], 32)
+                            },
+                            r: {
+                                x: parseInt(d[h + 2], 32),
+                                y: parseInt(d[h + 3], 32)
+                            }
+                        })
+                }
+        },
+        stringify: function(a){
+            var physics = [], scenery = [], powerups = [], vehicle = a.player || "BMX", f, h;
+            f = 0;
+            for(h = a.physics.length; f < h; f++)
+                a.physics[f].ma || physics.push(a.physics[f].toString());
+            f = 0;
+            for(h = a.scenery.length; f < h; f++)
+                a.scenery[f].ma || scenery.push(a.scenery[f].toString());
+            f = 0;
+            for(h = a.powerups.length; f < h; f++)
+                powerups.push(a.powerups[f].toString());
+            f = 0;
+            for(h = Math.max(a.physics.length, a.scenery.length); f < h; f++)
+                a.physics[f] && (a.physics[f].ma = !1),
+                a.scenery[f] && (a.scenery[f].ma = !1);
+            return physics + "#" + scenery + "#" + powerups + "#" + vehicle
         }
     };
-    function Gb(a, b) {
-        var b = b || H
-          , c = "id=" + a
-          , d = new XMLHttpRequest
+    function watchGhost(a, b){
+        var b = b || track
           , e = ja();
-        d.onload = function() {
-            e.Va(d.responseText)
-        }
-        ;
-        d.open("POST", "/ghost/load", j);
-        d.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        d.send(c);
-        e.ab(function(a) {
-            var a = a.split(",")
-              , c = [{}, {}, {}, {}, {}];
-            5 < a.length && (c = c.concat(a.slice(5)));
-            for (var d = 0, e, m, n; 5 > d; d++) {
-                n = a[d].split(" ");
+        e.ab(function(a){
+            var c = [{}, {}, {}, {}, {}];
+            5 < a.split(",").length && (c = c.concat(a.split(",").slice(5)));
+            for(var d = 0, e, m, n; 5 > d; d++){
+                n = a.split(",")[d].split(" ");
                 e = 0;
-                for (m = n.length - 1; e < m; e++)
+                for(m = n.length - 1; e < m; e++)
                     c[d][n[e]] = 1
             }
-            b.H = (b.Z = c)[5];
+            b.ghost = (b.ghost_data = c)[5];
             b.reset()
         })
+        e.Va(a);
+        track.paused = false;
     }
-    function ec() {
-        H.aa = "BMX" === H.aa ? "MTB" : "BMX";
-        H.reset()
+    function switchBike(){
+        track.vehicle = "BMX" === track.vehicle ? "MTB" : "BMX";
+        track.reset()
     }
-    function fc() {
-        var a = H.Ua(R);
-        a.length && H.La(function() {
-            H.G(a, j)
-        }, function() {
-            for (var b = 0, c = a.length; b < c; b++)
+    function fc(){
+        var a = track.erase(R);
+        a.length && track.pushUndo(function(){
+            track.addToSelf(a, !0)
+        }, function(){
+            for(var b = 0, c = a.length; b < c; b++)
                 a[b].remove()
         })
     }
-    function gc() {
-        I.width = window.innerWidth;
-        I.height = window.innerHeight;
-        I.style.position = "fixed";
-        document.body.style.overflow = 'hidden';
-        I.style.top = I.style.left = 0;
-        I.style.border = "none";
-        Fb.style.left = I.width - (v.documentElement.offsetHeight <= window.innerHeight ? 24 : 39) + "px";
-        V[2] = Tb[0][7] = "Disable fullscreen ( ESC or F )";
-        window.scrollTo(0, 0);
-        I.style.zIndex = 2E3;
-        ac.style.zIndex = Fb.style.zIndex = 2001
+    function fullscreen(){
+        800 === canvas.width ? (canvas.width = window.innerWidth,
+        canvas.height = window.innerHeight,
+        canvas.style.position = "fixed",
+        canvas.style.background = "#ffffff",
+        canvas.style.top = canvas.style.left = 0,
+        canvas.style.border = "none",
+        Fb.style.left = canvas.width - (document.documentElement.offsetHeight <= window.innerHeight ? 41 : 39) + "px",
+        V[2] = Tb[0][7] = "Disable fullscreen ( ESC or F )",
+        canvas.style.zIndex = 2E3,
+        ac.style.zIndex = Fb.style.zIndex = 2000) : resizeCanvas()
+        adjust()
     }
-    function cc() {
+    function resizeCanvas(){
         document.body.style.overflowX = 'auto';
         document.body.style.overflowY = 'scroll';
-        I.width = 700;
-        I.height = 400;
-        I.style.position = "static";
-        I.style.border = "1px solid black";
-        Fb.style.left = I.offsetLeft + I.width - 22 + "px";
+        canvas.width = 800;
+        canvas.height = 450;
+        canvas.style.position = "static";
+        canvas.style.border = "1px solid black";
+        Fb.style.left = canvas.offsetLeft + canvas.width - 22 + "px";
         V[2] = Tb[0][7] = "Enable fullscreen ( F )";
-        I.style.zIndex = ac.style.zIndex = Fb.style.zIndex = 2
+        canvas.style.zIndex = ac.style.zIndex = Fb.style.zIndex = 2
     }
-    function hc() {
+    function adjust(){
         K.lineCap = "round";
         K.lineJoin = "round";
         K.font = "8px eiven";
-        ac.style.top = Fb.style.top = I.offsetTop + "px";
-        ac.style.left = I.offsetLeft + "px"
+        ac.style.top = Fb.style.top = canvas.offsetTop + "px";
+        ac.style.left = canvas.offsetLeft + "px"
     }
-    window.onresize = function() {
-        (700 === I.width ? cc : gc)();
-        hc()
+    window.onresize = function(){
+        (800 === canvas.width ? resizeCanvas : fullscreen)();
+        adjust()
+    };
+    function jc(a){
+        a.addEventListener("focus", detach);
+        a.addEventListener("blur", attach)
     }
-    ;
-    function ic() {
-        (700 === I.width ? gc : cc)();
-        hc()
-    }
-    function jc(a) {
-        a.addEventListener("focus", kc);
-        a.addEventListener("blur", lc)
-    }
-    v.onkeydown = function(a) {
-        switch (a.keyCode) {
+    document.onkeydown = function(a){
+        switch (a.keyCode){
         case 8:
-            250 !== I.width && a.preventDefault();
-            H.jb();
-            H.Na();
+            250 !== canvas.width && a.preventDefault();
+            track.jb();
+            track.cp();
             break;
         case 13:
             a.preventDefault();
-            H.Na();
+            track.cp();
             break;
         case 37:
-        case 65:
-            H.t && (a.preventDefault(),
-            H.O = H.t.head,
-            Aa = 1);
+            track.player && (a.preventDefault(),
+            track.cameraLock = track.player.head,
+            Aa = 1,
+            window.autoPause ? (track.paused = false, window.autoPause = false) : null);
             break;
         case 39:
-        case 68:
-            H.t && (a.preventDefault(),
-            H.O = H.t.head,
-            Ba = 1);
+            track.player && (a.preventDefault(),
+            track.cameraLock = track.player.head,
+            Ba = 1,
+            window.autoPause ? (track.paused = false, window.autoPause = false) : null);
             break;
         case 38:
-        case 87:
-            H.t && (a.preventDefault(),
-            H.O = H.t.head,
-            O = 1);
+            track.player && (a.preventDefault(),
+            track.cameraLock = track.player.head,
+            cameraLock = 1,
+            window.autoPause ? (track.paused = false, window.autoPause = false) : null);
             break;
         case 40:
-        case 83:
-            H.t && (a.preventDefault(),
-            H.O = H.t.head,
-            Ca = 1);
+            track.player && (a.preventDefault(),
+            track.cameraLock = track.player.head,
+            Ca = 1,
+            window.autoPause ? (track.paused = false, window.autoPause = false) : null);
             break;
         case 109:
         case 189:
-            mc(-1);
+            zoom(-1);
             break;
         case 107:
         case 187:
-            mc(1);
+            zoom(1);
             break;
         case 90:
         case 222:
-            !H.O && H.id === g ? H.lb() : wa && (xa = 1);
+            !track.cameraLock && track.id === void 0 ? track.undo() : wa && (xa = 1);
+            window.autoPause ? (track.paused = false, window.autoPause = false) : null;
             break;
         case 32:
-            250 !== I.width && a.preventDefault(),
-            H.paused = !H.paused
+            250 !== canvas.width && a.preventDefault(),
+            track.paused = window.autoPause ? true : !track.paused,
+            window.autoPause = false
         }
-        if (H.id === g)
-            switch (a.keyCode) {
-            case 66:
-                "brush" !== P ? (P = "brush",
-                ga.style.cursor = "none",
-                Z = j) : S || (S = j,
-                U.copy(Lb),
-                Z = j);
+        if(location.pathname.slice(0, 7) == '/tracks')
+            switch (a.keyCode){
+            case 65:
+                track.player && (a.preventDefault(),
+                track.cameraLock = track.player.head,
+                Aa = 1);
                 break;
-            case 67:
-                "scenery brush" !== P ? (P = "scenery brush",
-                ga.style.cursor = "none",
-                Z = j) : S || (S = j,
+            case 68:
+                track.player && (a.preventDefault(),
+                track.cameraLock = track.player.head,
+                Ba = 1);
+                break;
+            case 87:
+                track.player && (a.preventDefault(),
+                track.cameraLock = track.player.head,
+                cameraLock = 1);
+                break;
+            case 83:
+                track.player && (a.preventDefault(),
+                track.cameraLock = track.player.head,
+                Ca = 1);
+                break;
+            }
+        if(track.id === void 0)
+            switch (a.keyCode){
+            case 65:
+                "brush" !== tool ? (tool = "brush",
+                document.body.style.cursor = "none",
+                Z = !0) : S || (S = !0,
+                U.copy(Lb),
+                Z = !0);
+                break;
+            case 83:
+                "scenery brush" !== tool ? (tool = "scenery brush",
+                document.body.style.cursor = "none",
+                Z = !0) : S || (S = !0,
                 U.copy(Mb),
-                Z = j);
+                Z = !0);
                 break;
             case 81:
-                "line" !== P ? (P = "line",
-                ga.style.cursor = "none") : S || (S = j,
+                "line" !== tool ? (tool = "line",
+                document.body.style.cursor = "none") : S || (S = !0,
                 U.copy(Lb),
-                Z = j);
+                Z = !0);
                 break;
-            case 84:
-                "scenery line" !== P ? (P = "scenery line",
-                ga.style.cursor = "none") : S || (S = j,
+            case 87:
+                "scenery line" !== tool ? (tool = "scenery line",
+                document.body.style.cursor = "none") : S || (S = !0,
                 U.copy(Mb),
-                Z = j);
+                Z = !0);
                 break;
             case 69:
-                P = "eraser";
-                ga.style.cursor = "none";
-                Z = j;
+                tool = "eraser";
+                document.body.style.cursor = "none";
+                Z = !0;
                 break;
             case 82:
-                "camera" !== P ? (Qb = P,
-                P = "camera",
-                ga.style.cursor = "move") : Rb = j;
+                "camera" !== tool ? (Qb = tool,
+                tool = "camera",
+                document.body.style.cursor = "move") : Rb = !0;
                 break;
             case 77:
-                H.Qa();
+                track.undoManager.undo();
                 break;
             case 78:
-                H.Ma()
+                track.undoManager.redo()
             }
-    }
-    ;
-    v.onkeypress = function(a) {
-        switch (a.keyCode) {
+    };
+    document.onkeypress = function(a){
+        switch (a.keyCode){
         case 13:
         case 37:
-        case 65:
         case 39:
-        case 68:
         case 38:
-        case 87:
         case 40:
-        case 83:
             a.preventDefault();
             break;
         case 8:
         case 32:
-            250 !== I.width && a.preventDefault();
+            250 !== canvas.width && a.preventDefault();
             break;
         case 113:
-            H.t.ka = k
+            track.player.pastCheckpoint = !1
         }
-    }
-    ;
-    v.onkeyup = function(a) {
-        switch (a.keyCode) {
+    };
+    document.onkeyup = function(a){
+        switch (a.keyCode){
         case 70:
         case 27:
-            ic();
+            fullscreen();
             break;
         case 66:
-            a.ctrlKey && ec();
+            a.ctrlKey && switchBike();
             break;
         case 37:
-        case 65:
             Aa = 0;
             break;
         case 39:
-        case 68:
             Ba = 0;
             break;
         case 38:
-        case 87:
-            O = 0;
+            cameraLock = 0;
             break;
         case 40:
-        case 83:
             Ca = 0;
             break;
         case 90:
         case 222:
-            wa = j;
+            wa = !0;
             break;
         case 71:
-            H.H ? H.O = H.H.head === H.O && H.t ? H.t.head : H.H.head : (Jb = 11 - Jb,
+            track.ghost ? track.cameraLock = track.ghost.head === track.cameraLock && track.player ? track.player.head : track.ghost.head : (Jb = 11 - Jb,
             Tb[1][6] = (1 === Jb ? "En" : "Dis") + "able grid snapping ( G )");
             break;
         case 82:
-            Rb && (P = Qb,
-            ga.style.cursor = "none",
-            Rb = k);
+            Rb && (tool = Qb,
+            document.body.style.cursor = "none",
+            Rb = !1);
             break;
         case 49:
         case 50:
         case 51:
         case 52:
         case 53:
-            H.id !== g && H.ob(a.keyCode - 48);
+            track.id !== void 0 && track.watchGhost(a.keyCode - 48);
             break;
         case 81:
-        case 67:
+        case 87:
         case 69:
-        case 86:
-            H.H && (H.O === H.H.head && (H.O = H.t.head),
-            H.H = k);
-        case 66:
-            Z && (S = Z = k)
+        case 83:
+            track.ghost && (track.cameraLock === track.ghost.head && (track.cameraLock = track.player.head),
+            track.ghost = !1);
+        case 65:
+            Z && (S = Z = !1)
         }
-    }
-    ;
-    ac.onmousemove = function(a) {
-        a = t((a.clientY - ac.offsetTop + window.pageYOffset) / 25);
+        if(location.pathname.slice(0, 7) == '/tracks')
+            switch (a.keyCode){
+            case 65:
+                Aa = 0;
+                break;
+            case 68:
+                Ba = 0;
+                break;
+            case 87:
+                cameraLock = 0;
+                break;
+            case 83:
+                Ca = 0;
+                break;
+            }
+    };
+    ac.onmousemove = function(a){
+        a = Math.floor((a.clientY - ac.offsetTop + window.pageYOffset) / 25);
         V = [0, a, Tb[0][a]]
-    }
-    ;
-    Fb.onmousemove = function(a) {
-        a = t((a.clientY - Fb.offsetTop + window.pageYOffset) / 25);
+    };
+    Fb.onmousemove = function(a){
+        a = Math.floor((a.clientY - Fb.offsetTop + window.pageYOffset) / 25);
         V = [1, a, Tb[1][a]];
-        if (14 === a && ("scenery line" === P || "scenery brush" === P))
+        if(14 === a && ("scenery line" === tool || "scenery brush" === tool))
             V[2] = "Shorten last set of scenery lines ( Z )"
-    }
-    ;
-    ac.onmousedown = function(a) {
-        H.O = k;
-        switch (t((a.clientY - ac.offsetTop + window.pageYOffset) / 25) + 1) {
+    };
+    ac.onmousedown = function(a){
+        track.cameraLock = !1;
+        switch (Math.floor((a.clientY - ac.offsetTop + window.pageYOffset) / 25) + 1){
         case 1:
-            H.paused = !H.paused;
+            track.paused = !track.paused;
             break;
         case 3:
-            H.jb();
+            track.jb();
         case 2:
-            H.Na();
+            track.Na();
             break;
         case 5:
-            ec();
+            switchBike();
             break;
         case 7:
-            Ib ? (Ib = k,
-            V[2] = Tb[0][6] = "Enable line shading") : (Ib = j,
+            Ib ? (Ib = !1,
+            V[2] = Tb[0][6] = "Enable line shading") : (Ib = !0,
             V[2] = Tb[0][6] = "Disable line shading");
-            H.U = [];
+            track.U = [];
             break;
         case 8:
-            ic()
+            fullscreen()
         }
-    }
-    ;
-    Fb.onmousedown = function(a) {
-        if (H.id !== g)
-            return k;
-        H.O = k;
-        switch (t((a.clientY - ac.offsetTop + window.pageYOffset) / 25) + 1) {
+    };
+    Fb.onmousedown = function(a){
+        if(track.id !== void 0)
+            return !1;
+        track.cameraLock = !1;
+        switch (Math.floor((a.clientY - ac.offsetTop + window.pageYOffset) / 25) + 1){
         case 1:
-            P = "brush";
+            tool = "brush";
             break;
         case 2:
-            P = "scenery brush";
+            tool = "scenery brush";
             break;
         case 3:
-            P = "line";
+            tool = "line";
             break;
         case 4:
-            P = "scenery line";
+            tool = "scenery line";
             break;
         case 5:
-            P = "eraser";
+            tool = "eraser";
             break;
         case 6:
-            P = "camera";
+            tool = "camera";
             break;
         case 7:
             1 === Jb ? (Jb = 10,
@@ -3118,352 +2713,360 @@
             V[2] = Tb[1][6] = "Enable grid snapping ( G )");
             break;
         case 9:
-            P = "goal";
+            tool = "goal";
             break;
         case 10:
-            P = "checkpoint";
+            tool = "checkpoint";
             break;
         case 11:
-            P = "boost";
+            tool = "boost";
             break;
         case 12:
-            P = "gravity";
+            tool = "gravity";
             break;
         case 13:
-            P = "bomb";
+            tool = "bomb";
             break;
         case 14:
-            P = "slow-mo";
+            tool = "slow-mo";
+            break;
+        case 15:
+            tool = "antigravity";
             break;
         case 16:
-            H.lb()
+            tool = "teleporter";
+            break;
+        case 18:
+            track.undo()
         }
-    }
-    ;
-    I.onmouseover = function() {
-        V = k;
-        ga.style.cursor = "camera" === P ? "move" : "none"
-    }
-    ;
-    I.onmousedown = function(a) {
+    };
+    canvas.onmouseover = function(){
+        V = !1;
+        document.body.style.cursor = "camera" === tool ? "move" : "none"
+    };
+    canvas.onmousedown = function(a){
         a.preventDefault();
-        S = j;
-        H.O = k;
-        if (window.BHR_RCE_ENABLED && 2 === a.button && "camera" !== P)
+        S = !0;
+        track.cameraLock = !1;
+        if(window.BHR_RCE_ENABLED && 2 === a.button && "camera" !== tool)
             fc(),
-            Hb = j;
+            Hb = !0;
         else {
             var b;
             Z || U.copy(R);
-            switch (P) {
+            switch (tool){
             case "boost":
             case "gravity":
-                ga.style.cursor = "crosshair";
+                document.body.style.cursor = "crosshair";
                 break;
             case "eraser":
                 fc();
                 break;
             case "goal":
-                H.k.push(b = new fb(U.x,U.y,H));
-                H.ja++;
+                track.powerups.push(b = new Target(U.x,U.y,track));
+                track.targets++;
                 break;
             case "checkpoint":
-                H.k.push(b = new hb(U.x,U.y,H));
+                track.powerups.push(b = new Checkpoint(U.x,U.y,track));
                 break;
             case "bomb":
-                b = new pb(U.x,U.y,H);
+                b = new Bomb(U.x,U.y,track);
                 break;
             case "slow-mo":
-                b = new nb(U.x,U.y,H);
+                b = new Slowmo(U.x,U.y,track);
+                break;
+            case "antigravity":
+                b = new Antigravity(U.x,U.y,track);
+                break;
+            case "teleporter":
+                b = new Teleporter(U.x,U.y,track);
+                track.teleporter = b;
+                break;
             case "brush":
             case "scenery brush":
-                Z && H.pa(U, R, "brush" !== P),
-                Z = k,
-                S = j
+                Z && track.addLine(U, R, "brush" !== tool),
+                Z = !1,
+                S = !0
             }
-            if (b !== g) {
-                var c = t(b.c.x / H.v)
-                  , d = t(b.c.y / H.v);
-                H.e[c] === g && (H.e[c] = []);
-                H.e[c][d] === g && (H.e[c][d] = new xb);
-                H.e[c][d].k.push(b);
-                H.La(function() {
+            if(b !== void 0){
+                var c = Math.floor(b.pos.x / track.scale)
+                  , d = Math.floor(b.pos.y / track.scale);
+                track.grid[c] === void 0 && (track.grid[c] = []);
+                track.grid[c][d] === void 0 && (track.grid[c][d] = new xb);
+                track.grid[c][d].powerups.push(b);
+                track.pushUndo(function(){
                     b.remove()
-                }, function() {
-                    b instanceof fb && ++H.ja;
-                    H.e[c][d].k.push(b)
+                }, function(){
+                    b instanceof Target && ++track.targets;
+                    track.grid[c][d].powerups.push(b)
                 })
             }
         }
-    }
-    ;
-    I.oncontextmenu = function(a) {
+    };
+    canvas.oncontextmenu = function(a){
         a.preventDefault()
-    }
-    ;
-    v.onmousemove = function(a) {
-        "camera" !== P && (H.O = k);
-        R = (new F(a.clientX - I.offsetLeft,a.clientY - I.offsetTop + window.pageYOffset)).Ka();
-        "eraser" !== P && 2 !== a.button && (R.x = s(R.x / Jb) * Jb,
-        R.y = s(R.y / Jb) * Jb);
-        if (S)
-            if ("camera" === P)
-                H.N.G(U.i(R)),
+    };
+    document.onmousemove = function(a){
+        "camera" !== tool && (track.cameraLock = !1);
+        R = (new Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
+        "eraser" !== tool && 2 !== a.button && (R.x = Math.round(R.x / Jb) * Jb,
+        R.y = Math.round(R.y / Jb) * Jb);
+        if(S)
+            if("camera" === tool)
+                track.camera.addToSelf(U.sub(R)),
                 R.copy(U);
-            else if ("eraser" === P || window.BHR_RCE_ENABLED && 2 === a.button)
+            else if("eraser" === tool || window.BHR_RCE_ENABLED && 2 === a.button)
                 fc();
-            else if (!Z && ("brush" === P || "scenery brush" === P) && U.fb(R) >= Kb) {
-                var b = H.pa(U, R, "brush" !== P);
-                H.La(function() {
+            else if(!Z && ("brush" === tool || "scenery brush" === tool) && U.distanceTo(R) >= Kb){
+                var b = track.addLine(U, R, "brush" !== tool);
+                track.pushUndo(function(){
                     b.remove()
-                }, function() {
+                }, function(){
                     b.xb()
                 })
             }
-    }
-    ;
-    I.onmouseup = function() {
+    };
+    canvas.onmouseup = function(){
         var a, b, c, d;
-        if (Hb)
-            return Hb = k;
-        if (S)
-            if ("line" === P || "scenery line" === P || "brush" === P || "scenery brush" === P) {
-                var e = H.pa(U, R, "line" !== P && "brush" !== P);
-                H.La(function() {
+        if(Hb)
+            return Hb = !1;
+        if(S)
+            if("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool){
+                var e = track.addLine(U, R, "line" !== tool && "brush" !== tool);
+                track.pushUndo(function(){
                     e.remove()
-                }, function() {
+                }, function(){
                     e.xb()
                 })
-            } else if ("boost" === P || "gravity" === P)
-                ga.style.cursor = "none",
-                d = s(180 * Math.atan2(-(R.x - U.x), R.y - U.y) / Math.PI),
-                c = "boost" === P ? new jb(U.x,U.y,d,H) : new lb(U.x,U.y,d,H),
-                a = t(c.c.x / H.v),
-                b = t(c.c.y / H.v),
-                H.e[a] === g && (H.e[a] = []),
-                H.e[a][b] === g && (H.e[a][b] = new xb),
-                H.e[a][b].k.push(c),
-                H.La(function() {
+            } else if("teleporter" === tool){
+                U.copy(R);
+                track.teleporter.tpb(U.x,U.y);
+                track.teleporter = undefined;
+            } else if("boost" === tool || "gravity" === tool)
+                document.body.style.cursor = "none",
+                d = Math.round(180 * Math.atan2(-(R.x - U.x), R.y - U.y) / Math.PI),
+                c = "boost" === tool ? new Boost(U.x,U.y,d,track) : new Gravity(U.x,U.y,d,track),
+                a = Math.floor(c.pos.x / track.scale),
+                b = Math.floor(c.pos.y / track.scale),
+                track.grid[a] === void 0 && (track.grid[a] = []),
+                track.grid[a][b] === void 0 && (track.grid[a][b] = new xb),
+                track.grid[a][b].powerups.push(c),
+                track.pushUndo(function(){
                     c.remove()
-                }, function() {
-                    H.e[a][b].k.push(c)
+                }, function(){
+                    track.grid[a][b].powerups.push(c)
                 })
+    };
+    document.onmouseup = function(){
+        Z || (S = !1)
+    };
+    canvas.onmouseout = function(){
+        document.body.style.cursor = "default"
+    };
+    if(newButton) {
+        newButton.onclick = function(){
+            if(confirm("Do you really want to start a new track?")) {
+                Sb.pop();
+                H = ride();
+                Vb.innerHTML = "trackcode";
+                code.value = null;
+                track.reset()
+            }
+        }
     }
-    ;
-    v.onmouseup = function() {
-        Z || (S = k)
+    if(loadButton) {
+        loadButton.onclick = function(){
+            if(10 < code.value.length) {
+                Sb.pop();
+                H = ride(code.value, []);
+                Vb.innerHTML = "Trackcode";
+                code.value = null;
+                track.reset()
+            } else {
+                alert("No trackcode to load!")
+            }
+        }
     }
-    ;
-    I.onmouseout = function() {
-        ga.style.cursor = "default"
+    if(saveButton) {
+        saveButton.onclick = function(){
+            if(track.id === void 0) {
+                code.value = track.toString();
+                code.select();
+                Vb.innerHTML = "Trackcode - " + Math.round(code.value.length / 1E3) + "k - CTRL + C to copy"
+            }
+        }
     }
-    ;
-    Xb && (Xb.onclick = function() {
-        confirm("Do you really want to start a new track?") && (Sb.pop(),
-        H = bc("-18 1i 18 1i##", []),
-        Vb.innerHTML = "trackcode",
-        Ub.value = null,
-        H.reset())
-    }
-    );
-    Yb && (Yb.onclick = function() {
-        10 < Ub.value.length ? (Sb.pop(),
-        H = bc(Ub.value, []),
-        Vb.innerHTML = "Trackcode",
-        Ub.value = null,
-        H.reset()) : alert("No trackcode to load!")
-    }
-    );
-    Zb && (Zb.onclick = function() {
-        H.id === g && (Ub.value = H.toString(),
-        Ub.select(),
-        Vb.innerHTML = "Trackcode - " + s(Ub.value.length / 1E3) + "k - CTRL + C to copy")
-    }
-    );
-    $b && ($b.onclick = function() {
-        var a = H.toString();
-        if (0 < a.length) {
-            H.paused = j;
-            P = "camera";
-            nc(j);
-            ac.style.display = "none";
-            Fb.style.display = "none";
-            K.lineCap = "round";
-            K.lineJoin = "round";
-            v.getElementById("track_menu").style.display = "none";
-            var b = D(["input#name.input-block-level", {
-                type: "text",
-                size: 18,
-                Qb: 20,
-                placeholder: "Name..."
-            }])
-              , c = D(["textarea.input-block-level", {
-                rows: 4,
-                placeholder: "Description..."
-            }])
-              , d = D(["input.btn.btn-primary.btn-block.btn-large", {
-                type: "submit",
-                value: "Save track"
-            }])
-              , e = D(["div.span3", "Visibility:"])
-              , f = D(["div.btn-group.span9", {
-                "data-toggle": "buttons-radio"
-            }, ["button.btn#optPublic.active", ["i.icon-globe"], " Public"], ["button.btn#optHidden", ["i.icon-eye-close"], " Hidden"], ["button.btn#optPrivate", ["i.icon-lock"], " Private"]])
-              , h = D(["input.span12", {
-                placeholder: "Partners...",
-                type: "text"
-            }])
-              , i = D(["div.span5"])
-              , l = D(["label.hide.row-fluid", ["div.span3", "Collaboration with: "], ["div.span4", [h]], [i]])
-              , m = D(["div.row-fluid"])
-              , n = D(["div"])
-              , x = D(["div.well.row-fluid#track_menu"]);
-            n.style.color = I.style.borderColor = "#f00";
-            n.innerHTML = "Use your mouse to drag & fit an interesting part of your track in the thumbnail";
-            l.style.lineHeight = e.style.lineHeight = "30px";
-            var w = function(a) {
-                for (var b = [].slice.call(arguments, 1), c = 0, d = b.length; c < d; c++)
-                    a.appendChild(b[c]);
-                return a
-            };
-            w(x, b, c, w(m, e, f), d);
-            Wb.insertBefore(x, I.nextSibling);
-            Wb.insertBefore(n, I);
-            for (var e = ja(), m = ja(), n = [e, m], x = function(a) {
-                return function(b) {
-                    X[a] = b;
-                    0 < --M || y.Va(X);
-                    return b
-                }
-            }, y = ja(), w = 0, C = n.length, M = C, X = Array(C); w < C; w++)
-                n[w].ab(x(w));
-            n = y;
-            (new Request.JSON({
-                url: "/call/all-usernames",
-                Ub: e.Va
-            })).send();
-            require(["/js/lib/mootagify.js?" + String.uniqueID()], m.Va);
-            n.ab(function(a) {
-                var b = a[0];
-                new a[1](l.removeClass("hide"),null,{
-                    Yb: "b.tagif-tag",
-                    Nb: "span.remove-tag",
-                    Rb: 1,
-                    Pb: Infinity,
-                    Lb: j,
-                    target: i,
-                    Mb: b.map(function(a) {
-                        return a.Zb
-                    }).erase(BH.get("user.name"))
+    if(uploadButton) {
+        uploadButton.onclick = function(){
+            var a = track.toString();
+            if(0 < a.length && track.targets > 0){
+                track.paused = !0;
+                tool = "camera";
+                changeThumb(!0);
+                ac.style.display = "none";
+                Fb.style.display = "none";
+                K.lineCap = "round";
+                K.lineJoin = "round";
+                document.getElementById("track_menu").style.display = "none";
+                var b =createElement(["input#name.input-block-level", {
+                    type: "text",
+                    size: 18,
+                    Qb: 20,
+                    placeholder: "Name..."
+                }])
+                  , c =createElement(["textarea.input-block-level", {
+                    rows: 4,
+                    placeholder: "Description..."
+                }])
+                  , d =createElement(["input.btn.btn-primary.btn-block.btn-large", {
+                    type: "submit",
+                    value: "Save track"
+                }])
+                  , e =createElement(["div.span3", "Visibility:"])
+                  , f =createElement(["div.btn-group.span9", {
+                    "data-toggle": "buttons-radio"
+                }, ["button.btn#optPublic.active", ["i.icon-world"], " Public"], ["button.btn#optPrivate", ["i.icon-lock"], " Private"]])
+                  , h =createElement(["input.span12", {
+                    placeholder: "Partners...",
+                    type: "text"
+                }])
+                  , i =createElement(["div.span5"])
+                  , l =createElement(["label.hide.row-fluid", ["div.span3", "Collaboration with: "], ["div.span4", [h]], [i]])
+                  , m =createElement(["div.row-fluid"])
+                  , n =createElement(["div"])
+                  , x =createElement(["div.well.row-fluid#track_menu"]);
+                n.style.color = canvas.style.borderColor = "#f00";
+                n.innerHTML = "Use your mouse to drag & fit an interesting part of your track in the thumbnail";
+                l.style.lineHeight = e.style.lineHeight = "30px";
+                var w = function(a){
+                    for(var b = [].slice.call(arguments, 1), c = 0, d = b.length; c < d; c++)
+                        a.appendChild(b[c]);
+                    return a
+                };
+                w(x, b, c, w(m, e, f), d);
+                Wb.insertBefore(x, canvas.nextSibling);
+                Wb.insertBefore(n, canvas);
+                for(var e = ja(), m = ja(), n = [e, m], x = function(a){
+                    return function(b){
+                        X[a] = b;
+                        0 < --M || y.Va(X);
+                        return b
+                    }
+                }, y = ja(), w = 0, C = n.length, M = C, X = Array(C); w < C; w++)
+                    n[w].ab(x(w));
+                n = y;
+                jc(b);
+                b.addEventListener("keypress", function(a){
+                    a.stopPropagation()
+                }, !1);
+                b.focus();
+                jc(h);
+                jc(c);
+                for(var fc in f.children)
+                    f.children[fc].onclick = c => {
+                        c.target.className = 'active';
+                        c.target.nextSibling != null ? c.target.nextSibling.className = 'inactive' : c.target.previousSibling.className = 'inactive';
+                    };
+                d.addEventListener("click", function(){
+                    var e = document.createElement("canvas"), h, l;
+                    e.width = 500;
+                    e.height = 300;
+                    track.zoom *= 2;
+                    l = track.U;
+                    track.U = {};
+                    changeThumb(!1);
+                    track.draw();
+                    e.getContext("2d").drawImage(canvas, (canvas.width - 500) / 2, (canvas.height - 300) / 2, 500, 300, 0, 0, 500, 300);
+                    track.zoom /= 2;
+                    track.U = l;
+                    e = e.toDataURL("image/png");
+                    if("asdf" === e)
+                        return alert("The thumbnail is blank!\nDrag & fit an interesting part of your track inside."),
+                        !1;
+                    if(4 > b.value.length)
+                        return alert("The track name is too short!"),
+                        !1;
+                    d.disabled = !0;
+                    for(var fc in f.children){
+                        if(f.children[fc].className == 'active')
+                            h = f.children[fc].innerText.slice(1)
+                    }
+                    l = new XMLHttpRequest;
+                    l.open("POST", "/draw/upload", !1);
+                    l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    l.send("n=" + encodeURIComponent(b.value) + "&c=" + encodeURIComponent(a) + "&d=" + encodeURIComponent(c.value) + "&f=" + encodeURIComponent(h) + "&t=" + encodeURIComponent(e) + "&s=" + encodeURIComponent(track.targets));
+                    location.href = "/"
                 })
-            });
-            jc(b);
-            b.addEventListener("keypress", function(a) {
-                a.stopPropagation()
-            }, k);
-            b.focus();
-            jc(h);
-            jc(c);
-            d.addEventListener("click", function() {
-                var e = v.createElement("canvas"), h, i, l;
-                e.width = 500;
-                e.height = 300;
-                H.d *= 2;
-                l = H.U;
-                H.U = {};
-                nc(k);
-                H.I();
-                e.getContext("2d").drawImage(I, (I.width - 500) / 2, (I.height - 300) / 2, 500, 300, 0, 0, 500, 300);
-                H.d /= 2;
-                H.U = l;
-                e = e.toDataURL("image/png");
-                if ("asdf" === e)
-                    return alert("The thumbnail is blank!\nDrag & fit an interesting part of your track inside."),
-                    k;
-                h = b.value;
-                if (4 > h.length)
-                    return alert("The track name is too short!"),
-                    k;
-                i = c.value;
-                d.disabled = j;
-                l = new XMLHttpRequest;
-                l.open("POST", "/tracks/save", k);
-                l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                l.send("n=" + encodeURIComponent(h) + "&c=" + encodeURIComponent(a) + "&d=" + encodeURIComponent(i) + "&p=" + encodeURIComponent($(f).getElement(".active").get("id")));
-                h = JSON.parse(l.responseText);
-                if ("string" === typeof h)
-                    return alert("Your track was refused: " + h),
-                    k;
-                l = new XMLHttpRequest;
-                l.open("POST", "/tracks/thumbnail/" + h, k);
-                l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                l.send(e.replace("data:image/png;base64,", "i="));
-                location.href = "/tracks/" + h
-            })
-        } else
-            return alert("Sorry, but your track must be bigger or more detailed."),
-            k
+            } else
+                if(track.targets < 1){
+                    return alert("Sorry, but your track must have at least 1 target!"),
+                    !1
+                } else
+                    return alert("Sorry, but your track must be bigger or more detailed."),
+                    !1
+        }
     }
-    );
-    function mc(a) {
-        if (0 > a && 0.2 < H.d || 0 < a && 4 > H.d)
-            H.d = s(10 * H.d + 2 * a) / 10,
-            H.U = {}
+    function zoom(a){
+        if(0 > a && 0.2 < track.zoom || 0 < a && 4 > track.zoom)
+            track.zoom = Math.round(10 * track.zoom + 2 * a) / 10,
+            track.U = {}
     }
-    function oc(a) {
+    function oc(a){
         a.preventDefault();
-        if (Z)
-            if ("eraser" === P)
-                if ((0 < a.detail || 0 > a.wheelDelta) && 5 < ab)
+        if(Z)
+            if("eraser" === tool)
+                if((0 < a.detail || 0 > a.wheelDelta) && 5 < ab)
                     ab -= 5;
                 else {
-                    if ((0 > a.detail || 0 < a.wheelDelta) && 40 > ab)
+                    if((0 > a.detail || 0 < a.wheelDelta) && 40 > ab)
                         ab += 5
                 }
             else {
-                if ("brush" === P || "scenery brush" === P)
-                    if ((0 < a.detail || 0 > a.wheelDelta) && 4 < Kb)
+                if("brush" === tool || "scenery brush" === tool)
+                    if((0 < a.detail || 0 > a.wheelDelta) && 4 < Kb)
                         Kb -= 8;
-                    else if ((0 > a.detail || 0 < a.wheelDelta) && 200 > Kb)
+                    else if((0 > a.detail || 0 < a.wheelDelta) && 200 > Kb)
                         Kb += 8
             }
         else
-            0 < a.detail || 0 > a.wheelDelta ? mc(-1) : (0 > a.detail || 0 < a.wheelDelta) && mc(1);
-        a = (new F(a.clientX - I.offsetLeft,a.clientY - I.offsetTop + window.pageYOffset)).Ka();
-        H.O || H.N.G(R.i(a))
+            0 < a.detail || 0 > a.wheelDelta ? zoom(-1) : (0 > a.detail || 0 < a.wheelDelta) && zoom(1);
+        a = (new Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
+        track.cameraLock || track.camera.addToSelf(R.sub(a))
     }
-    I.addEventListener("DOMMouseScroll", oc, k);
-    I.addEventListener("mousewheel", oc, k);
+    canvas.addEventListener("DOMMouseScroll", oc, !1);
+    canvas.addEventListener("mousewheel", oc, !1);
     var pc;
-    function kc() {
+    function detach(){
         pc = {
-            Fb: v.onkeydown,
-            Gb: v.onkeypress,
-            Hb: v.onkeyup
+            Fb: document.onkeydown,
+            Gb: document.onkeypress,
+            Hb: document.onkeyup
         };
-        v.onkeydown = v.onkeypress = v.onkeyup = aa()
+        document.onkeydown = document.onkeypress = document.onkeyup = () => {}
     }
-    function lc() {
-        pc && (v.onkeydown = pc.Fb,
-        v.onkeypress = pc.Gb,
-        v.onkeyup = pc.Hb,
-        pc = k)
+    function attach(){
+        if(pc) {
+            document.onkeydown = pc.Fb,
+            document.onkeypress = pc.Gb,
+            document.onkeyup = pc.Hb,
+            pc = !1
+        }
     }
-    function nc(a) {
-        H.Ab = a !== k
+    function changeThumb(a){
+        track.Ab = a !== !1
     }
-    function qc() {
-        return H
+    function getTrack(){
+        return track
     }
-    var sc = window.BH || (window.BH = {});
-    sc.game = window.cr = {
-        ride: bc,
-        watchGhost: Gb,
-        detach: kc,
-        attach: lc,
-        changeThumb: nc
+    window.BHR = {};
+    window.BHR.game = {
+        ride: ride,
+        watchGhost: watchGhost,
+        detach: detach,
+        attach: attach,
+        changeThumb: changeThumb
     };
-    sc.TrackString = dc;
-    sc.set ? sc.set("track", qc) : sc.track = qc;
-    sc.TRACK_MIN_SIZE = 0;
+    window.BHR.TrackString = dc;
+    window.BHR.set ? window.BHR.set("track", getTrack) : window.BHR.track = getTrack;
+    window.BHR.TRACK_MIN_SIZE = 0;
 }()
