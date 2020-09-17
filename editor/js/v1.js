@@ -1768,13 +1768,14 @@
         play(){
             if(this.delta < 4){
                 this.delta ++;
+                requestAnimationFrame(() => this.play());
             } else {
                 for(var a = Sb.length; a--;){
                     Sb[a]()
                 }
                 this.delta = 0;
+                requestAnimationFrame(() => this.play());
             }
-            requestAnimationFrame(() => this.play());
         }
         jb(){
             1 < BMX_DEFAULT.length && BMX_DEFAULT.pop();
