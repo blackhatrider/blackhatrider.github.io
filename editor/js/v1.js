@@ -1784,8 +1784,7 @@
         }
         cp(){
             this.removeCollectedItems();
-            this.paused = JSON.parse(localStorage.pauseOnEnter) ? true : !1;
-            JSON.parse(localStorage.pauseOnEnter) ? window.autoPause = true : null;
+            this.paused = !1;
             var a = this.player = this.vehicle ? "BMX" === this.vehicle ? new BMX(this, BMX_DEFAULT[BMX_DEFAULT.length - 1], !0) : new MTB(this, MTB_DEFAULT[MTB_DEFAULT.length - 1], !1) : !1;
             a && (this.cameraLock = a.head,
             this.currentTime = a.na[a.na.length - 1][29],
