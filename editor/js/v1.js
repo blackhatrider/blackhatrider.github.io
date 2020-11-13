@@ -1,6 +1,6 @@
 var track, ia = 0;
 const GAME = {
-    canvas: document.getElementById("canvas_rider"),
+    loop: null,
     toolbar: {
         drawLeft: function() {
             K.lineWidth = 1;
@@ -319,8 +319,10 @@ const GAME = {
             K.font = "8px eiven";
         }
     },
+    update: [],
+    render: [],
     get ctx() {
-        return this.canvas.getContext("2d");
+        return canvas.getContext("2d");
     },
     get Vector() {
         return class {
@@ -2744,13 +2746,6 @@ const GAME = {
                 for(var b = 0, c = a.length; b < c; b++)
                     a[b].Eb ? this.cb(a[b]) : this.pa(a[b].a, a[b].b, a[b].hb)
             }
-            kb() {}
-            Ua() {}
-            remove() {}
-            La() {}
-            Qa() {}
-            Ma() {}
-            undo() {}
             toString() {
                 return "v1,SURVIVAL#" + this.vehicle
             }
@@ -2764,12 +2759,8 @@ const GAME = {
                 this.track.sb = b || [];
                 this.track.players.push(this.track.firstPlayer = this.track.vehicle === "BMX" && new GAME.BMXBike(this.track, 1, []) || new GAME.MountainBike(this.track, 1, []));
                 this.track.cameraLock = this.track.firstPlayer.head;
-                Sb.push((a) => {
-                    this.track.update(a)
-                });
-                render.push(() => {
-                    this.track.render()
-                });
+                GAME.update.push((a) => this.track.update(a));
+                GAME.render.push((a) => this.track.render(a));
                 this.lastFrameTime = -1;
                 track = this.track;
                 window.Game.track = () => track;
@@ -2779,17 +2770,17 @@ const GAME = {
             startTicker(time) {
                 //this.delta = this.lastFrameTime === -1 ? 0 : (time - this.lastFrameTime) / 1000;
                 if(time - this.lastFrameTime < 1000 / 25){
-                    for(var a = render.length; a--;){
-                        render[a]()
+                    for(var a = GAME.render.length; a--;){
+                        GAME.render[a]()
                     }
                     this.animationFrame = requestAnimationFrame(this.startTicker.bind(this));
                     return
                 }
-                for(var a = Sb.length; a--;){
-                    Sb[a](this.delta)
+                for(var a = GAME.update.length; a--;){
+                    GAME.update[a](this.delta)
                 }
-                for(var a = render.length; a--;){
-                    render[a]()
+                for(var a = GAME.render.length; a--;){
+                    GAME.render[a]()
                 }
                 this.lastFrameTime = time;
                 this.animationFrame = requestAnimationFrame(this.startTicker.bind(this));
@@ -2814,15 +2805,187 @@ var BMX_DEFAULT = [[0, -1, 0, -1, 0, 0, 21, 38, 21, 38, 0, 0, 0, -21, 38, -21, 3
     U = new GAME.Vector(40,50),
     R = new GAME.Vector(0,0),
     Kb = 20, ab = 15, Z = !1, tool = "camera", Qb = "camera",
-    Rb = !1, Hb = !1, V = !1, Jb = 1, Sb = [], render = [], Ib = !1,
+    Rb = !1, Hb = !1, V = !1, Jb = 1, Ib = !1,
     Tb = [
         ";Restart ( ENTER );Cancel Checkpoint ( BACKSPACE );;Switch bike ( ctrl+B - Arrows to control, Z to turn );;Enable line shading;Enable fullscreen ( F )".split(";"),
         "Brush ( A - Hold to snap, hold & scroll to adjust size );Scenery brush ( S - Hold to snap, hold & scroll to adjust size );Lines ( backWheel - Hold to snap );Scenery lines ( W - Hold to snap );Eraser ( E - Hold & scroll to adjust size );Camera ( R - Release or press again to switch back, scroll to zoom );Enable grid snapping ( G );;Goal;Checkpoint;Boost;Gravity modifier;Bomb;Slow-Mo;Antigravity;Teleporter;;Shorten last line ( Z )".split(";")
     ],
     Lb = new GAME.Vector(40,50),
-    Mb = new GAME.Vector(-40,50);
-
-
+    Mb = new GAME.Vector(-40,50),
+    Wb = document.getElementById("content"),
+    charCount = document.getElementById("charcount"),
+    code = document.getElementById("trackcode"),
+    button = {
+        new: document.getElementById("new"),
+        load: document.getElementById("load"),
+        save: document.getElementById("save"),
+        upload: document.getElementById("upload")
+    };
+!!button.new && (button.new.onclick = () => Game.newRide("-18 1i 18 1i"));
+!!button.load && (button.load.onclick = () => Game.loadRide());
+!!button.save && (button.save.onclick = () => Game.saveRide());
+!!button.upload && (button.upload.onclick = () => {
+    function ja(){
+        function a(a){
+            e.push(a);
+            d && (c = a(c));
+            return f.Ib
+        }
+        function b(a){
+            d = !0;
+            c = a;
+            for(var b = 0, f = e.length; b < f; b++)
+                e[b](a)
+        }
+        var c, d, e = [], f = {
+            ab: a,
+            Va: b,
+            Ib: {
+                ab: a
+            },
+            Wb: {
+                Va: b
+            }
+        };
+        return f
+    }
+    function ka(a, b){
+        var c = document.createElementNS(b, a.match(/^\w+/)[0]), d, e;
+        if(d = a.match(/#([\w-]+)/))
+            c.id = d[1];
+        (e = a.match(/\.[\w-]+/g)) && c.setAttribute("class", e.join(" ").replace(/\./g, ""));
+        return c
+    }
+    function createElement(a, b, c){
+        var d = document, e, f;
+        if(a && a.big)
+            return d.getElementById(a);
+        c = c || {};
+        b = b || "http://www.w3.org/1999/xhtml";
+        a[0].big && (a[0] = ka(a[0], b));
+        for(e = 1; e < a.length; e++)
+            if(a[e].big)
+                a[0].appendChild(d.createTextNode(a[e]));
+            else if(a[e].pop)
+                a[e][0].big && (a[e][0] = ka(a[e][0], b)),
+                a[0].appendChild(a[e][0]),
+                createElement(a[e], b, c);
+            else if(a[e].call)
+                a[e](a[0]);
+            else
+                for(f in a[e])
+                    a[0].setAttribute(f, a[e][f]);
+        c[0] = a[0];
+        return c[0]
+    }
+    var a = track.toString();
+    if(0 < a.length && track.targets > 0){
+        track.paused = !0;
+        tool = "camera";
+        track.Ab = !0;
+        K.lineCap = "round";
+        K.lineJoin = "round";
+        document.getElementById("track_menu").style.display = "none";
+        var b =createElement(["input#name.input-block-level", {
+            type: "text",
+            size: 18,
+            Qb: 20,
+            placeholder: "Name..."
+        }])
+            , c =createElement(["textarea.input-block-level", {
+            rows: 4,
+            placeholder: "Description..."
+        }])
+            , d =createElement(["input.btn.btn-primary.btn-block.btn-large", {
+            type: "submit",
+            value: "Save track"
+        }])
+            , e =createElement(["div.span3", "Visibility:"])
+            , f =createElement(["div.btn-group.span9", {
+            "data-toggle": "buttons-radio"
+        }, ["button.btn#optPublic.active", ["i.icon-world"], " Public"], ["button.btn#optPrivate", ["i.icon-lock"], " Private"]])
+            , h =createElement(["input.span12", {
+            placeholder: "Partners...",
+            type: "text"
+        }])
+            , i =createElement(["div.span5"])
+            , l =createElement(["label.hide.row-fluid", ["div.span3", "Collaboration with: "], ["div.span4", [h]], [i]])
+            , m =createElement(["div.row-fluid"])
+            , n =createElement(["div"])
+            , x =createElement(["div.well.row-fluid#track_menu"]);
+        n.style.color = canvas.style.borderColor = "#f00";
+        n.innerHTML = "Use your mouse to drag & fit an interesting part of your track in the thumbnail";
+        l.style.lineHeight = e.style.lineHeight = "30px";
+        var w = function(a){
+            for(var b = [].slice.call(arguments, 1), c = 0, d = b.length; c < d; c++)
+                a.appendChild(b[c]);
+            return a
+        };
+        w(x, b, c, w(m, e, f), d);
+        Wb.insertBefore(x, canvas.nextSibling);
+        Wb.insertBefore(n, canvas);
+        for(var e = ja(), m = ja(), n = [e, m], x = function(a){
+            return function(b){
+                X[a] = b;
+                0 < --M || y.Va(X);
+                return b
+            }
+        }, y = ja(), w = 0, C = n.length, M = C, X = Array(C); w < C; w++)
+            n[w].ab(x(w));
+        n = y;
+        function jc(a){
+            a.addEventListener("blur", Game.attach)
+        }
+        jc(b);
+        b.addEventListener("keypress", function(a){
+            a.stopPropagation()
+        }, !1);
+        b.focus();
+        jc(h);
+        jc(c);
+        for(var fc in f.children)
+            f.children[fc].onclick = c => {
+                c.target.className = 'active';
+                c.target.nextSibling != null ? c.target.nextSibling.className = 'inactive' : c.target.previousSibling.className = 'inactive';
+            };
+        d.addEventListener("click", function(){
+            var e = document.createElement("canvas"), h, l;
+            e.width = 500;
+            e.height = 300;
+            track.zoom *= 2;
+            l = track.U;
+            track.U = {};
+            track.Ab = !1;
+            track.draw();
+            e.getContext("2d").drawImage(canvas, (canvas.width - 500) / 2, (canvas.height - 300) / 2, 500, 300, 0, 0, 500, 300);
+            track.zoom /= 2;
+            track.U = l;
+            e = e.toDataURL("image/png");
+            if("asdf" === e)
+                return alert("The thumbnail is blank!\nDrag & fit an interesting part of your track inside."),
+                !1;
+            if(4 > b.value.length)
+                return alert("The track name is too short!"),
+                !1;
+            d.disabled = !0;
+            for(var fc in f.children){
+                if(f.children[fc].className == 'active')
+                    h = f.children[fc].innerText.slice(1)
+            }
+            l = new XMLHttpRequest;
+            l.open("POST", "/draw/upload", !1);
+            l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            l.send("n=" + encodeURIComponent(b.value) + "&c=" + encodeURIComponent(a) + "&d=" + encodeURIComponent(c.value) + "&f=" + encodeURIComponent(h) + "&t=" + encodeURIComponent(e) + "&s=" + encodeURIComponent(track.targets));
+            location.href = "/"
+        })
+    } else {
+        if(track.targets < 1){
+            return alert("Sorry, but your track must have at least 1 target!")
+        } else {
+            return alert("Sorry, but your track must be bigger or more detailed.")
+        }
+    }
+})
 window.onresize = () => 800 == canvas.width ? GAME.resizeCanvas.smallscreen : GAME.resizeCanvas.fullscreen;
 document.onkeydown = function(a){
     switch (a.keyCode){
@@ -3312,14 +3475,45 @@ window.Game = {
         keyup: document.onkeyup
     },
     ride: function(a, b) {
-        new GAME.Run(a, b);
+        GAME.loop = new GAME.Run(a, b);
+    },
+    newRide: function() {
+        if(confirm("Do you really want to start a new track?")) {
+            GAME.loop.close();
+            GAME.update.pop();
+            GAME.render.pop();
+            this.ride();
+            charCount.innerHTML = "Trackcode";
+            code.value = null;
+            track.reset()
+        }
+    },
+    loadRide: function() {
+        if(10 < code.value.length) {
+            GAME.loop.close();
+            GAME.update.pop();
+            GAME.render.pop();
+            this.ride(code.value);
+            charCount.innerHTML = "Trackcode";
+            code.value = null;
+            track.reset()
+        } else {
+            alert("No trackcode to load!")
+        }
+    },
+    saveRide: function() {
+        if(track.id === void 0) {
+            code.value = track.toString();
+            code.select();
+            charCount.innerHTML = "Trackcode - " + Math.round(code.value.length / 1E3) + "k - CTRL + C to copy"
+        }
     },
     attach: function() {
-        if(defaults) {
+        if(this.defaults) {
             document.onkeydown = this.defaults.keydown,
             document.onkeypress = this.defaults.keypress,
             document.onkeyup = this.defaults.keyup,
-            defaults = !1
+            this.defaults = !1
         }
     }
 };
