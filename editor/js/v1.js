@@ -1783,7 +1783,7 @@ const GAME = {
                 this.zb = "e"
             }
             Ea(a){
-                this.track.firstPlayer = new Explosion(this.pos,a.track.gravity,a.track.time,this.track)
+                this.track.firstPlayer = new GAME.Explosion(this.pos,a.track.gravity,a.track.time,this.track)
             }
         }
     },
