@@ -1,6 +1,12 @@
-var track, ia = 0;
-const GAME = {
+!function(t) {
+    window.Game = t.Run;
+    window.Game.track = () => t.track;
+}({
     loop: null,
+    track: null,
+    update: [],
+    render: [],
+    powerupID: 0,
     toolbar: {
         drawLeft: function() {
             K.lineWidth = 1;
@@ -319,22 +325,694 @@ const GAME = {
             K.font = "8px eiven";
         }
     },
-    update: [],
-    render: [],
     get ctx() {
         return canvas.getContext("2d");
     },
+    get InitiateVariables() {
+        self = this;
+        return canvas = document.getElementById("canvas_rider")
+          , K = canvas.getContext("2d"),
+            records = [{}, {}, {}, {}, {}],
+            U = new self.Vector(40,50),
+            R = new self.Vector(0,0),
+            Kb = 20, ab = 15, Z = !1, tool = "camera", Qb = "camera",
+            Rb = !1, Hb = !1, V = !1, Jb = 1, Ib = !1,
+            Tb = [
+                ";Restart ( ENTER );Cancel Checkpoint ( BACKSPACE );;Switch bike ( ctrl+B - Arrows to control, Z to turn );;Enable line shading;Enable fullscreen ( F )".split(";"),
+                "Brush ( A - Hold to snap, hold & scroll to adjust size );Scenery brush ( S - Hold to snap, hold & scroll to adjust size );Lines ( backWheel - Hold to snap );Scenery lines ( W - Hold to snap );Eraser ( E - Hold & scroll to adjust size );Camera ( R - Release or press again to switch back, scroll to zoom );Enable grid snapping ( G );;Goal;Checkpoint;Boost;Gravity modifier;Bomb;Slow-Mo;Antigravity;Teleporter;;Shorten last line ( Z )".split(";")
+            ],
+            Lb = new self.Vector(40,50),
+            Mb = new self.Vector(-40,10),
+            Wb = document.getElementById("content"),
+            charCount = document.getElementById("charcount"),
+            code = document.getElementById("trackcode"),
+            button = {
+                new: document.getElementById("new"),
+                load: document.getElementById("load"),
+                save: document.getElementById("save"),
+                upload: document.getElementById("upload")
+            };
+    },
+    get InitiateOnclick() {
+        self = this;
+        return (!!button.new && (button.new.onclick = () => Game.newRide("-18 1i 18 1i")),
+            !!button.load && (button.load.onclick = () => Game.loadRide()),
+            !!button.save && (button.save.onclick = () => Game.saveRide()),
+            !!button.upload && (button.upload.onclick = () => {
+                function ja(){
+                    function a(a){
+                        e.push(a);
+                        d && (c = a(c));
+                        return f.Ib
+                    }
+                    function b(a){
+                        d = !0;
+                        c = a;
+                        for(var b = 0, f = e.length; b < f; b++)
+                            e[b](a)
+                    }
+                    var c, d, e = [], f = {
+                        ab: a,
+                        Va: b,
+                        Ib: {
+                            ab: a
+                        },
+                        Wb: {
+                            Va: b
+                        }
+                    };
+                    return f
+                }
+                function ka(a, b){
+                    var c = document.createElementNS(b, a.match(/^\w+/)[0]), d, e;
+                    if(d = a.match(/#([\w-]+)/))
+                        c.id = d[1];
+                    (e = a.match(/\.[\w-]+/g)) && c.setAttribute("class", e.join(" ").replace(/\./g, ""));
+                    return c
+                }
+                function createElement(a, b, c){
+                    var d = document, e, f;
+                    if(a && a.big)
+                        return d.getElementById(a);
+                    c = c || {};
+                    b = b || "http://www.w3.org/1999/xhtml";
+                    a[0].big && (a[0] = ka(a[0], b));
+                    for(e = 1; e < a.length; e++)
+                        if(a[e].big)
+                            a[0].appendChild(d.createTextNode(a[e]));
+                        else if(a[e].pop)
+                            a[e][0].big && (a[e][0] = ka(a[e][0], b)),
+                            a[0].appendChild(a[e][0]),
+                            createElement(a[e], b, c);
+                        else if(a[e].call)
+                            a[e](a[0]);
+                        else
+                            for(f in a[e])
+                                a[0].setAttribute(f, a[e][f]);
+                    c[0] = a[0];
+                    return c[0]
+                }
+                var a = self.track.toString();
+                if(0 < a.length && self.track.targets > 0){
+                    self.track.paused = !0;
+                    tool = "camera";
+                    self.track.Ab = !0;
+                    K.lineCap = "round";
+                    K.lineJoin = "round";
+                    document.getElementById("track_menu").style.display = "none";
+                    var b =createElement(["input#name.input-block-level", {
+                        type: "text",
+                        size: 18,
+                        Qb: 20,
+                        placeholder: "Name..."
+                    }])
+                        , c =createElement(["textarea.input-block-level", {
+                        rows: 4,
+                        placeholder: "Description..."
+                    }])
+                        , d =createElement(["input.btn.btn-primary.btn-block.btn-large", {
+                        type: "submit",
+                        value: "Save track"
+                    }])
+                        , e =createElement(["div.span3", "Visibility:"])
+                        , f =createElement(["div.btn-group.span9", {
+                        "data-toggle": "buttons-radio"
+                    }, ["button.btn#optPublic.active", ["i.icon-world"], " Public"], ["button.btn#optPrivate", ["i.icon-lock"], " Private"]])
+                        , h =createElement(["input.span12", {
+                        placeholder: "Partners...",
+                        type: "text"
+                    }])
+                        , i =createElement(["div.span5"])
+                        , l =createElement(["label.hide.row-fluid", ["div.span3", "Collaboration with: "], ["div.span4", [h]], [i]])
+                        , m =createElement(["div.row-fluid"])
+                        , n =createElement(["div"])
+                        , x =createElement(["div.well.row-fluid#track_menu"]);
+                    n.style.color = canvas.style.borderColor = "#f00";
+                    n.innerHTML = "Use your mouse to drag & fit an interesting part of your track in the thumbnail";
+                    l.style.lineHeight = e.style.lineHeight = "30px";
+                    var w = function(a){
+                        for(var b = [].slice.call(arguments, 1), c = 0, d = b.length; c < d; c++)
+                            a.appendChild(b[c]);
+                        return a
+                    };
+                    w(x, b, c, w(m, e, f), d);
+                    Wb.insertBefore(x, canvas.nextSibling);
+                    Wb.insertBefore(n, canvas);
+                    for(var e = ja(), m = ja(), n = [e, m], x = function(a){
+                        return function(b){
+                            X[a] = b;
+                            0 < --M || y.Va(X);
+                            return b
+                        }
+                    }, y = ja(), w = 0, C = n.length, M = C, X = Array(C); w < C; w++)
+                        n[w].ab(x(w));
+                    n = y;
+                    function jc(a){
+                        a.addEventListener("blur", Game.attach)
+                    }
+                    jc(b);
+                    b.addEventListener("keypress", function(a){
+                        a.stopPropagation()
+                    }, !1);
+                    b.focus();
+                    jc(h);
+                    jc(c);
+                    for(var fc in f.children)
+                        f.children[fc].onclick = c => {
+                            c.target.className = 'active';
+                            c.target.nextSibling != null ? c.target.nextSibling.className = 'inactive' : c.target.previousSibling.className = 'inactive';
+                        };
+                    d.addEventListener("click", function(){
+                        var e = document.createElement("canvas"), h, l;
+                        e.width = 500;
+                        e.height = 300;
+                        self.track.zoom *= 2;
+                        l = self.track.U;
+                        self.track.U = {};
+                        self.track.Ab = !1;
+                        self.track.draw();
+                        e.getContext("2d").drawImage(canvas, (canvas.width - 500) / 2, (canvas.height - 300) / 2, 500, 300, 0, 0, 500, 300);
+                        self.track.zoom /= 2;
+                        self.track.U = l;
+                        e = e.toDataURL("image/png");
+                        if("asdf" === e)
+                            return alert("The thumbnail is blank!\nDrag & fit an interesting part of your track inside."),
+                            !1;
+                        if(4 > b.value.length)
+                            return alert("The track name is too short!"),
+                            !1;
+                        d.disabled = !0;
+                        for(var fc in f.children){
+                            if(f.children[fc].className == 'active')
+                                h = f.children[fc].innerText.slice(1)
+                        }
+                        l = new XMLHttpRequest;
+                        l.open("POST", "/draw/upload", !1);
+                        l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        l.send("n=" + encodeURIComponent(b.value) + "&c=" + encodeURIComponent(a) + "&d=" + encodeURIComponent(c.value) + "&f=" + encodeURIComponent(h) + "&t=" + encodeURIComponent(e) + "&s=" + encodeURIComponent(self.track.targets));
+                        location.href = "/"
+                    })
+                } else {
+                    if(self.track.targets < 1){
+                        return alert("Sorry, but your track must have at least 1 target!")
+                    } else {
+                        return alert("Sorry, but your track must be bigger or more detailed.")
+                    }
+                }
+            }),
+            document.onkeydown = function(a){
+                switch (a.keyCode){
+                case 8:
+                    250 !== canvas.width && a.preventDefault();
+                    self.track.removeCheckpoint();
+                    self.track.gotoCheckpoint();
+                    break;
+                case 13:
+                    a.preventDefault();
+                    self.track.gotoCheckpoint();
+                    break;
+                case 190:
+                    a.preventDefault();
+                    self.track.removeCheckpointUndo();
+                    self.track.gotoCheckpoint();
+                    break;
+                case 37:
+                    self.track.firstPlayer && (a.preventDefault(),
+                    self.track.cameraFocus = self.track.firstPlayer.head,
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonDown("left"),
+                    window.autoPause ? (self.track.paused = false, window.autoPause = false) : null,
+                    self.track.firstPlayer.checkpointsCache = []);
+                    break;
+                case 39:
+                    self.track.firstPlayer && (a.preventDefault(),
+                    self.track.cameraFocus = self.track.firstPlayer.head,
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonDown("right"),
+                    window.autoPause ? (self.track.paused = false, window.autoPause = false) : null,
+                    self.track.firstPlayer.checkpointsCache = []);
+                    break;
+                case 38:
+                    self.track.firstPlayer && (a.preventDefault(),
+                    self.track.cameraFocus = self.track.firstPlayer.head,
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonDown("up"),
+                    window.autoPause ? (self.track.paused = false, window.autoPause = false) : null,
+                    self.track.firstPlayer.checkpointsCache = []);
+                    break;
+                case 40:
+                    self.track.firstPlayer && (a.preventDefault(),
+                    self.track.cameraFocus = self.track.firstPlayer.head,
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonDown("brake"),
+                    window.autoPause ? (self.track.paused = false, window.autoPause = false) : null,
+                    self.track.firstPlayer.checkpointsCache = []);
+                    break;
+                case 109:
+                case 189:
+                    self.track.zoomOut();
+                    break;
+                case 107:
+                case 187:
+                    self.track.zoomIn();
+                    break;
+                case 90:
+                    !self.track.cameraFocus && self.track.id === void 0 ? self.track.undo() : self.track.firstPlayer.swapped && (!self.track.firstPlayer.dead && self.track.firstPlayer.setButtonDown("swap"));
+                    window.autoPause ? (self.track.paused = false, window.autoPause = false) : null;
+                    break;
+                case 32:
+                    250 !== canvas.width && a.preventDefault(),
+                    self.track.paused = window.autoPause ? true : !self.track.paused,
+                    window.autoPause = false
+                }
+                if(location.pathname.slice(0, 7) == '/tracks')
+                    switch (a.keyCode){
+                    case 65:
+                        self.track.firstPlayer && (a.preventDefault(),
+                        self.track.cameraFocus = self.track.firstPlayer.head,
+                        self.track.firstPlayer.alive && self.track.firstPlayer.setButtonDown("left"),
+                        self.track.firstPlayer.checkpointsCache = []);
+                        break;
+                    case 68:
+                        self.track.firstPlayer && (a.preventDefault(),
+                        self.track.cameraFocus = self.track.firstPlayer.head,
+                        self.track.firstPlayer.alive && self.track.firstPlayer.setButtonDown("right"),
+                        self.track.firstPlayer.checkpointsCache = []);
+                        break;
+                    case 87:
+                        self.track.firstPlayer && (a.preventDefault(),
+                        self.track.cameraFocus = self.track.firstPlayer.head,
+                        self.track.firstPlayer.alive && self.track.firstPlayer.setButtonDown("up"),
+                        self.track.firstPlayer.checkpointsCache = []);
+                        break;
+                    case 83:
+                        self.track.firstPlayer && (a.preventDefault(),
+                        self.track.cameraFocus = self.track.firstPlayer.head,
+                        self.track.firstPlayer.alive && self.track.firstPlayer.setButtonDown("brake"),
+                        self.track.firstPlayer.checkpointsCache = []);
+                        break;
+                    }
+                if(self.track.id == void 0)
+                    switch (a.keyCode){
+                    case 65:
+                        "brush" !== tool ? (tool = "brush",
+                        document.body.style.cursor = "none",
+                        Z = !0) : self.track.cameraLock || (self.track.cameraLock = !0,
+                        U.copy(Lb),
+                        Z = !0);
+                        break;
+                    case 83:
+                        "scenery brush" !== tool ? (tool = "scenery brush",
+                        document.body.style.cursor = "none",
+                        Z = !0) : self.track.cameraLock || (self.track.cameraLock = !0,
+                        U.copy(Mb),
+                        Z = !0);
+                        break;
+                    case 81:
+                        "line" !== tool ? (tool = "line",
+                        document.body.style.cursor = "none") : self.track.cameraLock || (self.track.cameraLock = !0,
+                        U.copy(Lb),
+                        Z = !0);
+                        break;
+                    case 87:
+                        "scenery line" !== tool ? (tool = "scenery line",
+                        document.body.style.cursor = "none") : self.track.cameraLock || (self.track.cameraLock = !0,
+                        U.copy(Mb),
+                        Z = !0);
+                        break;
+                    case 69:
+                        tool = "eraser";
+                        document.body.style.cursor = "none";
+                        Z = !0;
+                        break;
+                    case 82:
+                        "camera" !== tool ? (Qb = tool,
+                        tool = "camera",
+                        document.body.style.cursor = "move") : Rb = !0;
+                        break;
+                    case 77:
+                        self.track.undoManager.undo();
+                        break;
+                    case 78:
+                        self.track.undoManager.redo()
+                    }
+            },
+            document.onkeypress = function(a){
+                switch (a.keyCode){
+                case 13:
+                case 37:
+                case 39:
+                case 38:
+                case 40:
+                    a.preventDefault();
+                    break;
+                case 8:
+                case 32:
+                    250 !== canvas.width && a.preventDefault();
+                    break;
+                case 113:
+                    self.track.firstPlayer.pastCheckpoint = !1
+                }
+            },
+            document.onkeyup = function(a){
+                switch (a.keyCode){
+                case 70:
+                case 27:
+                    self.resizeCanvas.fullscreen;
+                    break;
+                case 66:
+                    a.ctrlKey && self.track.switchBike();
+                    break;
+                case 37:
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonUp("left")
+                    break;
+                case 39:
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonUp("right")
+                    break;
+                case 38:
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonUp("up")
+                    break;
+                case 40:
+                    !self.track.firstPlayer.dead && self.track.firstPlayer.setButtonUp("brake")
+                    break;
+                case 90:
+                    self.track.firstPlayer.swapped = !0;
+                    break;
+                case 71:
+                    self.track.players.length > 1 ? self.track.cameraFocus = self.track.players[1].head === self.track.cameraFocus && self.track.firstPlayer ? self.track.firstPlayer.head : self.track.players[1].head : (Jb = 11 - Jb,
+                    Tb[1][6] = (1 === Jb ? "En" : "Dis") + "able grid snapping ( G )");
+                    break;
+                case 82:
+                    Rb && (tool = Qb,
+                    document.body.style.cursor = "none",
+                    Rb = !1);
+                    break;
+                case 49:
+                case 50:
+                case 51:
+                case 52:
+                case 53:
+                    self.track.id !== void 0 && self.track.watchGhost(a.keyCode - 48);
+                    break;
+                case 81:
+                case 87:
+                case 69:
+                case 83:
+                    self.track.players.length > 1 && (self.track.cameraFocus === self.track.players[1].head && (self.track.cameraFocus = self.track.firstPlayer.head),
+                    self.track.players[1] = !1);
+                case 65:
+                    Z && (self.track.cameraLock = Z = !1)
+                }
+                if(location.pathname.slice(0, 7) == '/tracks')
+                    switch (a.keyCode){
+                    case 65:
+                        self.track.firstPlayer.gamepad.left = 0;
+                        break;
+                    case 68:
+                        self.track.firstPlayer.gamepad.right = 0;
+                        break;
+                    case 87:
+                        self.track.firstPlayer.gamepad.up = 0;
+                        break;
+                    case 83:
+                        self.track.firstPlayer.gamepad.brake = 0;
+                        break;
+                    }
+            },
+            canvas.onmousemove = (a, b) => {
+                b = Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25);
+                a = Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25);
+                if(b < 1) {
+                    V = [0, a, Tb[0][a]];
+                    document.body.style.cursor = "default";
+                } else if(self.track.editor && b > 30) {
+                    V = [1, a, Tb[1][a]];
+                    if(14 === a && ("scenery line" === tool || "scenery brush" === tool)) {
+                        V[2] = "Shorten last set of scenery lines ( Z )";
+                    }
+                    document.body.style.cursor = "default";
+                } else {
+                    V = !1;
+                    document.body.style.cursor = tool == "camera" ? "move" : "none";
+                }
+            },
+            canvas.onmouseover = canvas.onmouseenter = function(){
+                V = !1;
+                document.body.style.cursor = "camera" === tool ? "move" : "none"
+            },
+            canvas.onmousedown = function(a){
+                a.preventDefault();
+                self.track.cameraLock = !0;
+                self.track.cameraFocus = !1;
+                if(Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25) < 1) {
+                    self.track.cameraLock = !1;
+                    switch(Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25) + 1) {
+                        case 1:
+                            self.track.paused = !self.track.paused;
+                            break;
+                        case 2:
+                            self.track.gotoCheckpoint();
+                            break;
+                        case 3:
+                            self.track.removeCheckpoint();
+                            break;
+                        case 5:
+                            self.track.switchBike();
+                            break;
+                        case 7:
+                            Ib ? (Ib = !1,
+                            V[2] = Tb[0][6] = "Enable line shading") : (Ib = !0,
+                            V[2] = Tb[0][6] = "Disable line shading");
+                            self.track.U = [];
+                            break;
+                        case 8:
+                            self.resizeCanvas.fullscreen;
+                            break;
+                    }
+                } else if(self.track.editor && Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25) > 30) {
+                    self.track.cameraLock = !1;
+                    switch(Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25) + 1) {
+                        case 1:
+                            tool = "brush";
+                            break;
+                        case 2:
+                            tool = "scenery brush";
+                            break;
+                        case 3:
+                            tool = "line";
+                            break;
+                        case 4:
+                            tool = "scenery line";
+                            break;
+                        case 5:
+                            tool = "eraser";
+                            break;
+                        case 6:
+                            tool = "camera";
+                            break;
+                        case 7:
+                            1 === Jb ? (Jb = 10,
+                            V[2] = Tb[1][6] = "Disable grid snapping ( G )") : (Jb = 1,
+                            V[2] = Tb[1][6] = "Enable grid snapping ( G )");
+                            break;
+                        case 9:
+                            tool = "goal";
+                            break;
+                        case 10:
+                            tool = "checkpoint";
+                            break;
+                        case 11:
+                            tool = "boost";
+                            break;
+                        case 12:
+                            tool = "gravity";
+                            break;
+                        case 13:
+                            tool = "bomb";
+                            break;
+                        case 14:
+                            tool = "slow-mo";
+                            break;
+                        case 15:
+                            tool = "antigravity";
+                            break;
+                        case 16:
+                            tool = "teleporter";
+                            break;
+                        case 18:
+                            self.track.undo()
+                        }
+                } else if(window.BHR_RCE_ENABLED && 2 === a.button && "camera" !== tool) {
+                    var a = self.track.erase(R);
+                    a.length && self.track.pushUndo(() => {
+                        self.track.addToSelf(a, !0);
+                    }, () => {
+                        for(var b = 0, c = a.length; b < c; b++) {
+                            a[b].remove();
+                        }
+                    });
+                    Hb = !0;
+                } else {
+                    var b;
+                    Z || U.copy(R);
+                    switch (tool){
+                    case "boost":
+                    case "gravity":
+                        document.body.style.cursor = "crosshair";
+                        break;
+                    case "eraser":
+                        var a = self.track.erase(R);
+                        a.length && self.track.pushUndo(() => {
+                            self.track.addToSelf(a, !0);
+                        }, () => {
+                            for(var b = 0, c = a.length; b < c; b++) {
+                                a[b].remove();
+                            }
+                        });
+                        break;
+                    case "goal":
+                        self.track.powerups.push(b = new self.Target(U.x,U.y,self.track));
+                        self.track.targets++;
+                        break;
+                    case "checkpoint":
+                        self.track.powerups.push(b = new self.Checkpoint(U.x,U.y,self.track));
+                        break;
+                    case "bomb":
+                        b = new self.Bomb(U.x,U.y,self.track);
+                        break;
+                    case "slow-mo":
+                        b = new self.Slowmo(U.x,U.y,self.track);
+                        break;
+                    case "antigravity":
+                        b = new self.Antigravity(U.x,U.y,self.track);
+                        break;
+                    case "teleporter":
+                        b = new self.Teleporter(U.x,U.y,self.track);
+                        self.track.teleporter = b;
+                        break;
+                    case "brush":
+                    case "scenery brush":
+                        Z && self.track.addLine(U, R, "brush" !== tool),
+                        Z = !1,
+                        self.track.cameraLock = !0
+                    }
+                    if(b !== void 0){
+                        var c = Math.floor(b.pos.x / self.track.scale)
+                        , d = Math.floor(b.pos.y / self.track.scale);
+                        self.track.grid[c] === void 0 && (self.track.grid[c] = []);
+                        self.track.grid[c][d] === void 0 && (self.track.grid[c][d] = new self.Sector);
+                        self.track.grid[c][d].powerups.push(b);
+                        self.track.pushUndo(function(){
+                            b.remove()
+                        }, function(){
+                            b instanceof self.Target && ++track.targets;
+                            self.track.grid[c][d].powerups.push(b)
+                        })
+                    }
+                }
+            },
+            document.onmousemove = function(a){
+                "camera" !== tool && (self.track.cameraFocus = !1);
+                R = (new self.Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
+                "eraser" !== tool && 2 !== a.button && (R.x = Math.round(R.x / Jb) * Jb,
+                R.y = Math.round(R.y / Jb) * Jb);
+                if(self.track.cameraLock) {
+                    if("camera" === tool) {
+                        self.track.camera.addToSelf(U.sub(R)),
+                        R.copy(U);
+                    } else if("eraser" === tool || window.BHR_RCE_ENABLED && 2 === a.button) {
+                        var a = self.track.erase(R);
+                        a.length && self.track.pushUndo(() => {
+                            self.track.addToSelf(a, !0);
+                        }, () => {
+                            for(var b = 0, c = a.length; b < c; b++) {
+                                a[b].remove();
+                            }
+                        });
+                    } else if(!Z && ("brush" === tool || "scenery brush" === tool) && U.distanceTo(R) >= Kb) {
+                        var b = self.track.addLine(U, R, "brush" !== tool);
+                        self.track.pushUndo(function(){
+                            b.remove()
+                        }, function(){
+                            b.xb()
+                        })
+                    }
+                }
+            },
+            canvas.onmouseup = function(){
+                var a, b, c, d;
+                if(Hb)
+                    return Hb = !1;
+                if(self.track.cameraLock)
+                    if("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool){
+                        var e = self.track.addLine(U, R, "line" !== tool && "brush" !== tool);
+                        self.track.pushUndo(function(){
+                            e.remove()
+                        }, function(){
+                            e.xb()
+                        })
+                    } else if("teleporter" === tool){
+                        U.copy(R);
+                        self.track.teleporter.tpb(U.x,U.y);
+                        self.track.teleporter = undefined;
+                    } else if("boost" === tool || "gravity" === tool)
+                        document.body.style.cursor = "none",
+                        d = Math.round(180 * Math.atan2(-(R.x - U.x), R.y - U.y) / Math.PI),
+                        c = "boost" === tool ? new self.Boost(U.x,U.y,d,self.track) : new self.Gravity(U.x,U.y,d,self.track),
+                        a = Math.floor(c.pos.x / self.track.scale),
+                        b = Math.floor(c.pos.y / self.track.scale),
+                        self.track.grid[a] === void 0 && (self.track.grid[a] = []),
+                        self.track.grid[a][b] === void 0 && (self.track.grid[a][b] = new self.Sector),
+                        self.track.grid[a][b].powerups.push(c),
+                        self.track.pushUndo(function(){
+                            c.remove()
+                        }, function(){
+                            self.track.grid[a][b].powerups.push(c)
+                        })
+            },
+            document.onmouseup = () => Z || (self.track.cameraLock = !1),
+            canvas.oncontextmenu = (a) => a.preventDefault(),
+            canvas.onmouseout = canvas.onmouseleave = () => document.body.style.cursor = "default",
+            canvas.ondommousescroll = canvas.onmousewheel = (a) => {
+                a.preventDefault();
+                if(Z) {
+                    if("eraser" === tool) {
+                        if((0 < a.detail || 0 > a.wheelDelta) && 5 < ab) {
+                            ab -= 5;
+                        } else {
+                            if((0 > a.detail || 0 < a.wheelDelta) && 40 > ab) {
+                                ab += 5
+                            }
+                        }
+                    } else {
+                        if("brush" === tool || "scenery brush" === tool) {
+                            if((0 < a.detail || 0 > a.wheelDelta) && 4 < Kb) {
+                                Kb -= 8;
+                            } else if((0 > a.detail || 0 < a.wheelDelta) && 200 > Kb) {
+                                Kb += 8;
+                            }
+                        }
+                    }
+                } else {
+                    if(0 < a.detail || 0 > a.wheelDelta) {
+                        self.track.zoomOut()
+                    } else if(0 > a.detail || 0 < a.wheelDelta) {
+                        self.track.zoomIn()
+                    };
+                }
+                a = (new self.Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
+                self.track.cameraFocus || self.track.camera.addToSelf(R.sub(a))
+            }
+        );
+    },
     get Vector() {
+        self = this;
         return class {
             constructor(a, b) {
                 this.x = a;
                 this.y = b
             }
             toPixel(){
-                return new GAME.Vector((this.x - track.camera.x) * track.zoom + canvas.width / 2,(this.y - track.camera.y) * track.zoom + canvas.height / 2)
+                return new self.Vector((this.x - self.track.camera.x) * self.track.zoom + canvas.width / 2,(this.y - self.track.camera.y) * self.track.zoom + canvas.height / 2)
             }
             adjustToCanvas(){
-                return new GAME.Vector((this.x - canvas.width / 2) / track.zoom + track.camera.x,(this.y - canvas.height / 2) / track.zoom + track.camera.y)
+                return new self.Vector((this.x - canvas.width / 2) / self.track.zoom + self.track.camera.x,(this.y - canvas.height / 2) / self.track.zoom + self.track.camera.y)
             }
             copy(a){
                 this.x = a.x;
@@ -357,19 +1035,19 @@ const GAME = {
                 return this
             }
             clone(){
-                return new GAME.Vector(this.x,this.y)
+                return new self.Vector(this.x,this.y)
             }
             add(a){
-                return new GAME.Vector(this.x + a.x,this.y + a.y)
+                return new self.Vector(this.x + a.x,this.y + a.y)
             }
             sub(a){
-                return new GAME.Vector(this.x - a.x,this.y - a.y)
+                return new self.Vector(this.x - a.x,this.y - a.y)
             }
             scale(a){
-                return new GAME.Vector(this.x * a,this.y * a)
+                return new self.Vector(this.x * a,this.y * a)
             }
             oppositeScale(a){
-                return new GAME.Vector(this.x / a,this.y / a)
+                return new self.Vector(this.x / a,this.y / a)
             }
             dot(a){
                 return this.x * a.x + this.y * a.y
@@ -399,24 +1077,26 @@ const GAME = {
         }
     },
     get Mass() {
+        self = this;
         return class {
             constructor(a, b){
                 this.pos = a.clone();
                 this.old = a.clone();
-                this.vel = new GAME.Vector(0,0);
+                this.vel = new self.Vector(0,0);
                 this.track = b;
             }
             update(){
                 this.vel.addToSelf(this.track.gravity).scaleSelf(0.99);
                 this.pos.addToSelf(this.vel);
                 this.touching = !1;
-                this.collide && track.collide(this);
+                this.collide && self.track.collide(this);
                 this.vel = this.pos.sub(this.old);
                 this.old.copy(this.pos)
             }
         }
     },
     get BodyPart() {
+        self = this;
         return class extends this.Mass {
             constructor(a, b){
                 super(a, b);
@@ -429,7 +1109,7 @@ const GAME = {
                 this.touching = !0
             }
             clone(){
-                var a = new GAME.BodyPart(this.pos,this.track);
+                var a = new self.BodyPart(this.pos,this.track);
                 a.old = this.old.clone();
                 a.vel = this.vel.clone();
                 a.size = this.size;
@@ -448,7 +1128,8 @@ const GAME = {
         }
     },
     get Wheel() {
-        return class extends GAME.Mass {
+        self = this;
+        return class extends this.Mass {
             constructor(a, b){
                 super(a, b);
                 this.size = 10;
@@ -463,7 +1144,7 @@ const GAME = {
                 this.touching = !0
             }
             clone(){
-                var a = new GAME.Wheel(this.pos,this.track);
+                var a = new self.Wheel(this.pos,this.track);
                 a.old = this.old.clone();
                 a.vel = this.vel.clone();
                 a.motor = this.motor;
@@ -484,11 +1165,12 @@ const GAME = {
         }
     },
     get Shard() {
+        self = this;
         return class {
             constructor(a, b){
-                this.pos = new GAME.Vector(a.x + 5 * (Math.random() - Math.random()),a.y + 5 * (Math.random() - Math.random()));
-                this.old = new GAME.Vector(this.pos.x,this.pos.y);
-                this.vel = new GAME.Vector(11 * (Math.random() - Math.random()),11 * (Math.random() - Math.random()));
+                this.pos = new self.Vector(a.x + 5 * (Math.random() - Math.random()),a.y + 5 * (Math.random() - Math.random()));
+                this.old = new self.Vector(this.pos.x,this.pos.y);
+                this.vel = new self.Vector(11 * (Math.random() - Math.random()),11 * (Math.random() - Math.random()));
                 this.track = b;
                 this.mb = b.track;
                 this.size = 2 + 9 * Math.random();
@@ -517,7 +1199,7 @@ const GAME = {
                 this.pos.addToSelf(a.scale(-a.dot(this.vel) * this.friction));
                 this.rotation += this.da;
                 var b = a.getLength();
-                0 < b && (a = new GAME.Vector(-a.y / b,a.x / b),
+                0 < b && (a = new self.Vector(-a.y / b,a.x / b),
                 this.old.addToSelf(a.scale(0.8 * a.dot(this.vel))))
             }
             update(){
@@ -526,13 +1208,14 @@ const GAME = {
                 this.vel = this.vel.scale(0.99);
                 this.pos.addToSelf(this.vel);
                 this.touching = !1;
-                this.collide && track.collide(this);
+                this.collide && self.track.collide(this);
                 this.vel = this.pos.sub(this.old);
                 this.old.copy(this.pos)
             }
         }
     },
     get Spring() {
+        self = this;
         return class {
             constructor(a, b, c){
                 this.a = a;
@@ -547,7 +1230,7 @@ const GAME = {
             }
             rotate(a){
                 var b = this.b.pos.sub(this.a.pos),
-                    b = new GAME.Vector(-b.y / this.leff,b.x / this.leff);
+                    b = new self.Vector(-b.y / this.leff,b.x / this.leff);
                 this.a.pos.addToSelf(b.scale(a));
                 this.b.pos.addToSelf(b.scale(-a))
             }
@@ -564,7 +1247,7 @@ const GAME = {
                 return this
             }
             swap(){
-                var a = new GAME.Vector;
+                var a = new self.Vector;
                 a.copy(this.a.pos);
                 this.a.pos.copy(this.b.pos);
                 this.b.pos.copy(a);
@@ -582,7 +1265,7 @@ const GAME = {
                 return this.b.pos.sub(this.a.pos).getLength()
             }
             clone(){
-                var a = new GAME.Spring(this.a,this.b,this.track);
+                var a = new self.Spring(this.a,this.b,this.track);
                 a.lrest = this.lrest;
                 a.leff = this.leff;
                 a.dampConstant= this.dampConstant;
@@ -603,10 +1286,11 @@ const GAME = {
         }
     },
     get Vehicle() {
+        self = this;
         return class {
             init(a) {
                 this.track = a,
-                this.gravity = new GAME.Vector(0,.3),
+                this.gravity = new self.Vector(0,.3),
                 this.complete = !1,
                 this.alive = !0,
                 this.crashed = !1,
@@ -620,7 +1304,7 @@ const GAME = {
             }
             createCosmetics() {
                 var t = null || this.firstPlayer && this.firstPlayer._user
-                  , e = {head: "hat"} || t.cosmetics;
+                , e = {head: "hat"} || t.cosmetics;
                 this.cosmetics = e
             }
             trackComplete(){
@@ -657,15 +1341,15 @@ const GAME = {
                 }
                 this.pastCheckpoint = 0
             }
-            die = () => {
+            die() {
                 this.dead = !0;
                 this.head.drive = () => {};
                 this.rearWheel.motor = 0;
                 this.rearWheel.brake = !1;
                 this.frontWheel.brake = !1;
                 this.head.collide = !1;
-                var bike = this.track.firstPlayer = this.track.players[0] = new GAME.DeadBike(this,this.getStickMan(),this.track,this.checkpoints);
-                bike.hat = new GAME.Shard(this.head.pos.clone(),this);
+                var bike = this.track.firstPlayer = this.track.players[0] = new self.DeadBike(this,this.getStickMan(),this.track,this.checkpoints);
+                bike.hat = new self.Shard(this.head.pos.clone(),this);
                 bike.hat.vel = this.head.vel.clone();
                 bike.hat.size = 10;
                 bike.hat.da = 0.1
@@ -673,21 +1357,21 @@ const GAME = {
             getStickMan(){
                 var a = {}
                 , b = this.frontWheel.pos.sub(this.rearWheel.pos)
-                , c = new GAME.Vector(b.y * this.dir,-b.x * this.dir);
+                , c = new self.Vector(b.y * this.dir,-b.x * this.dir);
                 a.head = this.rearWheel.pos.add(b.scale(0.35)).add(this.head.pos.sub(this.frontWheel.pos.add(this.rearWheel.pos).scale(0.5)).scale(1.2));
                 a.hand = a.shadowHand = this.rearWheel.pos.add(b.scale(0.8)).add(c.scale(0.68));
                 var d = a.head.sub(a.hand)
-                , d = new GAME.Vector(d.y * this.dir,-d.x * this.dir);
+                , d = new self.Vector(d.y * this.dir,-d.x * this.dir);
                 a.elbow = a.shadowElbow = a.head.add(a.hand).scale(0.5).add(d.scale(130 / d.lengthSquared()));
                 a.hip = this.rearWheel.pos.add(b.scale(0.2)).add(c.scale(0.5));
-                var e = new GAME.Vector(6 * Math.cos(this.pedalSpeed),6 * Math.sin(this.pedalSpeed));
+                var e = new self.Vector(6 * Math.cos(this.pedalSpeed),6 * Math.sin(this.pedalSpeed));
                 a.foot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).add(e);
                 d = a.hip.sub(a.foot);
-                d = new GAME.Vector(-d.y * this.dir,d.x * this.dir);
+                d = new self.Vector(-d.y * this.dir,d.x * this.dir);
                 a.knee = a.hip.add(a.foot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
                 a.shadowFoot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).sub(e);
                 d = a.hip.sub(a.shadowFoot);
-                d = new GAME.Vector(-d.y * this.dir,d.x * this.dir);
+                d = new self.Vector(-d.y * this.dir,d.x * this.dir);
                 a.shadowKnee = a.hip.add(a.shadowFoot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
                 return a
             }
@@ -815,7 +1499,8 @@ const GAME = {
         }
     },
     get BMXBike() {
-        return class extends GAME.Vehicle {
+        self = this;
+        return class extends this.Vehicle {
             constructor(a, b, c = [], d = !1) {
                 super();
                 this.init(a);
@@ -829,7 +1514,7 @@ const GAME = {
                 if(this.checkpoints.length > 0) {
                     var cp = this.checkpoints[this.checkpoints.length - 1];
                     this.dir = cp.dir;
-                    this.gravity = new GAME.Vector(cp.gravity.x, cp.gravity.y);
+                    this.gravity = new self.Vector(cp.gravity.x, cp.gravity.y);
                     this.slow = cp.slow;
                     this.targetsCollected = cp.targetsCollected;
                     this.time = cp.time;
@@ -866,7 +1551,7 @@ const GAME = {
             cosmeticHead = null;
             cosmeticRearWheel = null;
             cosmeticFrontWheel = null;
-            swapped = !1;
+            swapped = !0;
             ragdoll = null;
             checkpointsCache = [];
             gamepad = { up: 0, brake: 0, left: 0, right: 0, swap: 0 };
@@ -874,9 +1559,9 @@ const GAME = {
                 var a = 0, b = -1,
                     c = 21, d = 38,
                     e = -21, f = 38,
-                    g = new GAME.Vector(0,0),
-                    h = new GAME.Vector(0,0),
-                    i = new GAME.Vector(0,0),
+                    g = new self.Vector(0,0),
+                    h = new self.Vector(0,0),
+                    i = new self.Vector(0,0),
                     j = 0,
                     k = 0;
                 if(this.checkpoints.length > 0) {
@@ -884,14 +1569,14 @@ const GAME = {
                     a = cp.masses[0].pos.x, b = cp.masses[0].pos.y,
                     c = cp.masses[1].pos.x, d = cp.masses[1].pos.y,
                     e = cp.masses[2].pos.x, f = cp.masses[2].pos.y,
-                    g = new GAME.Vector(cp.masses[0].vel.x,cp.masses[0].vel.y),
-                    h = new GAME.Vector(cp.masses[1].vel.x,cp.masses[1].vel.y),
-                    i = new GAME.Vector(cp.masses[2].vel.x,cp.masses[2].vel.y),
+                    g = new self.Vector(cp.masses[0].vel.x,cp.masses[0].vel.y),
+                    h = new self.Vector(cp.masses[1].vel.x,cp.masses[1].vel.y),
+                    i = new self.Vector(cp.masses[2].vel.x,cp.masses[2].vel.y),
                     j = cp.masses[1].motor,
                     k = cp.masses[2].motor;
                 }
-                this.masses = [this.head = new GAME.BodyPart(new GAME.Vector(a,b),this), this.frontWheel = new GAME.Wheel(new GAME.Vector(c,d),this), this.rearWheel = new GAME.Wheel(new GAME.Vector(e,f),this)];
-                this.head.drive = this.die,
+                this.masses = [this.head = new self.BodyPart(new self.Vector(a,b),this), this.frontWheel = new self.Wheel(new self.Vector(c,d),this), this.rearWheel = new self.Wheel(new self.Vector(e,f),this)];
+                this.head.drive = () => this.die(),
                 this.head.size = 14,
                 this.frontWheel.size = this.rearWheel.size = 11.7,
                 this.head.vel = g,
@@ -900,9 +1585,9 @@ const GAME = {
                 this.frontWheel.motor = j,
                 this.rearWheel.motor = k;
                 if(this.checkpoints.length > 0)
-                    this.head.old = new GAME.Vector(cp.masses[0].old.x,cp.masses[0].old.y),
-                    this.frontWheel.old = new GAME.Vector(cp.masses[1].old.x,cp.masses[1].old.y),
-                    this.rearWheel.old = new GAME.Vector(cp.masses[2].old.x,cp.masses[2].old.y)
+                    this.head.old = new self.Vector(cp.masses[0].old.x,cp.masses[0].old.y),
+                    this.frontWheel.old = new self.Vector(cp.masses[1].old.x,cp.masses[1].old.y),
+                    this.rearWheel.old = new self.Vector(cp.masses[2].old.x,cp.masses[2].old.y)
             }
             createSprings() {
                 var a = 45,
@@ -915,9 +1600,9 @@ const GAME = {
                     c = cp.springs[2].leff;
                 }
                 this.springs = [
-                    this.rearSpring = new GAME.Spring(this.head,this.rearWheel,this),
-                    this.chasse = new GAME.Spring(this.rearWheel,this.frontWheel,this),
-                    this.frontSpring = new GAME.Spring(this.frontWheel,this.head,this)
+                    this.rearSpring = new self.Spring(this.head,this.rearWheel,this),
+                    this.chasse = new self.Spring(this.rearWheel,this.frontWheel,this),
+                    this.frontSpring = new self.Spring(this.frontWheel,this.head,this)
                 ];
                 this.rearSpring.lrest = 45,
                 this.chasse.lrest = 42,
@@ -941,13 +1626,13 @@ const GAME = {
                 this.dead()
             }
             swap(){
-                wa = this.gamepad.swap = !1;
+                this.gamepad.swap = !1;
                 this.dir *= -1;
                 this.chasse.swap();
                 var a = this.rearSpring.leff;
                 this.rearSpring.leff = this.frontSpring.leff;
                 this.frontSpring.leff = a;
-                this.swapped = this.swapped && !1 || !0;
+                this.swapped = !this.swapped;
                 this.collide("turn")
             }
             setProperties(){
@@ -970,7 +1655,7 @@ const GAME = {
                 K.beginPath(),K.arc(h.x, h.y, 10 * e, 0, 2 * Math.PI, !0),K.moveTo(i.x + 10 * e, i.y),K.arc(i.x, i.y, 10 * e, 0, 2 * Math.PI, !0),K.stroke();
                 var l = i.x - h.x
                 , m = i.y - h.y
-                , i = new GAME.Vector((i.y - h.y) * f,(h.x - i.x) * f);
+                , i = new self.Vector((i.y - h.y) * f,(h.x - i.x) * f);
                 a = h.x + 0.3 * l + 0.25 * i.x;
                 b = h.y + 0.3 * m + 0.25 * i.y;
                 var n = h.x + 0.84 * l + 0.42 * i.x
@@ -1104,7 +1789,7 @@ const GAME = {
                         this.frontSpring.clone()
                     ],
                     dir: this.dir,
-                    gravity: new GAME.Vector(this.gravity.x, this.gravity.y),
+                    gravity: new self.Vector(this.gravity.x, this.gravity.y),
                     slow: this.slow,
                     targetsCollected: this.targetsCollected,
                     powerups: powerups,
@@ -1114,7 +1799,8 @@ const GAME = {
         }
     },
     get MountainBike() {
-        return class  extends GAME.Vehicle {
+        self = this;
+        return class extends this.Vehicle {
             constructor(a, b, c = [], d) {
                 super();
                 this.init(a);
@@ -1128,7 +1814,7 @@ const GAME = {
                 if(this.checkpoints.length > 0) {
                     var cp = this.checkpoints[this.checkpoints.length - 1];
                     this.dir = cp.dir;
-                    this.gravity = new GAME.Vector(cp.gravity.x, cp.gravity.y);
+                    this.gravity = new self.Vector(cp.gravity.x, cp.gravity.y);
                     this.slow = cp.slow;
                     this.targetsCollected = cp.targetsCollected;
                     this.time = cp.time;
@@ -1165,23 +1851,17 @@ const GAME = {
             cosmeticHead = null;
             cosmeticRearWheel = null;
             cosmeticFrontWheel = null;
-            swapped = !1;
+            swapped = !0;
             ragdoll = null;
             checkpointsCache = [];
-            gamepad = {
-                up: 0,
-                brake: 0,
-                left: 0,
-                right: 0,
-                swap: 0
-            }
+            gamepad = { up: 0, brake: 0, left: 0, right: 0, swap: 0 }
             createMasses() {
                 var a = 2, b = -3,
                     c = 23, d = 35,
                     e = -23, f = 35,
-                    g = new GAME.Vector(0,0),
-                    h = new GAME.Vector(0,0),
-                    i = new GAME.Vector(0,0),
+                    g = new self.Vector(0,0),
+                    h = new self.Vector(0,0),
+                    i = new self.Vector(0,0),
                     j = 0,
                     k = 0;
                 if(this.checkpoints.length > 0) {
@@ -1189,14 +1869,14 @@ const GAME = {
                     a = cp.masses[0].pos.x, b = cp.masses[0].pos.y,
                     c = cp.masses[1].pos.x, d = cp.masses[1].pos.y,
                     e = cp.masses[2].pos.x, f = cp.masses[2].pos.y,
-                    g = new GAME.Vector(cp.masses[0].vel.x,cp.masses[0].vel.y),
-                    h = new GAME.Vector(cp.masses[1].vel.x,cp.masses[1].vel.y),
-                    i = new GAME.Vector(cp.masses[2].vel.x,cp.masses[2].vel.y),
+                    g = new self.Vector(cp.masses[0].vel.x,cp.masses[0].vel.y),
+                    h = new self.Vector(cp.masses[1].vel.x,cp.masses[1].vel.y),
+                    i = new self.Vector(cp.masses[2].vel.x,cp.masses[2].vel.y),
                     j = cp.masses[1].motor,
                     k = cp.masses[2].motor;
                 }
-                this.masses = [this.head = new GAME.BodyPart(new GAME.Vector(a,b),this), this.frontWheel = new GAME.Wheel(new GAME.Vector(c,d),this), this.rearWheel = new GAME.Wheel(new GAME.Vector(e,f),this)];
-                this.head.drive = this.die,
+                this.masses = [this.head = new self.BodyPart(new self.Vector(a,b),this), this.frontWheel = new self.Wheel(new self.Vector(c,d),this), this.rearWheel = new self.Wheel(new self.Vector(e,f),this)];
+                this.head.drive = () => this.die(),
                 this.head.size = this.rearWheel.size = this.frontWheel.size = 14,
                 this.head.vel = g,
                 this.frontWheel.vel = h,
@@ -1204,9 +1884,9 @@ const GAME = {
                 this.frontWheel.motor = j,
                 this.rearWheel.motor = k;
                 if(this.checkpoints.length > 0)
-                    this.head.old = new GAME.Vector(cp.masses[0].old.x,cp.masses[0].old.y),
-                    this.frontWheel.old = new GAME.Vector(cp.masses[1].old.x,cp.masses[1].old.y),
-                    this.rearWheel.old = new GAME.Vector(cp.masses[2].old.x,cp.masses[2].old.y)
+                    this.head.old = new self.Vector(cp.masses[0].old.x,cp.masses[0].old.y),
+                    this.frontWheel.old = new self.Vector(cp.masses[1].old.x,cp.masses[1].old.y),
+                    this.rearWheel.old = new self.Vector(cp.masses[2].old.x,cp.masses[2].old.y)
             }
             createSprings() {
                 var a = 47,
@@ -1219,9 +1899,9 @@ const GAME = {
                     c = cp.springs[2].leff;
                 }
                 this.springs = [
-                    this.rearSpring = new GAME.Spring(this.head,this.rearWheel,this),
-                    this.chasse = new GAME.Spring(this.rearWheel,this.frontWheel,this),
-                    this.frontSpring = new GAME.Spring(this.frontWheel,this.head,this)
+                    this.rearSpring = new self.Spring(this.head,this.rearWheel,this),
+                    this.chasse = new self.Spring(this.rearWheel,this.frontWheel,this),
+                    this.frontSpring = new self.Spring(this.frontWheel,this.head,this)
                 ];
                 this.rearSpring.lrest = 47,
                 this.chasse.lrest = 45,
@@ -1233,13 +1913,13 @@ const GAME = {
                 this.frontSpring.leff = c
             }
             swap(){
-                wa = this.gamepad.swap = !1;
+                this.gamepad.swap = !1;
                 this.dir *= -1;
                 this.chasse.swap();
                 var a = this.rearSpring.leff;
                 this.rearSpring.leff = this.frontSpring.leff;
                 this.frontSpring.leff = a;
-                this.swapped = this.swapped && !1 || !0;
+                this.swapped = !this.swapped;
                 this.collide("turn")
             }
             setProperties() {
@@ -1257,21 +1937,21 @@ const GAME = {
             getStickMan() {
                 var a = {}
                 , b = this.frontWheel.pos.sub(this.rearWheel.pos)
-                , c = new GAME.Vector(b.y * this.dir,-b.x * this.dir);
+                , c = new self.Vector(b.y * this.dir,-b.x * this.dir);
                 a.head = this.rearWheel.pos.add(b.scale(0.35)).add(this.head.pos.sub(this.frontWheel.pos.add(this.rearWheel.pos).scale(0.5)).scale(1.2));
                 a.hand = a.shadowHand = this.rearWheel.pos.add(b.scale(0.8)).add(c.scale(0.68));
                 var d = a.head.sub(a.hand)
-                , d = new GAME.Vector(d.y * this.dir,-d.x * this.dir);
+                , d = new self.Vector(d.y * this.dir,-d.x * this.dir);
                 a.elbow = a.shadowElbow = a.head.add(a.hand).scale(0.5).add(d.scale(130 / d.lengthSquared()));
                 a.hip = this.rearWheel.pos.add(b.scale(0.2)).add(c.scale(0.5));
-                var e = new GAME.Vector(6 * Math.cos(this.pedalSpeed),6 * Math.sin(this.pedalSpeed));
+                var e = new self.Vector(6 * Math.cos(this.pedalSpeed),6 * Math.sin(this.pedalSpeed));
                 a.foot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).add(e);
                 d = a.hip.sub(a.foot);
-                d = new GAME.Vector(-d.y * this.dir,d.x * this.dir);
+                d = new self.Vector(-d.y * this.dir,d.x * this.dir);
                 a.knee = a.hip.add(a.foot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
                 a.shadowFoot = this.rearWheel.pos.add(b.scale(0.4)).add(c.scale(0.05)).sub(e);
                 d = a.hip.sub(a.shadowFoot);
-                d = new GAME.Vector(-d.y * this.dir,d.x * this.dir);
+                d = new self.Vector(-d.y * this.dir,d.x * this.dir);
                 a.shadowKnee = a.hip.add(a.shadowFoot).scale(0.5).add(d.scale(160 / d.lengthSquared()));
                 return a
             }
@@ -1281,14 +1961,14 @@ const GAME = {
                 , c = this.frontWheel.pos.toPixel()
                 , d = this.head.pos.toPixel()
                 , e = c.sub(b)
-                , f = new GAME.Vector((c.y - b.y) * this.dir,(b.x - c.x) * this.dir)
+                , f = new self.Vector((c.y - b.y) * this.dir,(b.x - c.x) * this.dir)
                 , h = d.sub(b.add(e.scale(0.5)));
                 K.strokeStyle = "#000";
                 K.lineWidth = 3.5 * a.zoom;
                 K.beginPath(),K.arc(b.x, b.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0),K.moveTo(c.x + 12.5 * a.zoom, c.y),K.arc(c.x, c.y, 12.5 * a.zoom, 0, 2 * Math.PI, !0),K.stroke(),K.beginPath(),K.fillStyle = "grey";
                 K.moveTo(b.x + 5 * a.zoom, b.y),K.arc(b.x, b.y, 5 * a.zoom, 0, 2 * Math.PI, !0),K.moveTo(c.x + 4 * a.zoom, c.y),K.arc(c.x, c.y, 4 * a.zoom, 0, 2 * Math.PI, !0),K.fill(),K.beginPath(),K.lineWidth = 5 * a.zoom;
                 K.moveTo(b.x, b.y),K.lineTo(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y),K.moveTo(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y),K.lineTo(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y),K.lineTo(b.x + 0.4 * e.x + 0.05 * f.x, b.y + 0.4 * e.y + 0.05 * f.y),K.stroke(),K.beginPath(),K.lineWidth = 2 * a.zoom;
-                var i = new GAME.Vector(6 * Math.cos(this.pedalSpeed) * a.zoom,6 * Math.sin(this.pedalSpeed) * a.zoom);
+                var i = new self.Vector(6 * Math.cos(this.pedalSpeed) * a.zoom,6 * Math.sin(this.pedalSpeed) * a.zoom);
                 K.moveTo(b.x + 0.72 * e.x + 0.64 * h.x, b.y + 0.72 * e.y + 0.64 * h.y),K.lineTo(b.x + 0.43 * e.x + 0.05 * f.x, b.y + 0.43 * e.y + 0.05 * f.y),K.moveTo(b.x + 0.45 * e.x + 0.3 * h.x, b.y + 0.45 * e.y + 0.3 * h.y),K.lineTo(b.x + 0.3 * e.x + 0.4 * h.x, b.y + 0.3 * e.y + 0.4 * h.y),K.lineTo(b.x + 0.25 * e.x + 0.6 * h.x, b.y + 0.25 * e.y + 0.6 * h.y),K.moveTo(b.x + 0.17 * e.x + 0.6 * h.x, b.y + 0.17 * e.y + 0.6 * h.y),K.lineTo(b.x + 0.3 * e.x + 0.6 * h.x, b.y + 0.3 * e.y + 0.6 * h.y),K.moveTo(b.x + 0.43 * e.x + 0.05 * f.x + i.x, b.y + 0.43 * e.y + 0.05 * f.y + i.y),K.lineTo(b.x + 0.43 * e.x + 0.05 * f.x - i.x, b.y + 0.43 * e.y + 0.05 * f.y - i.y),K.stroke(),K.beginPath(),K.lineWidth = a.zoom;
                 K.moveTo(b.x + 0.46 * e.x + 0.4 * h.x, b.y + 0.46 * e.y + 0.4 * h.y),K.lineTo(b.x + 0.28 * e.x + 0.5 * h.x, b.y + 0.28 * e.y + 0.5 * h.y),K.stroke(),K.beginPath(),K.lineWidth = 3 * a.zoom;
                 K.moveTo(c.x, c.y),K.lineTo(b.x + 0.71 * e.x + 0.73 * h.x, b.y + 0.71 * e.y + 0.73 * h.y),K.lineTo(b.x + 0.73 * e.x + 0.77 * h.x, b.y + 0.73 * e.y + 0.77 * h.y),K.lineTo(b.x + 0.7 * e.x + 0.8 * h.x, b.y + 0.7 * e.y + 0.8 * h.y),K.stroke();
@@ -1302,10 +1982,10 @@ const GAME = {
                     , b = b.add(e.scale(0.67)).add(f.scale(0.8))
                     , i = c.add(e.scale(-0.05)).add(f.scale(0.42))
                     , m = d.sub(i)
-                    , h = (new GAME.Vector(m.y * this.dir,-m.x * this.dir)).scaleSelf(a.zoom * a.zoom)
+                    , h = (new self.Vector(m.y * this.dir,-m.x * this.dir)).scaleSelf(a.zoom * a.zoom)
                     , n = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()))
                     , m = l.sub(i)
-                    , h = (new GAME.Vector(m.y * this.dir,-m.x * this.dir)).scaleSelf(a.zoom * a.zoom)
+                    , h = (new self.Vector(m.y * this.dir,-m.x * this.dir)).scaleSelf(a.zoom * a.zoom)
                     , h = i.add(m.scale(0.5)).add(h.scale(200 / m.lengthSquared()));
                     K.beginPath(),K.lineWidth = 6 * a.zoom;
                     K.strokeStyle = "rgba(0, 0, 0, 0.5)";
@@ -1332,7 +2012,7 @@ const GAME = {
                         K.moveTo(d.x, d.y),K.lineTo(l.x, l.y),K.lineTo(n.x, n.y),K.lineTo(e.x, e.y),K.lineTo(c.x, c.y),K.lineTo(i.x, i.y),K.stroke(),K.fill()
                     }
                     e = h.sub(b);
-                    f = new GAME.Vector(e.y * this.dir,-e.x * this.dir);
+                    f = new self.Vector(e.y * this.dir,-e.x * this.dir);
                     f = f.scale(a.zoom * a.zoom);
                     e = b.add(e.scale(0.3)).add(f.scale(80 / e.lengthSquared()));
                     K.lineWidth = 5 * a.zoom;
@@ -1365,7 +2045,7 @@ const GAME = {
                         this.frontSpring.clone()
                     ],
                     dir: this.dir,
-                    gravity: new GAME.Vector(this.gravity.x, this.gravity.y),
+                    gravity: new self.Vector(this.gravity.x, this.gravity.y),
                     slow: this.slow,
                     targetsCollected: this.targetsCollected,
                     powerups: powerups,
@@ -1375,35 +2055,36 @@ const GAME = {
         }
     },
     get DeadRider() {
+        self = this;
         return class {
             constructor(a, b){
                 this.dead = !0;
-                var vector = new GAME.Vector(0,0);
+                var vector = new self.Vector(0,0);
                 this.dir = 1;
                 this.masses = b;
                 this.track = b;
                 this.points = [
-                    this.head = new GAME.BodyPart(vector,this),
-                    this.hip = new GAME.BodyPart(vector,this),
-                    this.elbow = new GAME.BodyPart(vector,this),
-                    this.shadowElbow = new GAME.BodyPart(vector,this),
-                    this.hand = new GAME.BodyPart(vector,this),
-                    this.shadowHand = new GAME.BodyPart(vector,this),
-                    this.knee = new GAME.BodyPart(vector,this),
-                    this.shadowKnee = new GAME.BodyPart(vector,this),
-                    this.foot = new GAME.BodyPart(vector,this),
-                    this.shadowFoot = new GAME.BodyPart(vector,this)
+                    this.head = new self.BodyPart(vector,this),
+                    this.hip = new self.BodyPart(vector,this),
+                    this.elbow = new self.BodyPart(vector,this),
+                    this.shadowElbow = new self.BodyPart(vector,this),
+                    this.hand = new self.BodyPart(vector,this),
+                    this.shadowHand = new self.BodyPart(vector,this),
+                    this.knee = new self.BodyPart(vector,this),
+                    this.shadowKnee = new self.BodyPart(vector,this),
+                    this.foot = new self.BodyPart(vector,this),
+                    this.shadowFoot = new self.BodyPart(vector,this)
                 ];
                 this.joints = [
-                    new GAME.Spring(this.head,this.hip,this),
-                    new GAME.Spring(this.head,this.elbow,this),
-                    new GAME.Spring(this.elbow,this.hand,this),
-                    new GAME.Spring(this.head,this.shadowElbow,this),
-                    new GAME.Spring(this.shadowElbow,this.shadowHand,this),
-                    new GAME.Spring(this.hip,this.knee,this),
-                    new GAME.Spring(this.knee,this.foot,this),
-                    new GAME.Spring(this.hip,this.shadowKnee,this),
-                    new GAME.Spring(this.shadowKnee,this.shadowFoot,this)
+                    new self.Spring(this.head,this.hip,this),
+                    new self.Spring(this.head,this.elbow,this),
+                    new self.Spring(this.elbow,this.hand,this),
+                    new self.Spring(this.head,this.shadowElbow,this),
+                    new self.Spring(this.shadowElbow,this.shadowHand,this),
+                    new self.Spring(this.hip,this.knee,this),
+                    new self.Spring(this.knee,this.foot,this),
+                    new self.Spring(this.hip,this.shadowKnee,this),
+                    new self.Spring(this.shadowKnee,this.shadowFoot,this)
                 ];
                 for(var point in this.points){
                     this.points[point].size = 3,
@@ -1477,13 +2158,14 @@ const GAME = {
         }
     },
     get DeadBike() {
-        return class extends GAME.Vehicle {
+        self = this;
+        return class extends this.Vehicle {
             constructor(a, b, c, d = []){
                 super();
                 this.init(c);
                 this.checkpoints = d;
                 this.dead = !0;
-                this.rider = new GAME.DeadRider(b,c);
+                this.rider = new self.DeadRider(b, c);
                 this.rider.setVelocity(a.head.vel, a.rearWheel.vel);
                 this.rider.dir = a.dir;
                 this.rider.gravity = this.gravity = a.gravity;
@@ -1509,23 +2191,25 @@ const GAME = {
         }
     },
     get Explosion() {
+        self = this;
         return class {
-            constructor(a, b, c, d){
+            constructor(a, b, c, d, e = []){
                 this.dead = !0;
                 this.track = d;
+                this.checkpoints = e;
                 this.motor = 30 + 20 * Math.random();
                 this.Vb = 0;
                 this.$a = [
-                    new GAME.Shard(a,this),
-                    new GAME.Shard(a,this),
-                    new GAME.Shard(a,this),
-                    new GAME.Shard(a,this),
-                    new GAME.Shard(a,this)
+                    new self.Shard(a,this),
+                    new self.Shard(a,this),
+                    new self.Shard(a,this),
+                    new self.Shard(a,this),
+                    new self.Shard(a,this)
                 ];
                 this.pos = a.clone();
                 this.gravity = b;
                 this.time = c;
-                this.head = new GAME.BodyPart(a,this);
+                this.head = new self.BodyPart(a,this);
                 this.head.vel.x = 20
             }
             draw(){
@@ -1534,7 +2218,7 @@ const GAME = {
                     this.motor -= 10;
                     b = this.pos.toPixel();
                     var e = b.x + this.motor / 2 * Math.cos(Math.random() * 2 * Math.PI)
-                      , d = b.y + this.motor / 2 * Math.sin(Math.random() * 2 * Math.PI);
+                    , d = b.y + this.motor / 2 * Math.sin(Math.random() * 2 * Math.PI);
                     K.fillStyle = "#ff0";
                     K.beginPath(),K.moveTo(b.x + this.motor / 2 * Math.cos(Math.random() * 2 * Math.PI), d);
                     for(a = 1; 16 > a; a++)
@@ -1555,11 +2239,12 @@ const GAME = {
         }
     },
     get Item() {
+        self = this;
         return class {
             constructor(a, b, c){
-                this.pos = new GAME.Vector(a, b);
+                this.pos = new self.Vector(a, b);
                 this.track = c;
-                this.id = ia++
+                this.id = self.powerupID++
             }
             draw(){
                 var a = this.track,
@@ -1595,7 +2280,7 @@ const GAME = {
         }
     },
     get SingleUseItem() {
-        return class extends GAME.Item {
+        return class extends this.Item {
             constructor(a, b, c){
                 super(a, b, c);
                 this.used = !1
@@ -1634,11 +2319,11 @@ const GAME = {
         }
     },
     get Triangle() {
-        return class extends GAME.Item {
+        return class extends this.Item {
             constructor(a, b, c, d){
                 super(a, b, d);
                 this.rotation = c;
-                this.dir = new GAME.Vector(-Math.sin(c * Math.PI / 180),Math.cos(c * Math.PI / 180))
+                this.dir = new self.Vector(-Math.sin(c * Math.PI / 180),Math.cos(c * Math.PI / 180))
             }
             draw(){
                 var a = this.track,
@@ -1732,7 +2417,6 @@ const GAME = {
                 super(a, b, c);
                 this.color = "#eee";
                 this.type = "S";
-                this.zb = "s"
             }
             collide(a){
                 500 > a.pos.distanceToSquared(this.pos) && (a.track.slow = !0)
@@ -1765,7 +2449,7 @@ const GAME = {
                 this.b = b
             }
             tpb(a, b){
-                this.d = new GAME.Vector(a,b);
+                this.d = new self.Vector(a,b);
                 this.x = a;
                 this.y = b;
             }
@@ -1775,23 +2459,24 @@ const GAME = {
         }
     },
     get Bomb() {
+        self = this;
         return class extends this.Item {
             constructor(a, b, c){
                 super(a, b, c);
                 this.color = "#f00";
                 this.type = "O";
-                this.zb = "e"
             }
             Ea(a){
-                this.track.firstPlayer = new GAME.Explosion(this.pos,a.track.gravity,a.track.time,this.track)
+                this.track.firstPlayer = this.track.players[0] = new self.Explosion(this.pos,a.track.gravity,a.track.time,this.track,this.track.firstPlayer.checkpoints)
             }
         }
     },
     get Line() {
+        self = this;
         return class {
             constructor(a, b, c, d, e){
-                this.a = a instanceof GAME.Vector ? a : new GAME.Vector(a, b);
-                this.b = b instanceof GAME.Vector ? b : new GAME.Vector(c, d);
+                this.a = a instanceof self.Vector ? a : new self.Vector(a, b);
+                this.b = b instanceof self.Vector ? b : new self.Vector(c, d);
                 this.vector = this.b.sub(this.a);
                 this.len = this.vector.getLength();
                 this.Remove = false;
@@ -1805,7 +2490,7 @@ const GAME = {
             }
             erase(a){
                 var b = a.sub(this.a).dot(this.vector.oppositeScale(this.len)),
-                    c = new GAME.Vector(0,0);
+                    c = new self.Vector(0,0);
                 if(b <= 0) {
                     c.copy(this.a)
                 } else if(b >= this.len) {
@@ -1837,18 +2522,18 @@ const GAME = {
         }
     },
     get PhysicsLine() {
+        self = this;
         return class extends this.Line {
             constructor(a, b, c, d, e){
                 super(a, b, c, d, e);
             }
             collide(a){
-                if(this.yb)
-                return this;
+                if(this.yb) return this;
                 this.yb = !0;
                 var b = a.pos,
                     c = a.vel,
                     d = a.size,
-                    e = new GAME.Vector(0,0),
+                    e = new self.Vector(0,0),
                     f = 0,
                     e = b.sub(this.a),
                     h = e.dot(this.vector) / this.len / this.len;
@@ -1857,7 +2542,7 @@ const GAME = {
                 f = e.getLength(),
                 (f < d || 0 > c) && (0 !== f || 514 === this.track.id)))
                     return b.addToSelf(e.scale((d * c - f) / f)),
-                    a.drive(new GAME.Vector(-e.y / f,e.x / f)),
+                    a.drive(new self.Vector(-e.y / f,e.x / f)),
                     this;
                 if(h * this.len < -d || h * this.len > this.len + d)
                     return this;
@@ -1865,7 +2550,7 @@ const GAME = {
                 f = e.getLength();
                 if(f < d && 0 !== f)
                     return b.addToSelf(e.scale((d - f) / f)),
-                    a.drive(new GAME.Vector(-e.y / f,e.x / f)),
+                    a.drive(new self.Vector(-e.y / f,e.x / f)),
                     this
             }
             getEnd(){
@@ -1972,8 +2657,11 @@ const GAME = {
         }
     },
     get Track() {
+        self = this;
         return class {
             constructor(a){
+                console.log("works")
+                K.fillText("Loading self.track... Please wait.", 36, 16);
                 var b, c, d, e;
                 this.grid = {};
                 this.scale = 100;
@@ -1985,16 +2673,16 @@ const GAME = {
                 this.vehicle = "BMX";
                 this.players = [];
                 this.editor = 1;
-                this.undoManager = new GAME.UndoManager();
+                this.undoManager = new self.UndoManager();
                 this.paused = !1;
-                K.fillText("Loading track... Please wait.", 36, 16);
-                this.camera = new GAME.Vector(0,0);
+                this.camera = new self.Vector(0,0);
+                this.cameraLock = !1;
                 this.id ? 7 < this.id.length ? ("v1," !== a.substr(0, 3) && (this.editor = 0)) : ("v1," !== a.substr(0, 3) && (this.editor = 0)) : (a = "-18 1i 18 1i##",
                 tool = "line");
                 this.code = a;
                 var f = a.split("#")
-                  , h = f[0] ? f[0].split(",") : []
-                  , a = 0;
+                , h = f[0] ? f[0].split(",") : []
+                , a = 0;
                 for(c = h.length; a < c; a++) {
                     if(e = h[a].split(/\s+/g), 3 < e.length) {
                         b = 0;
@@ -2036,37 +2724,37 @@ const GAME = {
                         d = parseInt(h[2], 32);
                         switch (h[0]){
                         case "T":
-                            i = new GAME.Target(b,d,this);
+                            i = new self.Target(b,d,this);
                             this.targets++;
                             this.powerups.push(i);
                             break;
                         case "C":
-                            i = new GAME.Checkpoint(b,d,this);
+                            i = new self.Checkpoint(b,d,this);
                             this.powerups.push(i);
                             break;
                         case "B":
-                            i = new GAME.Boost(b,d,parseInt(h[3], 32) + 180,this);
+                            i = new self.Boost(b,d,parseInt(h[3], 32) + 180,this);
                             break;
                         case "G":
-                            i = new GAME.Gravity(b,d,parseInt(h[3], 32) + 180,this);
+                            i = new self.Gravity(b,d,parseInt(h[3], 32) + 180,this);
                             break;
                         case "O":
-                            i = new GAME.Bomb(b,d,this);
+                            i = new self.Bomb(b,d,this);
                             break;
                         case "S":
-                            i = new GAME.Slowmo(b,d,this);
+                            i = new self.Slowmo(b,d,this);
                             break;
                         case "A":
-                            i = new GAME.Antigravity(b,d,this);
+                            i = new self.Antigravity(b,d,this);
                             break;
                         case "W":
-                            i = new GAME.Teleporter(b,d,this,parseInt(h[3], 32),parseInt(h[4], 32));
+                            i = new self.Teleporter(b,d,this,parseInt(h[3], 32),parseInt(h[4], 32));
                             this.powerups.push(i)
                         }
                         i && (b = Math.floor(b / this.scale),
                         d = Math.floor(d / this.scale),
                         this.grid[b] === void 0 && (this.grid[b] = {}),
-                        this.grid[b][d] === void 0 && (this.grid[b][d] = new GAME.Sector),
+                        this.grid[b][d] === void 0 && (this.grid[b][d] = new self.Sector),
                         this.grid[b][d].powerups.push(i))
                     }
                 "MTB" === f[3] || "BMX" === f[3] ? (this.vehicle = f[3],
@@ -2095,7 +2783,7 @@ const GAME = {
                 JSON.parse(localStorage.pauseOnEnter) ? window.autoPause = true : null;
                 var checkpoints = this.firstPlayer.checkpoints,
                     checkpointsCache = this.firstPlayer.checkpointsCache;
-                this.firstPlayer = this.players[0] = this.vehicle === "BMX" ? new GAME.BMXBike(this, 1, this.firstPlayer.checkpoints) : new GAME.MountainBike(this, 1, this.firstPlayer.checkpoints);
+                this.firstPlayer = this.players[0] = this.vehicle === "BMX" ? new self.BMXBike(this, 1, this.firstPlayer.checkpoints) : new self.MountainBike(this, 1, this.firstPlayer.checkpoints);
                 if(this.firstPlayer) {
                     if(checkpoints.length > 0) {
                         var cp = checkpoints[checkpoints.length - 1];
@@ -2103,18 +2791,18 @@ const GAME = {
                         this.currentTime = cp.time;
                     } else
                         this.currentTime = 0;
-                    this.cameraLock = this.firstPlayer.head,
+                    this.cameraFocus = this.firstPlayer.head,
                     this.camera = this.firstPlayer.head.pos.clone();
                 }
                 if(this.players.length > 1) {
                     for(var i = 1; i < this.players.length; i++) {
                         checkpoints = this.players[i].checkpoints,
                         checkpointsCache = this.players[i].checkpointsCache;
-                        this.players[i] = this.ghost_data[6] === "BMX" ? new GAME.BMXBike(this, 1, this.players[i].checkpoints, this.ghost_data) : new GAME.MountainBike(this, 1, this.players[i].checkpoints, this.ghost_data);
+                        this.players[i] = this.ghost_data[6] === "BMX" ? new self.BMXBike(this, 1, this.players[i].checkpoints, this.ghost_data) : new self.MountainBike(this, 1, this.players[i].checkpoints, this.ghost_data);
                         this.players[i].checkpoints = checkpoints;
                         this.players[i].checkpointsCache = checkpointsCache;
                         if(!this.firstPlayer || this.currentTime == 0) {
-                            this.cameraLock = this.players[i].head
+                            this.cameraFocus = this.players[i].head
                         }
                     }
                 }
@@ -2133,6 +2821,7 @@ const GAME = {
                 for(var i in this.players) {
                     if(this.players[i].checkpointsCache.length > 0) {
                         if(this.players[i].checkpoints !== void 0) {
+                            self.checkpoints.push(self.checkpointsCache[self.checkpointsCache.length - 1]);
                             this.players[i].checkpoints.push(this.players[i].checkpointsCache[this.players[i].checkpointsCache.length - 1]);
                         }
                         this.players[i].checkpointsCache.pop()
@@ -2164,7 +2853,7 @@ const GAME = {
             }
             watchGhost(a, b){
                 var b = b || track
-                  , e = [], c, d;
+                , e = [], c, d;
                 !function(a) {
                     e.push(a);
                     d && (c = a(c));
@@ -2181,7 +2870,7 @@ const GAME = {
                             c[d][n[e]] = 1
                     }
                     b.ghost_data = c
-                    b.players.push(b.ghost_data[6] === "BMX" ? new GAME.BMXBike(this, 1, [], b.ghost_data) : new GAME.MountainBike(this, 1, [], b.ghost_data))
+                    b.players.push(b.ghost_data[6] === "BMX" ? new self.BMXBike(this, 1, [], b.ghost_data) : new self.MountainBike(this, 1, [], b.ghost_data))
                     b.reset()
                 });
                 !function(a) {
@@ -2190,7 +2879,7 @@ const GAME = {
                     for (var b = 0, f = e.length; b < f; b++)
                         e[b](a)
                 }(a);
-                track.paused = !1;
+                self.track.paused = !1;
             }
             collide(a){
                 var x = Math.floor(a.pos.x / this.scale - 0.5),
@@ -2235,8 +2924,8 @@ const GAME = {
                     }
                     this.currentTime += 1000 / 25
                 }
-                if(this.cameraLock) {
-                    this.camera.addToSelf(this.cameraLock.pos.sub(this.camera).scale(0.3))
+                if(this.cameraFocus) {
+                    this.camera.addToSelf(this.cameraFocus.pos.sub(this.camera).scale(0.3))
                 }
                 return this
             }
@@ -2245,8 +2934,8 @@ const GAME = {
                 for(var i in this.players) {
                     this.players[i].draw();
                 }
-                GAME.toolbar.drawLeft();
-                this.editor && GAME.toolbar.drawRight();
+                self.toolbar.drawLeft();
+                this.editor && self.toolbar.drawRight();
             }
             draw(){
                 function a(){
@@ -2254,14 +2943,14 @@ const GAME = {
                     K.beginPath(),K.arc(f.x, f.y, (ab - 1) * d, 0, 2 * Math.PI, !0),K.fill()
                 }
                 var b = this.firstPlayer
-                  , c = this.currentTime
-                  , d = this.zoom
-                  , e = this.scale
-                  , f = R.toPixel()
-                  , h = this.grid;
+                , c = this.currentTime
+                , d = this.zoom
+                , e = this.scale
+                , f = R.toPixel()
+                , h = this.grid;
                 K.clearRect(0, 0, canvas.width, canvas.height);
                 K.lineWidth = Math.max(2 * d, 0.5);
-                if(S && !Hb && ("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool || "teleporter" === tool))
+                if(self.track.cameraLock && !Hb && ("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool || "teleporter" === tool))
                     50 > f.x ? (this.camera.x -= 10 / d,
                     R.x -= 10 / d) : f.x > canvas.width - 50 && (this.camera.x += 10 / d,
                     R.x += 10 / d),
@@ -2271,8 +2960,8 @@ const GAME = {
                     K.strokeStyle = "#f00",
                     f = R.toPixel(),
                     K.beginPath(),K.moveTo(U.toPixel().x, U.toPixel().y),K.lineTo(f.x, f.y),K.stroke();
-                var i = (new GAME.Vector(0,0)).adjustToCanvas()
-                  , l = (new GAME.Vector(canvas.width,canvas.height)).adjustToCanvas();
+                var i = (new self.Vector(0,0)).adjustToCanvas()
+                , l = (new self.Vector(canvas.width,canvas.height)).adjustToCanvas();
                 i.x = Math.floor(i.x / e);
                 i.y = Math.floor(i.y / e);
                 l.x = Math.floor(l.x / e);
@@ -2314,7 +3003,7 @@ const GAME = {
                 if(250 !== canvas.width){
                     if(Hb)
                         a();
-                    else if("camera" !== tool && !this.cameraLock)
+                    else if("camera" !== tool && !this.cameraFocus)
                         switch (tool){
                         case "line":
                         case "scenery line":
@@ -2342,7 +3031,7 @@ const GAME = {
                         case "gravity":
                             K.beginPath(),K.fillStyle = "boost" === tool ? "#ff0" : "#0f0",
                             K.save(),
-                            S ? (K.translate(U.toPixel().x, U.toPixel().y),
+                            self.track.cameraLock ? (K.translate(U.toPixel().x, U.toPixel().y),
                             K.rotate(Math.atan2(-(R.x - U.x), R.y - U.y))) : K.translate(f.x, f.y),
                             K.moveTo(-7 * d, -10 * d),K.lineTo(0, 10 * d),K.lineTo(7 * d, -10 * d),K.lineTo(-7 * d, -10 * d),K.fill(),K.stroke(),K.restore()
                         }
@@ -2462,7 +3151,7 @@ const GAME = {
                 return l
             }
             addLine(a, b, c){
-                a = new (c ? GAME.SceneryLine : GAME.PhysicsLine)(a.x,a.y,b.x,b.y,this);
+                a = new (c ? self.SceneryLine : self.PhysicsLine)(a.x,a.y,b.x,b.y,this);
                 if(2 <= a.len && 1E5 > a.len && (this.addLineInternal(a),
                 "brush" === tool || "line" === tool || "scenery brush" === tool || "scenery line" === tool))
                     "brush" === tool || "line" === tool ? Lb.copy(R) : Mb.copy(R),
@@ -2477,14 +3166,14 @@ const GAME = {
                     if(zb[c][d])
                         return zb[c][d];
                     var d = zb[c][d] = []
-                      , e = new GAME.Vector(a.x,a.y)
-                      , f = (b.y - a.y) / (b.x - a.x)
-                      , h = new GAME.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
-                      , i = 0;
+                    , e = new self.Vector(a.x,a.y)
+                    , f = (b.y - a.y) / (b.x - a.x)
+                    , h = new self.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
+                    , i = 0;
                     for(d.push(a); 5E3 > i && !(Math.floor(e.x / c) === Math.floor(b.x / c) && Math.floor(e.y / c) === Math.floor(b.y / c)); ){
-                        var l = new GAME.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
+                        var l = new self.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
                         l.y = Math.round(a.y + (l.x - a.x) * f);
-                        var m = new GAME.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
+                        var m = new self.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
                         m.x = Math.round(a.x + (m.y - a.y) / f);
                         Math.pow(l.x - a.x, 2) + Math.pow(l.y - a.y, 2) < Math.pow(m.x - a.x, 2) + Math.pow(m.y - a.y, 2) ? (e = l,
                         d.push(l)) : (e = m,
@@ -2498,7 +3187,7 @@ const GAME = {
                     c = Math.floor(b[e].x / this.scale),
                     d = Math.floor(b[e].y / this.scale),
                     this.grid[c] === void 0 && (this.grid[c] = {}),
-                    this.grid[c][d] === void 0 && (this.grid[c][d] = new GAME.Sector),
+                    this.grid[c][d] === void 0 && (this.grid[c][d] = new self.Sector),
                     a.hb ? this.grid[c][d].scenery.push(a) : this.grid[c][d].physics.push(a),
                     delete this.U[c + "_" + d]
             }
@@ -2509,7 +3198,7 @@ const GAME = {
                     this.grid[b] = {}
                 }
                 if(this.grid[b][c] === void 0) {
-                    this.grid[b][c] = new GAME.Sector
+                    this.grid[b][c] = new self.Sector
                 }
                 this.grid[b][c].powerups.push(a)
             }
@@ -2536,14 +3225,14 @@ const GAME = {
                     if(zb[c][d])
                         return zb[c][d];
                     var d = zb[c][d] = []
-                      , e = new GAME.Vector(a.x,a.y)
-                      , f = (b.y - a.y) / (b.x - a.x)
-                      , h = new GAME.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
-                      , i = 0;
+                    , e = new self.Vector(a.x,a.y)
+                    , f = (b.y - a.y) / (b.x - a.x)
+                    , h = new self.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
+                    , i = 0;
                     for(d.push(a); 5E3 > i && !(Math.floor(e.x / c) === Math.floor(b.x / c) && Math.floor(e.y / c) === Math.floor(b.y / c)); ){
-                        var l = new GAME.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
+                        var l = new self.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
                         l.y = Math.round(a.y + (l.x - a.x) * f);
-                        var m = new GAME.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
+                        var m = new self.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
                         m.x = Math.round(a.x + (m.y - a.y) / f);
                         Math.pow(l.x - a.x, 2) + Math.pow(l.y - a.y, 2) < Math.pow(m.x - a.x, 2) + Math.pow(m.y - a.y, 2) ? (e = l,
                         d.push(l)) : (e = m,
@@ -2571,7 +3260,7 @@ const GAME = {
             undo(){
                 if("scenery line" === tool || "scenery brush" === tool){
                     var a = Math.floor(Mb.x / this.scale)
-                      , b = Math.floor(Mb.y / this.scale);
+                    , b = Math.floor(Mb.y / this.scale);
                     (a = this.grid[a][b].scenery[this.grid[a][b].scenery.length - 1]) && a.b.x === Math.round(Mb.x) && a.b.y === Math.round(Mb.y) ? (a.Remove = !0,
                     Mb.copy(a.a),
                     this.remove(a.a, a.b)) : alert("No more scenery line to erase!")
@@ -2626,7 +3315,7 @@ const GAME = {
         return class extends this.Track {
             constructor() {
                 super("SURVIVAL");
-                K.fillText("Building track... Please wait.", 36, 16);
+                K.fillText("Building self.track... Please wait.", 36, 16);
                 this.physics = [];
                 this.Xa = 0.5
             }
@@ -2641,7 +3330,7 @@ const GAME = {
                     this.currentTime += 1000 / 25
                 }
                 var a;
-                a = (a = this.physics[this.physics.length - 1]) ? a.b : new GAME.Vector(-50,50);
+                a = (a = this.physics[this.physics.length - 1]) ? a.b : new self.Vector(-50,50);
                 !this.firstPlayer.dead && 2E3 > a.distanceTo(this.firstPlayer.frontWheel.pos) && (this.pa(a, Vector.prototype.add.call(a, {
                     x: Math.floor(100 * Math.random() / this.Xa),
                     y: Math.floor(20 * (Math.random() - 0.5) * this.Xa)
@@ -2652,8 +3341,8 @@ const GAME = {
             draw() {
                 var a = this.firstPlayer;
                 K.clearRect(0, 0, canvas.width, canvas.height);
-                var b = (new GAME.Vector(0,0)).adjustToCanvas()
-                , c = (new GAME.Vector(canvas.width,canvas.height)).adjustToCanvas();
+                var b = (new self.Vector(0,0)).adjustToCanvas()
+                , c = (new self.Vector(canvas.width,canvas.height)).adjustToCanvas();
                 b.x = Math.floor(b.x / this.scale);
                 b.y = Math.floor(b.y / this.scale);
                 c.x = Math.floor(c.x / this.scale);
@@ -2704,7 +3393,7 @@ const GAME = {
                 return this
             }
             pa(a, b, c) {
-                a = new (c ? GAME.SceneryLine : GAME.PhysicsLine)(a.x,a.y,b.x,b.y,this);
+                a = new (c ? this.SceneryLine : this.PhysicsLine)(a.x,a.y,b.x,b.y,this);
                 this.Ta(a);
                 return a
             }
@@ -2716,14 +3405,14 @@ const GAME = {
                     if(zb[c][d])
                         return zb[c][d];
                     var d = zb[c][d] = []
-                      , e = new GAME.Vector(a.x,a.y)
-                      , f = (b.y - a.y) / (b.x - a.x)
-                      , h = new GAME.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
-                      , i = 0;
+                    , e = new self.Vector(a.x,a.y)
+                    , f = (b.y - a.y) / (b.x - a.x)
+                    , h = new self.Vector(a.x < b.x ? 1 : -1,a.y < b.y ? 1 : -1)
+                    , i = 0;
                     for(d.push(a); 5E3 > i && !(Math.floor(e.x / c) === Math.floor(b.x / c) && Math.floor(e.y / c) === Math.floor(b.y / c)); ){
-                        var l = new GAME.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
+                        var l = new self.Vector(0 > h.x ? Math.round(Math.ceil((e.x + 1) / c + h.x) * c) - 1 : Math.round(Math.floor(e.x / c + h.x) * c),0);
                         l.y = Math.round(a.y + (l.x - a.x) * f);
-                        var m = new GAME.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
+                        var m = new self.Vector(0,0 > h.y ? Math.round(Math.ceil((e.y + 1) / c + h.y) * c) - 1 : Math.round(Math.floor(e.y / c + h.y) * c));
                         m.x = Math.round(a.x + (m.y - a.y) / f);
                         Math.pow(l.x - a.x, 2) + Math.pow(l.y - a.y, 2) < Math.pow(m.x - a.x, 2) + Math.pow(m.y - a.y, 2) ? (e = l,
                         d.push(l)) : (e = m,
@@ -2737,7 +3426,7 @@ const GAME = {
                     c = Math.floor(b[e].x / this.scale),
                     d = Math.floor(b[e].y / this.scale),
                     this.grid[c] === void 0 && (this.grid[c] = {}),
-                    this.grid[c][d] === void 0 && (this.grid[c][d] = new GAME.Sector),
+                    this.grid[c][d] === void 0 && (this.grid[c][d] = new self.Sector),
                     this.grid[c][d].physics.push(a),
                     this.physics.push(a),
                     delete this.U[c + "_" + d]
@@ -2751,36 +3440,35 @@ const GAME = {
             }
         }
     },
-    get Run() {
+    get Ride() {
+        self = this;
         return class {
             constructor(a, b) {
-                GAME.resizeCanvas.smallscreen;
-                this.track = a == "SURVIVAL" ? new GAME.SurvivalTrack(a) : new GAME.Track(a);
+                self.track = this.track = a == "SURVIVAL" ? new self.SurvivalTrack(a) : new self.Track(a);
+                self.resizeCanvas.smallscreen;
                 this.track.sb = b || [];
-                this.track.players.push(this.track.firstPlayer = this.track.vehicle === "BMX" && new GAME.BMXBike(this.track, 1, []) || new GAME.MountainBike(this.track, 1, []));
-                this.track.cameraLock = this.track.firstPlayer.head;
-                GAME.update.push((a) => this.track.update(a));
-                GAME.render.push((a) => this.track.render(a));
+                this.track.players.push(this.track.firstPlayer = this.track.vehicle === "BMX" && new self.BMXBike(this.track, 1, []) || new self.MountainBike(this.track, 1, []));
+                this.track.cameraFocus = this.track.firstPlayer.head;
+                self.update.push((a) => this.track.update(a));
+                self.render.push((a) => this.track.render(a));
                 this.lastFrameTime = -1;
-                track = this.track;
-                window.Game.track = () => track;
                 this.animationFrame = null;
                 requestAnimationFrame(this.startTicker.bind(this))
             }
             startTicker(time) {
                 //this.delta = this.lastFrameTime === -1 ? 0 : (time - this.lastFrameTime) / 1000;
                 if(time - this.lastFrameTime < 1000 / 25){
-                    for(var a = GAME.render.length; a--;){
-                        GAME.render[a]()
+                    for(var a = self.render.length; a--;){
+                        self.render[a]()
                     }
                     this.animationFrame = requestAnimationFrame(this.startTicker.bind(this));
                     return
                 }
-                for(var a = GAME.update.length; a--;){
-                    GAME.update[a](this.delta)
+                for(var a = self.update.length; a--;){
+                    self.update[a](this.delta)
                 }
-                for(var a = GAME.render.length; a--;){
-                    GAME.render[a]()
+                for(var a = self.render.length; a--;){
+                    self.render[a]()
                 }
                 this.lastFrameTime = time;
                 this.animationFrame = requestAnimationFrame(this.startTicker.bind(this));
@@ -2789,731 +3477,62 @@ const GAME = {
                 cancelAnimationFrame(this.animationFrame);
             }
         }
-    }
-}
-
-
-var canvas = document.getElementById("canvas_rider")
-  , K = canvas.getContext("2d");
-K.lineCap = "round";
-K.lineJoin = "round";
-K.font = "8px eiven";
-var BMX_DEFAULT = [[0, -1, 0, -1, 0, 0, 21, 38, 21, 38, 0, 0, 0, -21, 38, -21, 38, 0, 0, 0, 42, 45, 45, 1, 0, 0.3, !1, 0, [], 0]],
-    MTB_DEFAULT = [[2, -3, 2, -3, 0, 0, 23, 35, 23, 35, 0, 0, 0, -23, 35, -23, 35, 0, 0, 0, 45, 45, 47, 1, 0, 0.3, !1, 0, [], 0]],
-    records = [{}, {}, {}, {}, {}],
-    ghostCheckpoints = [], wa = !0, S = !1,
-    U = new GAME.Vector(40,50),
-    R = new GAME.Vector(0,0),
-    Kb = 20, ab = 15, Z = !1, tool = "camera", Qb = "camera",
-    Rb = !1, Hb = !1, V = !1, Jb = 1, Ib = !1,
-    Tb = [
-        ";Restart ( ENTER );Cancel Checkpoint ( BACKSPACE );;Switch bike ( ctrl+B - Arrows to control, Z to turn );;Enable line shading;Enable fullscreen ( F )".split(";"),
-        "Brush ( A - Hold to snap, hold & scroll to adjust size );Scenery brush ( S - Hold to snap, hold & scroll to adjust size );Lines ( backWheel - Hold to snap );Scenery lines ( W - Hold to snap );Eraser ( E - Hold & scroll to adjust size );Camera ( R - Release or press again to switch back, scroll to zoom );Enable grid snapping ( G );;Goal;Checkpoint;Boost;Gravity modifier;Bomb;Slow-Mo;Antigravity;Teleporter;;Shorten last line ( Z )".split(";")
-    ],
-    Lb = new GAME.Vector(40,50),
-    Mb = new GAME.Vector(-40,50),
-    Wb = document.getElementById("content"),
-    charCount = document.getElementById("charcount"),
-    code = document.getElementById("trackcode"),
-    button = {
-        new: document.getElementById("new"),
-        load: document.getElementById("load"),
-        save: document.getElementById("save"),
-        upload: document.getElementById("upload")
-    };
-!!button.new && (button.new.onclick = () => Game.newRide("-18 1i 18 1i"));
-!!button.load && (button.load.onclick = () => Game.loadRide());
-!!button.save && (button.save.onclick = () => Game.saveRide());
-!!button.upload && (button.upload.onclick = () => {
-    function ja(){
-        function a(a){
-            e.push(a);
-            d && (c = a(c));
-            return f.Ib
-        }
-        function b(a){
-            d = !0;
-            c = a;
-            for(var b = 0, f = e.length; b < f; b++)
-                e[b](a)
-        }
-        var c, d, e = [], f = {
-            ab: a,
-            Va: b,
-            Ib: {
-                ab: a
+    },
+    get Run() {
+        self = this;
+        self.InitiateVariables;
+        self.InitiateOnclick;
+        return {
+            defaults: {
+                keydown: document.onkeydown,
+                keypress: document.onkeypress,
+                keyup: document.onkeyup
             },
-            Wb: {
-                Va: b
-            }
-        };
-        return f
-    }
-    function ka(a, b){
-        var c = document.createElementNS(b, a.match(/^\w+/)[0]), d, e;
-        if(d = a.match(/#([\w-]+)/))
-            c.id = d[1];
-        (e = a.match(/\.[\w-]+/g)) && c.setAttribute("class", e.join(" ").replace(/\./g, ""));
-        return c
-    }
-    function createElement(a, b, c){
-        var d = document, e, f;
-        if(a && a.big)
-            return d.getElementById(a);
-        c = c || {};
-        b = b || "http://www.w3.org/1999/xhtml";
-        a[0].big && (a[0] = ka(a[0], b));
-        for(e = 1; e < a.length; e++)
-            if(a[e].big)
-                a[0].appendChild(d.createTextNode(a[e]));
-            else if(a[e].pop)
-                a[e][0].big && (a[e][0] = ka(a[e][0], b)),
-                a[0].appendChild(a[e][0]),
-                createElement(a[e], b, c);
-            else if(a[e].call)
-                a[e](a[0]);
-            else
-                for(f in a[e])
-                    a[0].setAttribute(f, a[e][f]);
-        c[0] = a[0];
-        return c[0]
-    }
-    var a = track.toString();
-    if(0 < a.length && track.targets > 0){
-        track.paused = !0;
-        tool = "camera";
-        track.Ab = !0;
-        K.lineCap = "round";
-        K.lineJoin = "round";
-        document.getElementById("track_menu").style.display = "none";
-        var b =createElement(["input#name.input-block-level", {
-            type: "text",
-            size: 18,
-            Qb: 20,
-            placeholder: "Name..."
-        }])
-            , c =createElement(["textarea.input-block-level", {
-            rows: 4,
-            placeholder: "Description..."
-        }])
-            , d =createElement(["input.btn.btn-primary.btn-block.btn-large", {
-            type: "submit",
-            value: "Save track"
-        }])
-            , e =createElement(["div.span3", "Visibility:"])
-            , f =createElement(["div.btn-group.span9", {
-            "data-toggle": "buttons-radio"
-        }, ["button.btn#optPublic.active", ["i.icon-world"], " Public"], ["button.btn#optPrivate", ["i.icon-lock"], " Private"]])
-            , h =createElement(["input.span12", {
-            placeholder: "Partners...",
-            type: "text"
-        }])
-            , i =createElement(["div.span5"])
-            , l =createElement(["label.hide.row-fluid", ["div.span3", "Collaboration with: "], ["div.span4", [h]], [i]])
-            , m =createElement(["div.row-fluid"])
-            , n =createElement(["div"])
-            , x =createElement(["div.well.row-fluid#track_menu"]);
-        n.style.color = canvas.style.borderColor = "#f00";
-        n.innerHTML = "Use your mouse to drag & fit an interesting part of your track in the thumbnail";
-        l.style.lineHeight = e.style.lineHeight = "30px";
-        var w = function(a){
-            for(var b = [].slice.call(arguments, 1), c = 0, d = b.length; c < d; c++)
-                a.appendChild(b[c]);
-            return a
-        };
-        w(x, b, c, w(m, e, f), d);
-        Wb.insertBefore(x, canvas.nextSibling);
-        Wb.insertBefore(n, canvas);
-        for(var e = ja(), m = ja(), n = [e, m], x = function(a){
-            return function(b){
-                X[a] = b;
-                0 < --M || y.Va(X);
-                return b
-            }
-        }, y = ja(), w = 0, C = n.length, M = C, X = Array(C); w < C; w++)
-            n[w].ab(x(w));
-        n = y;
-        function jc(a){
-            a.addEventListener("blur", Game.attach)
-        }
-        jc(b);
-        b.addEventListener("keypress", function(a){
-            a.stopPropagation()
-        }, !1);
-        b.focus();
-        jc(h);
-        jc(c);
-        for(var fc in f.children)
-            f.children[fc].onclick = c => {
-                c.target.className = 'active';
-                c.target.nextSibling != null ? c.target.nextSibling.className = 'inactive' : c.target.previousSibling.className = 'inactive';
-            };
-        d.addEventListener("click", function(){
-            var e = document.createElement("canvas"), h, l;
-            e.width = 500;
-            e.height = 300;
-            track.zoom *= 2;
-            l = track.U;
-            track.U = {};
-            track.Ab = !1;
-            track.draw();
-            e.getContext("2d").drawImage(canvas, (canvas.width - 500) / 2, (canvas.height - 300) / 2, 500, 300, 0, 0, 500, 300);
-            track.zoom /= 2;
-            track.U = l;
-            e = e.toDataURL("image/png");
-            if("asdf" === e)
-                return alert("The thumbnail is blank!\nDrag & fit an interesting part of your track inside."),
-                !1;
-            if(4 > b.value.length)
-                return alert("The track name is too short!"),
-                !1;
-            d.disabled = !0;
-            for(var fc in f.children){
-                if(f.children[fc].className == 'active')
-                    h = f.children[fc].innerText.slice(1)
-            }
-            l = new XMLHttpRequest;
-            l.open("POST", "/draw/upload", !1);
-            l.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            l.send("n=" + encodeURIComponent(b.value) + "&c=" + encodeURIComponent(a) + "&d=" + encodeURIComponent(c.value) + "&f=" + encodeURIComponent(h) + "&t=" + encodeURIComponent(e) + "&s=" + encodeURIComponent(track.targets));
-            location.href = "/"
-        })
-    } else {
-        if(track.targets < 1){
-            return alert("Sorry, but your track must have at least 1 target!")
-        } else {
-            return alert("Sorry, but your track must be bigger or more detailed.")
-        }
-    }
-})
-window.onresize = () => 800 == canvas.width ? GAME.resizeCanvas.smallscreen : GAME.resizeCanvas.fullscreen;
-document.onkeydown = function(a){
-    switch (a.keyCode){
-    case 8:
-        250 !== canvas.width && a.preventDefault();
-        track.removeCheckpoint();
-        track.gotoCheckpoint();
-        break;
-    case 13:
-        a.preventDefault();
-        track.gotoCheckpoint();
-        break;
-    case 190:
-        a.preventDefault();
-        track.removeCheckpointUndo();
-        track.gotoCheckpoint();
-        break;
-    case 37:
-        track.firstPlayer && (a.preventDefault(),
-        track.cameraLock = track.firstPlayer.head,
-        track.firstPlayer.alive && track.firstPlayer.setButtonDown("left"),
-        window.autoPause ? (track.paused = false, window.autoPause = false) : null,
-        track.firstPlayer.checkpointsCache = []);
-        break;
-    case 39:
-        track.firstPlayer && (a.preventDefault(),
-        track.cameraLock = track.firstPlayer.head,
-        track.firstPlayer.alive && track.firstPlayer.setButtonDown("right"),
-        window.autoPause ? (track.paused = false, window.autoPause = false) : null,
-        track.firstPlayer.checkpointsCache = []);
-        break;
-    case 38:
-        track.firstPlayer && (a.preventDefault(),
-        track.cameraLock = track.firstPlayer.head,
-        track.firstPlayer.alive && track.firstPlayer.setButtonDown("up"),
-        window.autoPause ? (track.paused = false, window.autoPause = false) : null,
-        track.firstPlayer.checkpointsCache = []);
-        break;
-    case 40:
-        track.firstPlayer && (a.preventDefault(),
-        track.cameraLock = track.firstPlayer.head,
-        track.firstPlayer.alive && track.firstPlayer.setButtonDown("brake"),
-        window.autoPause ? (track.paused = false, window.autoPause = false) : null,
-        track.firstPlayer.checkpointsCache = []);
-        break;
-    case 109:
-    case 189:
-        track.zoomOut();
-        break;
-    case 107:
-    case 187:
-        track.zoomIn();
-        break;
-    case 90:
-    case 222:
-        !track.cameraLock && track.id === void 0 ? track.undo() : wa && (track.firstPlayer.setButtonDown("swap"));
-        window.autoPause ? (track.paused = false, window.autoPause = false) : null;
-        break;
-    case 32:
-        250 !== canvas.width && a.preventDefault(),
-        track.paused = window.autoPause ? true : !track.paused,
-        window.autoPause = false
-    }
-    if(location.pathname.slice(0, 7) == '/tracks')
-        switch (a.keyCode){
-        case 65:
-            track.firstPlayer && (a.preventDefault(),
-            track.cameraLock = track.firstPlayer.head,
-            track.firstPlayer.alive && track.firstPlayer.setButtonDown("left"),
-            track.firstPlayer.checkpointsCache = []);
-            break;
-        case 68:
-            track.firstPlayer && (a.preventDefault(),
-            track.cameraLock = track.firstPlayer.head,
-            track.firstPlayer.alive && track.firstPlayer.setButtonDown("right"),
-            track.firstPlayer.checkpointsCache = []);
-            break;
-        case 87:
-            track.firstPlayer && (a.preventDefault(),
-            track.cameraLock = track.firstPlayer.head,
-            track.firstPlayer.alive && track.firstPlayer.setButtonDown("up"),
-            track.firstPlayer.checkpointsCache = []);
-            break;
-        case 83:
-            track.firstPlayer && (a.preventDefault(),
-            track.cameraLock = track.firstPlayer.head,
-            track.firstPlayer.alive && track.firstPlayer.setButtonDown("brake"),
-            track.firstPlayer.checkpointsCache = []);
-            break;
-        }
-    if(track.id === void 0)
-        switch (a.keyCode){
-        case 65:
-            "brush" !== tool ? (tool = "brush",
-            document.body.style.cursor = "none",
-            Z = !0) : S || (S = !0,
-            U.copy(Lb),
-            Z = !0);
-            break;
-        case 83:
-            "scenery brush" !== tool ? (tool = "scenery brush",
-            document.body.style.cursor = "none",
-            Z = !0) : S || (S = !0,
-            U.copy(Mb),
-            Z = !0);
-            break;
-        case 81:
-            "line" !== tool ? (tool = "line",
-            document.body.style.cursor = "none") : S || (S = !0,
-            U.copy(Lb),
-            Z = !0);
-            break;
-        case 87:
-            "scenery line" !== tool ? (tool = "scenery line",
-            document.body.style.cursor = "none") : S || (S = !0,
-            U.copy(Mb),
-            Z = !0);
-            break;
-        case 69:
-            tool = "eraser";
-            document.body.style.cursor = "none";
-            Z = !0;
-            break;
-        case 82:
-            "camera" !== tool ? (Qb = tool,
-            tool = "camera",
-            document.body.style.cursor = "move") : Rb = !0;
-            break;
-        case 77:
-            track.undoManager.undo();
-            break;
-        case 78:
-            track.undoManager.redo()
-        }
-};
-document.onkeypress = function(a){
-    switch (a.keyCode){
-    case 13:
-    case 37:
-    case 39:
-    case 38:
-    case 40:
-        a.preventDefault();
-        break;
-    case 8:
-    case 32:
-        250 !== canvas.width && a.preventDefault();
-        break;
-    case 113:
-        track.firstPlayer.pastCheckpoint = !1
-    }
-};
-document.onkeyup = function(a){
-    switch (a.keyCode){
-    case 70:
-    case 27:
-        GAME.resizeCanvas.fullscreen;
-        break;
-    case 66:
-        a.ctrlKey && track.switchBike();
-        break;
-    case 37:
-        track.firstPlayer.alive && track.firstPlayer.setButtonUp("left")
-        break;
-    case 39:
-        track.firstPlayer.alive && track.firstPlayer.setButtonUp("right")
-        break;
-    case 38:
-        track.firstPlayer.alive && track.firstPlayer.setButtonUp("up")
-        break;
-    case 40:
-        track.firstPlayer.alive && track.firstPlayer.setButtonUp("brake")
-        break;
-    case 90:
-    case 222:
-        wa = !0;
-        break;
-    case 71:
-        track.players.length > 1 ? track.cameraLock = track.players[1].head === track.cameraLock && track.firstPlayer ? track.firstPlayer.head : track.players[1].head : (Jb = 11 - Jb,
-        Tb[1][6] = (1 === Jb ? "En" : "Dis") + "able grid snapping ( G )");
-        break;
-    case 82:
-        Rb && (tool = Qb,
-        document.body.style.cursor = "none",
-        Rb = !1);
-        break;
-    case 49:
-    case 50:
-    case 51:
-    case 52:
-    case 53:
-        track.id !== void 0 && track.watchGhost(a.keyCode - 48);
-        break;
-    case 81:
-    case 87:
-    case 69:
-    case 83:
-        track.players.length > 1 && (track.cameraLock === track.players[1].head && (track.cameraLock = track.firstPlayer.head),
-        track.players[1] = !1);
-    case 65:
-        Z && (S = Z = !1)
-    }
-    if(location.pathname.slice(0, 7) == '/tracks')
-        switch (a.keyCode){
-        case 65:
-            track.firstPlayer.gamepad.left = 0;
-            break;
-        case 68:
-            track.firstPlayer.gamepad.right = 0;
-            break;
-        case 87:
-            track.firstPlayer.gamepad.up = 0;
-            break;
-        case 83:
-            track.firstPlayer.gamepad.brake = 0;
-            break;
-        }
-};
-canvas.onmousemove = (a, b) => {
-    b = Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25);
-    a = Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25);
-    if(b < 1) {
-        V = [0, a, Tb[0][a]];
-        document.body.style.cursor = "default";
-    } else if(track.editor && b > 30) {
-        V = [1, a, Tb[1][a]];
-        if(14 === a && ("scenery line" === tool || "scenery brush" === tool)) {
-            V[2] = "Shorten last set of scenery lines ( Z )";
-        }
-        document.body.style.cursor = "default";
-    } else {
-        V = !1;
-        document.body.style.cursor = tool == "camera" ? "move" : "none";
-    }
-};
-canvas.onmouseover = canvas.onmouseenter = function(){
-    V = !1;
-    document.body.style.cursor = "camera" === tool ? "move" : "none"
-};
-canvas.onmousedown = function(a){
-    a.preventDefault();
-    S = !0;
-    track.cameraLock = !1;
-    if(Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25) < 1) {
-        S = !1;
-        switch(Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25) + 1) {
-            case 1:
-                track.paused = !track.paused;
-                break;
-            case 2:
-                track.gotoCheckpoint();
-                break;
-            case 3:
-                track.removeCheckpoint();
-                break;
-            case 5:
-                track.switchBike();
-                break;
-            case 7:
-                Ib ? (Ib = !1,
-                V[2] = Tb[0][6] = "Enable line shading") : (Ib = !0,
-                V[2] = Tb[0][6] = "Disable line shading");
-                track.U = [];
-                break;
-            case 8:
-                GAME.resizeCanvas.fullscreen;
-                break;
-        }
-    } else if(track.editor && Math.floor((a.clientX - canvas.offsetLeft + window.pageXOffset) / 25) > 30) {
-        S = !1;
-        switch(Math.floor((a.clientY - canvas.offsetTop + window.pageYOffset) / 25) + 1) {
-            case 1:
-                tool = "brush";
-                break;
-            case 2:
-                tool = "scenery brush";
-                break;
-            case 3:
-                tool = "line";
-                break;
-            case 4:
-                tool = "scenery line";
-                break;
-            case 5:
-                tool = "eraser";
-                break;
-            case 6:
-                tool = "camera";
-                break;
-            case 7:
-                1 === Jb ? (Jb = 10,
-                V[2] = Tb[1][6] = "Disable grid snapping ( G )") : (Jb = 1,
-                V[2] = Tb[1][6] = "Enable grid snapping ( G )");
-                break;
-            case 9:
-                tool = "goal";
-                break;
-            case 10:
-                tool = "checkpoint";
-                break;
-            case 11:
-                tool = "boost";
-                break;
-            case 12:
-                tool = "gravity";
-                break;
-            case 13:
-                tool = "bomb";
-                break;
-            case 14:
-                tool = "slow-mo";
-                break;
-            case 15:
-                tool = "antigravity";
-                break;
-            case 16:
-                tool = "teleporter";
-                break;
-            case 18:
-                track.undo()
-            }
-    } else if(window.BHR_RCE_ENABLED && 2 === a.button && "camera" !== tool) {
-        var a = track.erase(R);
-        a.length && track.pushUndo(() => {
-            track.addToSelf(a, !0);
-        }, () => {
-            for(var b = 0, c = a.length; b < c; b++) {
-                a[b].remove();
-            }
-        });
-        Hb = !0;
-    } else {
-        var b;
-        Z || U.copy(R);
-        switch (tool){
-        case "boost":
-        case "gravity":
-            document.body.style.cursor = "crosshair";
-            break;
-        case "eraser":
-            var a = track.erase(R);
-            a.length && track.pushUndo(() => {
-                track.addToSelf(a, !0);
-            }, () => {
-                for(var b = 0, c = a.length; b < c; b++) {
-                    a[b].remove();
+            ride: function(a, b) {
+                self.loop = new self.Ride(a, b);
+                K.fillText("Loading self.track... Please wait.", 36, 16);
+            },
+            newRide: function() {
+                if(confirm("Do you really want to start a new track?")) {
+                    self.loop.close();
+                    self.update.pop();
+                    self.render.pop();
+                    this.ride();
+                    charCount.innerHTML = "Trackcode";
+                    code.value = null;
+                    self.track.reset()
                 }
-            });
-            break;
-        case "goal":
-            track.powerups.push(b = new GAME.Target(U.x,U.y,track));
-            track.targets++;
-            break;
-        case "checkpoint":
-            track.powerups.push(b = new GAME.Checkpoint(U.x,U.y,track));
-            break;
-        case "bomb":
-            b = new GAME.Bomb(U.x,U.y,track);
-            break;
-        case "slow-mo":
-            b = new GAME.Slowmo(U.x,U.y,track);
-            break;
-        case "antigravity":
-            b = new GAME.Antigravity(U.x,U.y,track);
-            break;
-        case "teleporter":
-            b = new GAME.Teleporter(U.x,U.y,track);
-            track.teleporter = b;
-            break;
-        case "brush":
-        case "scenery brush":
-            Z && track.addLine(U, R, "brush" !== tool),
-            Z = !1,
-            S = !0
-        }
-        if(b !== void 0){
-            var c = Math.floor(b.pos.x / track.scale)
-              , d = Math.floor(b.pos.y / track.scale);
-            track.grid[c] === void 0 && (track.grid[c] = []);
-            track.grid[c][d] === void 0 && (track.grid[c][d] = new GAME.Sector);
-            track.grid[c][d].powerups.push(b);
-            track.pushUndo(function(){
-                b.remove()
-            }, function(){
-                b instanceof GAME.Target && ++track.targets;
-                track.grid[c][d].powerups.push(b)
-            })
-        }
-    }
-};
-document.onmousemove = function(a){
-    "camera" !== tool && (track.cameraLock = !1);
-    R = (new GAME.Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
-    "eraser" !== tool && 2 !== a.button && (R.x = Math.round(R.x / Jb) * Jb,
-    R.y = Math.round(R.y / Jb) * Jb);
-    if(S) {
-        if("camera" === tool) {
-            track.camera.addToSelf(U.sub(R)),
-            R.copy(U);
-        } else if("eraser" === tool || window.BHR_RCE_ENABLED && 2 === a.button) {
-            var a = track.erase(R);
-            a.length && track.pushUndo(() => {
-                track.addToSelf(a, !0);
-            }, () => {
-                for(var b = 0, c = a.length; b < c; b++) {
-                    a[b].remove();
+            },
+            loadRide: function() {
+                if(10 < code.value.length) {
+                    var t = self.track.editor;
+                    self.loop.close();
+                    self.update.pop();
+                    self.render.pop();
+                    this.ride(code.value);
+                    charCount.innerHTML = "Trackcode";
+                    code.value = null;
+                    self.track.reset();
+                    self.track.editor = t;
+                } else {
+                    alert("No trackcode to load!")
                 }
-            });
-        } else if(!Z && ("brush" === tool || "scenery brush" === tool) && U.distanceTo(R) >= Kb) {
-            var b = track.addLine(U, R, "brush" !== tool);
-            track.pushUndo(function(){
-                b.remove()
-            }, function(){
-                b.xb()
-            })
-        }
-    }
-};
-canvas.onmouseup = function(){
-    var a, b, c, d;
-    if(Hb)
-        return Hb = !1;
-    if(S)
-        if("line" === tool || "scenery line" === tool || "brush" === tool || "scenery brush" === tool){
-            var e = track.addLine(U, R, "line" !== tool && "brush" !== tool);
-            track.pushUndo(function(){
-                e.remove()
-            }, function(){
-                e.xb()
-            })
-        } else if("teleporter" === tool){
-            U.copy(R);
-            track.teleporter.tpb(U.x,U.y);
-            track.teleporter = undefined;
-        } else if("boost" === tool || "gravity" === tool)
-            document.body.style.cursor = "none",
-            d = Math.round(180 * Math.atan2(-(R.x - U.x), R.y - U.y) / Math.PI),
-            c = "boost" === tool ? new GAME.Boost(U.x,U.y,d,track) : new GAME.Gravity(U.x,U.y,d,track),
-            a = Math.floor(c.pos.x / track.scale),
-            b = Math.floor(c.pos.y / track.scale),
-            track.grid[a] === void 0 && (track.grid[a] = []),
-            track.grid[a][b] === void 0 && (track.grid[a][b] = new GAME.Sector),
-            track.grid[a][b].powerups.push(c),
-            track.pushUndo(function(){
-                c.remove()
-            }, function(){
-                track.grid[a][b].powerups.push(c)
-            })
-};
-document.onmouseup = () => Z || (S = !1);
-canvas.oncontextmenu = (a) => a.preventDefault();
-canvas.onmouseout = canvas.onmouseleave = () => document.body.style.cursor = "default";
-canvas.ondommousescroll = canvas.onmousewheel = (a) => {
-    a.preventDefault();
-    if(Z) {
-        if("eraser" === tool) {
-            if((0 < a.detail || 0 > a.wheelDelta) && 5 < ab) {
-                ab -= 5;
-            } else {
-                if((0 > a.detail || 0 < a.wheelDelta) && 40 > ab) {
-                    ab += 5
+            },
+            saveRide: function() {
+                if(self.track.id === void 0) {
+                    code.value = self.track.toString();
+                    code.select();
+                    charCount.innerHTML = "Trackcode - " + Math.round(code.value.length / 1E3) + "k - CTRL + C to copy"
                 }
-            }
-        } else {
-            if("brush" === tool || "scenery brush" === tool) {
-                if((0 < a.detail || 0 > a.wheelDelta) && 4 < Kb) {
-                    Kb -= 8;
-                } else if((0 > a.detail || 0 < a.wheelDelta) && 200 > Kb) {
-                    Kb += 8;
+            },
+            attach: function() {
+                if(this.defaults) {
+                    document.onkeydown = this.defaults.keydown,
+                    document.onkeypress = this.defaults.keypress,
+                    document.onkeyup = this.defaults.keyup,
+                    this.defaults = !1
                 }
             }
         }
-    } else {
-        if(0 < a.detail || 0 > a.wheelDelta) {
-            track.zoomOut()
-        } else if(0 > a.detail || 0 < a.wheelDelta) {
-            track.zoomIn()
-        };
     }
-    a = (new GAME.Vector(a.clientX - canvas.offsetLeft,a.clientY - canvas.offsetTop + window.pageYOffset)).adjustToCanvas();
-    track.cameraLock || track.camera.addToSelf(R.sub(a))
-};
-window.Game = {
-    defaults: {
-        keydown: document.onkeydown,
-        keypress: document.onkeypress,
-        keyup: document.onkeyup
-    },
-    ride: function(a, b) {
-        GAME.loop = new GAME.Run(a, b);
-    },
-    newRide: function() {
-        if(confirm("Do you really want to start a new track?")) {
-            GAME.loop.close();
-            GAME.update.pop();
-            GAME.render.pop();
-            this.ride();
-            charCount.innerHTML = "Trackcode";
-            code.value = null;
-            track.reset()
-        }
-    },
-    loadRide: function() {
-        if(10 < code.value.length) {
-            GAME.loop.close();
-            GAME.update.pop();
-            GAME.render.pop();
-            this.ride(code.value);
-            charCount.innerHTML = "Trackcode";
-            code.value = null;
-            track.reset()
-        } else {
-            alert("No trackcode to load!")
-        }
-    },
-    saveRide: function() {
-        if(track.id === void 0) {
-            code.value = track.toString();
-            code.select();
-            charCount.innerHTML = "Trackcode - " + Math.round(code.value.length / 1E3) + "k - CTRL + C to copy"
-        }
-    },
-    attach: function() {
-        if(this.defaults) {
-            document.onkeydown = this.defaults.keydown,
-            document.onkeypress = this.defaults.keypress,
-            document.onkeyup = this.defaults.keyup,
-            this.defaults = !1
-        }
-    }
-};
+});
