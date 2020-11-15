@@ -671,11 +671,18 @@
             this.rearWheel.brake = !1;
             this.frontWheel.brake = !1;
             this.head.collide = !1;
-            var bike = this.track.firstPlayer = this.track.players[0] = new DeadBike(this,this.getStickMan(),this.track,this.checkpoints);
-            bike.hat = new Shard(this.head.pos.clone(),this);
-            bike.hat.vel = this.head.vel.clone();
-            bike.hat.size = 10;
-            bike.hat.da = 0.1
+            for(var i in this.track.players) {
+                if(this.track.players[i].dead) {
+                    this.track.players[i] = new DeadBike(this,this.getStickMan(),this.track,this.checkpoints);
+                    this.track.players[i].hat = new Shard(this.head.pos.clone(),this);
+                    this.track.players[i].hat.vel = this.head.vel.clone();
+                    this.track.players[i].hat.size = 10;
+                    this.track.players[i].hat.da = .1;
+                    if(i == 0) {
+                        this.track.firstPlayer = this.track.players[i];
+                    }
+                }
+            }
         }
         getStickMan(){
             var a = {}
@@ -845,9 +852,11 @@
                 }
                 for(var i in records) {
                     for(var x in records[i]) {
+                        console.log(x, this.time)
                         if(x >= this.time) {
                             delete records[i][x];
                         }
+                        console.log(records)
                     }
                 }
             } else {
@@ -1331,10 +1340,11 @@
     }
 
     class DeadRider {
-        constructor(a, b){
+        constructor(a, b, c){
             this.dead = !0;
             var vector = new Vector(0,0);
             this.dir = 1;
+            this.ghost = c;
             this.masses = b;
             this.track = b;
             this.points = [
@@ -1387,6 +1397,7 @@
                 shadowKnee = this.shadowKnee.pos.toPixel(),
                 shadowFoot = this.shadowFoot.pos.toPixel(),
                 hip = this.hip.pos.toPixel();
+            K.globalAlpha = this.ghost ? .5 : 1;
             K.lineWidth = 5 * a.zoom;
             K.strokeStyle = "rgba(0,0,0,0.5)";
             K.beginPath(),K.moveTo(head.x, head.y),K.lineTo(shadowElbow.x, shadowElbow.y),K.lineTo(shadowHand.x, shadowHand.y),K.moveTo(hip.x, hip.y),K.lineTo(shadowKnee.x, shadowKnee.y),K.lineTo(shadowFoot.x, shadowFoot.y),K.stroke();
@@ -1436,7 +1447,7 @@
             super(c);
             this.checkpoints = d;
             this.dead = !0;
-            this.rider = new DeadRider(b, c);
+            this.rider = new DeadRider(b, c, a.ghost);
             this.rider.setVelocity(a.head.vel, a.rearWheel.vel);
             this.rider.dir = a.dir;
             this.rider.gravity = this.gravity = a.gravity;
