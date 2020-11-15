@@ -720,11 +720,21 @@
                 this.trackComplete()
             }
             if(!!this.ghost_data) {
-                this.ghost_data[0][a] && (this.gamepad.left = this.gamepad.left ? 0 : 1);
-                this.ghost_data[1][a] && (this.gamepad.right = this.gamepad.right ? 0 : 1);
-                this.ghost_data[2][a] && (this.gamepad.up = this.gamepad.up ? 0 : 1);
-                this.ghost_data[3][a] && (this.gamepad.down = this.gamepad.down ? 0 : 1);
-                this.ghost_data[4][a] && this.swap();
+                if(this.ghost_data[0][a]) {
+                    this.gamepad.left = this.gamepad.left ? 0 : 1;
+                }
+                if(this.ghost_data[1][a]) {
+                    this.gamepad.right = this.gamepad.right ? 0 : 1;
+                }
+                if(this.ghost_data[2][a]) {
+                    this.gamepad.up = this.gamepad.up ? 0 : 1;
+                }
+                if(this.ghost_data[3][a]) {
+                    this.gamepad.down = this.gamepad.down ? 0 : 1;
+                }
+                if(this.ghost_data[4][a]) {
+                    this.swap();
+                }
             } else {
                 if(this.gamepad.left !== this.oldGamepad.left)
                     records[0][a] = 1,
@@ -832,7 +842,7 @@
         constructor(a, b, c = [], d = !1) {
             super(a);
             this.ghost = !!d;
-            d && (this.ghost_data = d);
+            this.ghost_data = d;
             this.checkpoints = c;
             this.createMasses(),
             this.createSprings(),
@@ -846,26 +856,26 @@
                 this.slow = c.slow;
                 this.targetsCollected = c.targetsCollected;
                 this.time = c.time;
-                this.oldGamepad = c.oldGamepad;
+                for(var i in c.oldGamepad) {
+                    this.oldGamepad[i] = c.oldGamepad[i];
+                }
                 for(var i in this.track.powerups) {
                     this.track.powerups[i].used = c.powerups[i];
                 }
                 for(var i in records) {
                     for(var x in records[i]) {
-                        console.log(x, this.time)
                         if(x >= this.time) {
                             delete records[i][x];
                         }
-                        console.log(records)
                     }
                 }
             } else {
                 this.slow = !1,
                 this.time = 0,
                 this.targetsCollected = 0;
-                this.oldGamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
-                for(var i in this.track.powerups)
+                for(var i in this.track.powerups) {
                     this.track.powerups[i].used = 0
+                }
             }
         }
         vehicle = "BMX";
@@ -878,6 +888,7 @@
         swapped = !0;
         checkpointsCache = [];
         gamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
+        oldGamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
         createMasses() {
             var a = 0, b = -1,
                 c = 21, d = 38,
@@ -1122,12 +1133,12 @@
         constructor(a, b, c = [], d) {
             super(a);
             this.ghost = !!d;
-            d && (this.ghost_data = d);
+            this.ghost_data = d;
             this.checkpoints = c;
             this.createMasses(),
             this.createSprings(),
             this.createCosmetics(),
-            -1 === b && this.swap()
+            -1 === b && this.swap(),
             this.pastCheckpoint = !1;
             if(this.checkpoints.length > 0) {
                 var cp = this.checkpoints[this.checkpoints.length - 1];
@@ -1136,13 +1147,15 @@
                 this.slow = cp.slow;
                 this.targetsCollected = cp.targetsCollected;
                 this.time = cp.time;
-                this.oldGamepad = cp.oldGamepad;
+                for(var i in c.oldGamepad) {
+                    this.oldGamepad[i] = c.oldGamepad[i];
+                }
                 for(var i in this.track.powerups) {
                     this.track.powerups[i].used = cp.powerups[i];
                 }
                 for(var i in records) {
                     for(var x in records[i]) {
-                        if(x > this.time) {
+                        if(x >= this.time) {
                             delete records[i][x];
                         }
                     }
@@ -1151,14 +1164,13 @@
                 this.slow = !1,
                 this.time = 0,
                 this.targetsCollected = 0;
-                this.oldGamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
-                for(var i in this.track.powerups)
+                for(var i in this.track.powerups) {
                     this.track.powerups[i].used = 0
+                }
             }
         }
         vehicle = "MTB";
         vehicleName = "MTB";
-        vehicleUpdate = this.update;
         slow = !1;
         dead = !1;
         pedalSpeed = 0;
@@ -1166,7 +1178,8 @@
         powerupsConsumed = 0;
         swapped = !0;
         checkpointsCache = [];
-        gamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 }
+        gamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
+        oldGamepad = { up: 0, down: 0, left: 0, right: 0, swap: 0 };
         createMasses() {
             var a = 2, b = -3,
                 c = 23, d = 35,
