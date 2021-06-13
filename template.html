@@ -30,3 +30,37 @@
                 <a href="/signup/" class="header-button" style="text-decoration:none">Signup</a>
             </div>
         </header>
+        <footer>
+            <label class="switch left"><input type="checkbox" id="dark"><span class="toggle"></span></label>
+            <p style="float: left;">Dark Mode</p>
+            <label class="switch right"><input type="checkbox" id="auto_pause"><span class="toggle"></span></label>
+            <p style="float: right;">Auto Pause</p>
+            <script>
+                const dark = document.getElementById("dark");
+                if (JSON.parse(localStorage.dark)) {
+                    dark.checked = true;
+                }
+
+                dark.onclick = function() {
+                    localStorage.setItem("dark", this.checked);
+                    link.href = localStorage.dark == "true" ? "/styles/dark.css" : "/styles/light.css";
+                }
+
+                const auto_pause = document.getElementById("auto_pause");
+                if (JSON.parse(localStorage.pauseOnEnter)) {
+                    auto_pause.checked = true;
+                }
+
+                auto_pause.onclick = function() {
+                    localStorage.setItem("pauseOnEnter", this.checked);
+                }
+
+                const link = document.createElement("link");
+                link.href = localStorage.dark == "true" ? "/styles/dark.css" : "/styles/light.css";
+                link.rel = "stylesheet";
+                document.head.appendChild(link);
+            </script>
+            <p>2020 - Black Hat Rider</p>
+        </footer>
+    </body>
+</html>
