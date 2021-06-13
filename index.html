@@ -12,7 +12,7 @@
 			ajax({
 				url: "/template.html",
 				method: "get"
-			}).then(t => document.write(t), console.log(t));
+			}).then(t => (document.write(t), console.log(t)));
 			
 		    data = {
 			"Calculus": "admin",
