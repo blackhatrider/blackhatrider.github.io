@@ -27,7 +27,7 @@
 			if (typeof p != 'undefined') {
 			    ajax({
 				url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/shuffled?ajax"
-			    }).then(t => {
+			    }).then(t => JSON.parse(t)).then(t => {
 				for (const e of t.tracks) {
 				    ajax({
 					url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/t/" + e.slug + "?ajax"
