@@ -34,7 +34,7 @@ if (typeof p != 'undefined') {
     }
     if (p == 'random') {
 
-        ajaxID({
+        ajax({
             method: "GET",
             url: `https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/random/track?ajax`
         }).then(data => {
