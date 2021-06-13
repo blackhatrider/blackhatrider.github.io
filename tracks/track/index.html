@@ -43,7 +43,7 @@
 				ajax({
 				    method: "GET",
 				    url: `https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/random/track?ajax`
-				}).then(data => {
+				}).then(t => JSON.parse(t)).then(data => {
 				    ajax({
 					method: "GET",
 					url: `https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${data.track.id}/track-data-v1.js`
