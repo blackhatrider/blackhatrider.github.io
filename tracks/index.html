@@ -26,11 +26,13 @@
 			let p = parseURLParameter('id');
 			if (typeof p != 'undefined') {
 			    ajax({
-				url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/shuffled?ajax"
+				url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/shuffled?ajax",
+				method: "get"
 			    }).then(t => JSON.parse(t)).then(t => {
 				for (const e of t.tracks) {
 				    ajax({
-					url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/t/" + e.slug + "?ajax"
+					url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/t/" + e.slug + "?ajax",
+					method: "get"
 				    }).then(t => {
 					document.getElementById("content").innerHTML += "<a href=\"/tracks/track?id=\"" + t.track.id + "\"><img src=\"" + e.thmb + "\"></a>";
 				    });
