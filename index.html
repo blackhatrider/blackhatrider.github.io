@@ -5,29 +5,26 @@
 		<meta name="description" content="Get on your bike and ride tens of tracks drawn by other players! Black Hat Rider is an addictive game written only in JavaScript &amp; HTML5, using the most of the new canvas element.">
 		<meta name="author" content="Calculus">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-		<link rel="stylesheet" type="text/css" id="bhr-style" href="/style.css">
 		<script src="/ajax.js"></script>
 		<script>
 			ajax({
 				url: "/template.html",
 				method: "get"
-			}).then(t => (document.write(t), console.log(t)));
+			}).then(t => document.write(t));
 			
-		    data = {
+		    const data = {
 			"Calculus": "admin",
 			"Guest": "pass"
 		    }
 		    window.onload = (event) => {
-				for(var i in data) {
-					if(localStorage.name == i && localStorage.pass == data[i]) {
+				for (const i in data) {
+					if (localStorage.name == i && localStorage.pass == data[i]) {
 						return
-					} else if(localStorage.name != i || localStorage.pass != data[i]) {
+					} else if (localStorage.name != i || localStorage.pass != data[i]) {
 						window.location.href = "./default.html"
 					}
 				}
 		    };
         	</script>
     </head>
-	<body data-gr-c-s-loaded="true" style="overflow: auto scroll; cursor: default;"></body>
 </html>
