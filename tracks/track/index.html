@@ -34,8 +34,8 @@
 						method: "get"
 					}).then(t => JSON.parse(t)).then(data => {
 						ajax({
-							method: "GET",
-							url: `https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${data.track.id}/track-data-v1.js`
+							url: "https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/" + data.track.id + "/track-data-v1.js",
+							method: "get"
 						}).then(t => JSON.parse(t.slice(2, -2))).then(data => {
 							document.getElementsByTagName("title")[0].innerHTML = `${data.title} | Black Hat Rider 2`;
 							document.getElementById("title").innerHTML = data.title;
