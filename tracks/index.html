@@ -31,8 +31,7 @@
 						ajax({
 							url: "https://cors-anywhere.herokuapp.com/https://www.freeriderhd.com/t/" + e.slug + "?ajax",
 							method: "get"
-						}).then(t => {
-							console.log(t, t.track);
+						}).then(t => JSON.parse(t)).then(t => {
 							document.getElementById("content").innerHTML += "<a href=\"/tracks/track?id=\"" + t.track.id + "\"><img src=\"" + e.thmb + "\"></a>";
 						});
 					}
