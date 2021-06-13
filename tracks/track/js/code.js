@@ -3,20 +3,6 @@ async function ajax(options, callback = () => {}) {
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                callback(JSON.parse(xmlhttp.responseText.slice(2,-2)));
-                resolve(JSON.parse(xmlhttp.responseText.slice(2,-2)));
-            }
-        };
-        xmlhttp.open(options.method, options.url, true);
-        xmlhttp.send();
-    });
-}
-
-async function ajaxID(options, callback = () => {}) {
-    return await new Promise(function(resolve, reject) {
-        const xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 callback(JSON.parse(xmlhttp.responseText));
                 resolve(JSON.parse(xmlhttp.responseText));
             }
@@ -26,7 +12,7 @@ async function ajaxID(options, callback = () => {}) {
     });
 }
 
-function parseURLParameter(t){
+function parseURLParameter(t) {
     const e = window.location.search.substring(1).split(/\u0026/g).map(t => t.split(/\u003D/g));
     const i = e.find(e => e[0] == t);
     return i?.[1];
@@ -38,7 +24,7 @@ if (typeof p != 'undefined') {
         ajax({
             method: "GET",
             url: `https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${p}/track-data-v1.js`
-        }).then(data => {
+        }).then(t => JSON.parse(t.slice(2, -2))).then(data => {
             document.getElementsByTagName("title")[0].innerHTML = `${data.title} | Black Hat Rider 2`;
             document.getElementById("title").innerHTML = data.title;
             let inject = document.createElement('script');
@@ -55,7 +41,7 @@ if (typeof p != 'undefined') {
             ajax({
                 method: "GET",
                 url: `https://cors-anywhere.herokuapp.com/https://cdn.freeriderhd.com/free_rider_hd/tracks/prd/${data.track.id}/track-data-v1.js`
-            }).then(code => {
+            }).then(t => JSON.parse(t.slice(2, -2))).then(code => {
                 document.getElementsByTagName("title")[0].innerHTML = `${code.title} | Black Hat Rider 2`;
                 document.getElementById("title").innerHTML = code.title;
                 let inject = document.createElement('script');
