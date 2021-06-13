@@ -1,13 +1,13 @@
-async function ajax(options, callback = () => {}) {
+async function ajax({ url, method, body, headers }, callback = () => {}) {
     return await new Promise(function(resolve, reject) {
         const xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                callback(JSON.parse(xmlhttp.responseText));
-                resolve(JSON.parse(xmlhttp.responseText));
+                callback(xmlhttp.responseText);
+                resolve(xmlhttp.responseText);
             }
         };
-        xmlhttp.open(options.method, options.url, true);
+        xmlhttp.open(method, url, true);
         xmlhttp.send();
     });
 }
