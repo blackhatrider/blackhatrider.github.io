@@ -1,30 +1,21 @@
-<html lang="en" slick-uniqueid="3">
-	<head>
-		<title>Black Hat Rider 2</title>
-		<link rel="icon" href="/icons/icon_128.png">
-		<meta name="description" content="Get on your bike and ride tens of tracks drawn by other players! Black Hat Rider is an addictive game written only in JavaScript &amp; HTML5, using the most of the new canvas element.">
-		<meta name="author" content="Calculus">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<script src="/ajax.js"></script>
-		<script>
-			ajax({
-				url: "/template.html",
-				method: "get"
-			}).then(t => document.write(t));
-			
-		    const data = {
-			"Calculus": "admin",
-			"Guest": "pass"
-		    }
-		    window.onload = (event) => {
-				for (const i in data) {
-					if (localStorage.name == i && localStorage.pass == data[i]) {
-						return
-					} else if (localStorage.name != i || localStorage.pass != data[i]) {
-						window.location.href = "./default.html"
-					}
-				}
-		    };
-        	</script>
-    </head>
-</html>
+<script src="/ajax.js"></script>
+<script>
+	ajax({
+		url: "/template.html",
+		method: "get"
+	}).then(t => document.write(t));
+
+    const data = {
+	"Calculus": "admin",
+	"Guest": "pass"
+    }
+    window.onload = (event) => {
+		for (const i in data) {
+			if (localStorage.name == i && localStorage.pass == data[i]) {
+				return
+			} else if (localStorage.name != i || localStorage.pass != data[i]) {
+				window.location.href = "./default.html"
+			}
+		}
+    };
+</script>
