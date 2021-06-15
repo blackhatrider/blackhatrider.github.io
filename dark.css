@@ -1,0 +1,116 @@
+html {
+    background: #1d1d1d;
+    color: #fdfdfd
+}
+
+header {
+    background: #2d2d2d;
+    border-bottom: 1px solid #444;
+}
+
+.header-button:hover {
+    background: #444;
+}
+
+.header-button:hover:active {
+    color: #fdfdfd;
+    background: #555;
+}
+
+input[type="text"], input[type="password"] {
+    background: #eee;
+}
+
+footer {
+    background: #2d2d2d;
+    border-top: 1px solid #444;
+}
+
+button, input[type="button"], input[type="submit"] {
+    color: #eee;
+    background: #2d2d2d;
+}
+
+.button {
+    color: #eee;
+    background: #2d2d2d;
+}
+
+button:hover, .button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+    background-color: #444;
+}
+
+button:hover:active, .button:hover:active, input[type="button"]:hover:active, input[type="submit"]:hover:active {
+    color: #ccc;
+    background-color: #555;
+}
+
+textarea, input[type="textarea"] {
+    background: #555;
+}
+
+td, th {
+    border: 1px solid #2d2d2d;
+}
+
+td .proflink {
+    color: #1d1d1d;
+}
+
+tr td .proflink:hover {
+    color: #fff;
+}
+
+tr td .proflink:hover:active {
+    color: #ccc;
+}
+
+tr:nth-child(even) {
+  background-color: #2d2d2d;
+}
+
+.toolbar .tool {
+    border: solid #000;
+}
+
+.toolbar .tool:not(.empty) {
+    background: #000
+}
+
+.toolbar .tool span {
+    border: 1px solid #fff;
+    background: #000;
+}
+
+img.thumbnail {
+    border: 1px solid white;
+}
+
+.dropdown {
+    border: 1px solid #444;
+}
+
+.dropdown .item {
+    background: #2d2d2d;
+}
+
+.dropdown .item:hover {
+    background: #444;
+}
+
+a {
+    color: white;
+}
+
+.comment {
+    border: 1px solid #444;
+}
+
+div#ghosts-container {
+    background: #2d2d2d;
+    border: 1px solid #444;
+}
+
+div#ghost div#vehicle {
+    color: #999;
+}
