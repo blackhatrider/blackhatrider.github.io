@@ -10,9 +10,7 @@ function parseURLParameter(t){
 
 fetch("/header.html").then(async response => (document.querySelector("header").innerHTML = await response.text())).then(t => {
     if (users.find(t => t.user == localStorage.getItem("username") && t.key == localStorage.getItem("password"))) {
-        logout.display = "block";
-    } else {
-        login.display = signup.display = "block";
+        logout.style.display = "block";
     }
 });
 
