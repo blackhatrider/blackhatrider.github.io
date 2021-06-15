@@ -9,7 +9,7 @@ function parseURLParameter(t){
 }
 
 fetch("/header.html").then(async response => (document.querySelector("header").innerHTML = await response.text())).then(t => {
-    if (users.find(t => t.user == localStorage.getItem("username") && t.key == localStorage.getItem("password"))) {
+    if (!users.find(t => t.user == localStorage.getItem("username") && t.key == localStorage.getItem("password"))) {
         logout.style.display = "block";
     }
 });
