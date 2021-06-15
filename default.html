@@ -1,4 +1,4 @@
-<html lang="en" slick-uniqueid="3">
+<html>
 	<head>
 		<style id="stndz-style"></style>
 		<title>Login | Black Hat Rider 2</title>
@@ -8,31 +8,36 @@
 		<link rel="icon" href="./icons/icon_128.png">
 		<link rel="stylesheet" href="/styles/style.css"></link>
 		<script src="/init.js"></script>
+		<script async>
+			login.onclick = function() {
+				const \u0074 = [
+					{
+						\u0075\u0073\u0065\u0072: "\u0043\u0061\u006C\u0063\u0075\u006C\u0075\u0073",
+						\u006B\u0065\u0079: "\u0061\u0064\u006D\u0069\u006E",
+					},
+					{
+						\u0075\u0073\u0065\u0072: "\u0047\u0075\u0065\u0073\u0074",
+						\u006B\u0065\u0079: "\u0070\u0061\u0073\u0073\u0077\u006F\u0072\u0064"
+					}
+				]
+				for (const \u0065 in \u0074) {
+					if (name.value == \u0065 && pass.value == \u0074[\u0065]) {
+						return localStorage.setItem("name", name.value), localStorage.setItem("pass", pass.value), window.location.href = "/";
+					} else {
+						return incorrect.innerHTML = "Invalid username or password.";
+					}
+				}
+			}
+		</script>
     </head>
 	<body>
+		<header></header>
         <label for="name">Username:</label>
         <input type="text" id="name" name="username"><br><br>
         <label for="pass">Password:</label>
         <input type="password" id="pass" name="password"><br>
         <p id="incorrect"></p>
-        <button onclick="login()">Login</button>
+        <button id="login">Login</button>
+		<footer></footer>
     </body>
-    <script>
-        data = {
-            "Calculus": "admin",
-            "Guest": "pass",
-            "isekeb": "pass"
-        }
-        function login(){
-            for(var i in data){
-                const name = document.getElementById("name").value;
-                const pas = document.getElementById("pass").value;
-                if(name == i && pas == data[i]){
-                    return localStorage.name = name, localStorage.pass = pas, window.location.href = "/"
-                } else if(name != i || pas != data[i]){
-                    document.getElementById("incorrect").innerHTML = "Invalid username or password.";
-                }
-            }
-        }
-    </script>
 </html>
