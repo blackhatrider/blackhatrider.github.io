@@ -1,6 +1,6 @@
 import users from "../users.js";
 
-if (location.pathname != "/default.html" && !localStorage.getItem("username") || !localStorage.getItem("password") || users.find(t => t.user == localStorage.getItem("username") && t.key == localStorage.getItem("password"))) location.href = "/default.html";
+if (location.pathname != "/default.html" && (!localStorage.getItem("username") || !localStorage.getItem("password") || users.find(t => t.user == localStorage.getItem("username") && t.key == localStorage.getItem("password")))) location.href = "/default.html";
 
 function parseURLParameter(t){
     const e = window.location.search.substring(1).split(/\u0026/g).map(t => t.split(/\u003D/g));
