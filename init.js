@@ -5,6 +5,13 @@ function parseURLParameter(t){
 }
 
 fetch("/header.html").then(async response => (document.querySelector("header").innerHTML = await response.text())).then(t => {
+    const link = document.createElement("link");
+    link.href = JSON.parse(localStorage.dark) ? "/dark.css" : "/light.css";
+    link.rel = "stylesheet";
+    document.head.appendChild(link);
+})
+
+fetch("/footer.html").then(async response => (document.querySelector("footer").innerHTML = await response.text())).then(t => {
     const dark = document.getElementById("dark");
     if (JSON.parse(localStorage.dark)) {
         dark.checked = true;
@@ -23,11 +30,4 @@ fetch("/header.html").then(async response => (document.querySelector("header").i
     auto_pause.onclick = function() {
         localStorage.setItem("pauseOnEnter", this.checked);
     }
-
-    const link = document.createElement("link");
-    link.href = localStorage.dark == "true" ? "/dark.css" : "/light.css";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
-})
-
-fetch("/footer.html").then(async response => (document.querySelector("footer").innerHTML = await response.text()));
+});
