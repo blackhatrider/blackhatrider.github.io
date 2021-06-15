@@ -1,14 +1,14 @@
 import users from "../users.js";
 
+if (!localStorage.getItem("username") || !localStorage.getItem("password")) return location.href = "/default.html";
+
 function parseURLParameter(t){
     const e = window.location.search.substring(1).split(/\u0026/g).map(t => t.split(/\u003D/g));
     const i = e.find(e => e[0] == t);
     return i?.[1];
 }
 
-fetch("/header.html").then(async response => (document.querySelector("header").innerHTML = await response.text())).then(t => {
-    if (!localStorage.getItem("username") || !localStorage.getItem("password")) return location.href = "/default.html";
-});
+fetch("/header.html").then(async response => (document.querySelector("header").innerHTML = await response.text()));
 
 fetch("/footer.html").then(async response => (document.querySelector("footer").innerHTML = await response.text())).then(t => {
     if (!localStorage.getItem("dark")) localStorage.setItem("dark", false);
