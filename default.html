@@ -21,7 +21,7 @@
 					}
 				]
 				for (const \u0065 of \u0074) {
-					if (name.value == \u0065.\u0075\u0073\u0065\u0072 && pass.value == \u0065.\u006B\u0065\u0079) {
+					if (username.value == \u0065.\u0075\u0073\u0065\u0072 && password.value == \u0065.\u006B\u0065\u0079) {
 						return localStorage.setItem("name", name.value), localStorage.setItem("pass", pass.value), window.location.href = "/";
 					} else {
 						return incorrect.innerHTML = "Invalid username or password.";
@@ -32,8 +32,8 @@
     </head>
 	<body>
 		<header></header>
-        <input type="text" id="name" placeholder="username">
-        <input type="password" id="pass" placeholder="password"><br>
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password"><br>
         <p id="incorrect"></p>
         <button id="login">Login</button>
 		<footer></footer>
