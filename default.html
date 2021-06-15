@@ -20,8 +20,8 @@
 						\u006B\u0065\u0079: "\u0070\u0061\u0073\u0073\u0077\u006F\u0072\u0064"
 					}
 				]
-				for (const \u0065 in \u0074) {
-					if (name.value == \u0065 && pass.value == \u0074[\u0065]) {
+				for (const \u0065 of \u0074) {
+					if (name.value == \u0065.\u0075\u0073\u0065\u0072 && pass.value == \u0065.\u006B\u0065\u0079) {
 						return localStorage.setItem("name", name.value), localStorage.setItem("pass", pass.value), window.location.href = "/";
 					} else {
 						return incorrect.innerHTML = "Invalid username or password.";
