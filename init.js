@@ -8,7 +8,7 @@ fetch("/header.html").then(async response => (document.querySelector("header").i
 
 fetch("/footer.html").then(async response => (document.querySelector("footer").innerHTML = await response.text())).then(t => {
     const link = document.createElement("link");
-    link.href = JSON.parse(localStorage.dark) ? "/dark.css" : "/light.css";
+    link.href = JSON.parse(localStorage.dark) ? "/styles/dark.css" : "/styles/light.css";
     link.rel = "stylesheet";
     document.head.appendChild(link);
     
@@ -19,7 +19,7 @@ fetch("/footer.html").then(async response => (document.querySelector("footer").i
 
     dark.onclick = function() {
         localStorage.setItem("dark", this.checked);
-        link.href = localStorage.dark == "true" ? "/dark.css" : "/light.css";
+        link.href = localStorage.dark == "true" ? "/styles/dark.css" : "/styles/light.css";
     }
     
     const auto_pause = document.getElementById("auto_pause");
