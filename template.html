@@ -1,66 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="theme-color" content="#2D2D2D">
-        <meta name="apple-mobile-web-app-title" content="Test">
-        <meta name="apple-mobile-web-app-status-bar-style" content="white">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta charset="utf-8">
-        <meta name="author" content="Calculus">
-        <link rel="stylesheet" href="/styles/style.css">
-		<link rel="icon" href="/icon.png">
-		<meta name="description" content="Ride your bike on one track drawn by another player! Black Hat Rider coming soon.">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="/ajax.js"></script>
-    </head>
-    <body>
-        <header>
-            <div class="header-left">
-                <a href="/" style="text-decoration:none" class="header-button"><div style="display:inline-block" class="icon-home"></div> Home</a>
-                <a href="/tracks" id="tracks" style="text-decoration:none" class="header-button">Tracks</a>
-		    	<a href="/tracks/random" id="tracks" style="text-decoration:none" class="header-button">Tracks</a>
-                <a href="/editor" style="text-decoration:none" class="header-button">Draw Track</a>
-                <a href="/messages"  id="messages" style="text-decoration:none" class="header-button" disabled>Messages</a>
-                <a href="/notifications" id="notifications" style="text-decoration:none" class="header-button" disabled>Notifications</a>
-            </div>
-            <div class="header-right">
-                <a href="/logout" class="header-button" style="text-decoration:none"><div class="icon-exit" style="display:inline-block"></div> Logout</a>
-                <a href="/login" class="header-button" style="text-decoration:none">Login</a>
-                <a href="/signup/" class="header-button" style="text-decoration:none">Signup</a>
-            </div>
-        </header>
-        <footer>
-            <label class="switch left"><input type="checkbox" id="dark"><span class="toggle"></span></label>
-            <p style="float: left;">Dark Mode</p>
-            <label class="switch right"><input type="checkbox" id="auto_pause"><span class="toggle"></span></label>
-            <p style="float: right;">Auto Pause</p>
-            <script>
-                const dark = document.getElementById("dark");
-                if (JSON.parse(localStorage.dark)) {
-                    dark.checked = true;
-                }
-
-                dark.onclick = function() {
-                    localStorage.setItem("dark", this.checked);
-                    link.href = localStorage.dark == "true" ? "/styles/dark.css" : "/styles/light.css";
-                }
-
-                const auto_pause = document.getElementById("auto_pause");
-                if (JSON.parse(localStorage.pauseOnEnter)) {
-                    auto_pause.checked = true;
-                }
-
-                auto_pause.onclick = function() {
-                    localStorage.setItem("pauseOnEnter", this.checked);
-                }
-
-                const link = document.createElement("link");
-                link.href = localStorage.dark == "true" ? "/styles/dark.css" : "/styles/light.css";
-                link.rel = "stylesheet";
-                document.head.appendChild(link);
-            </script>
-            <p>2020 - Black Hat Rider</p>
-        </footer>
-    </body>
-</html>
+<header>
+	<div class="header-left">
+		<a href="/" style="text-decoration:none" class="header-button"><div style="display:inline-block" class="icon-home"></div> Home</a>
+		<a href="/tracks" id="tracks" style="text-decoration:none" class="header-button">Tracks</a>
+			<a href="/tracks/random" id="tracks" style="text-decoration:none" class="header-button">Tracks</a>
+		<a href="/editor" style="text-decoration:none" class="header-button">Draw Track</a>
+		<a href="/messages"  id="messages" style="text-decoration:none" class="header-button" disabled>Messages</a>
+		<a href="/notifications" id="notifications" style="text-decoration:none" class="header-button" disabled>Notifications</a>
+    </div>
+		<div class="header-right">
+		<a href="/logout" class="header-button" style="text-decoration:none"><div class="icon-exit" style="display:inline-block"></div> Logout</a>
+		<a href="/login" class="header-button" style="text-decoration:none">Login</a>
+		<a href="/signup/" class="header-button" style="text-decoration:none">Signup</a>
+    </div>
+</header>
